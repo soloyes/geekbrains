@@ -1,4 +1,4 @@
-package sol.test;
+package ru.geekbrains;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
