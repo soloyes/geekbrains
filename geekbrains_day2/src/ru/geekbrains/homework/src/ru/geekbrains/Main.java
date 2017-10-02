@@ -5,11 +5,14 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
+        //Ordinary methods
         method1();
         method2();
         method3();
         method4(5);
         method5();
+        //
+
         //method6:
         System.out.println(method6(new int[]{1, 1, 1, 2, 1})); //true
         System.out.println(method6(new int[]{2, 1, 1, 2, 1})); //false
@@ -33,6 +36,12 @@ public class Main {
         System.out.println(Arrays.toString(method8(new int[]{0,0,0,0,1,1,1,1,1,1,1,0,0,1,1,1,1})));
         System.out.println(Arrays.toString(method8(new int[]{0,0,0,0,1,1,1,1,1,1,1,1,1})));
         System.out.println(Arrays.toString(method8(new int[]{0,0,0,1,1,1,1,1,0,1,1,1})));
+
+        System.out.println(method9(new int[]{1,2,3,4,5}));
+
+        System.out.println(method10(new int[]{1,2,3,4,5}, 4));
+
+        System.out.println(method11(new int[][]{{1,1},{1,1}}));
         //
     }
 
@@ -175,5 +184,40 @@ public class Main {
              out1[i] = out[i];
          }
          return out1;
+     }
+
+     private static double method9(int[] array){
+         double tmp = 0;
+         int n = 0;
+         for (int i = 1; i < array.length - 1; i+=2) {
+             tmp += array[i];
+             n ++;
+         }
+         return tmp/n;
+     }
+
+     private static long method10(int[] array, int n){
+         //Only first income
+         int j = -1;
+         int res = 0;
+         for (int i = 0; i < array.length - 1; i++) {
+             if (array[i] == n) j = i;
+         }
+         if (j > 0){
+             for (int i = 0; i < j + 1; i++) {
+                 res += array[i];
+             }
+         }
+         return res;
+     }
+
+     private static long method11(int[][] array){
+         int res = 0;
+         for (int i = 0; i < array.length; i++) {
+             for (int j = 0; j < array[i].length; j++) {
+                 res += array[i][j];
+             }
+         }
+         return res;
      }
 }
