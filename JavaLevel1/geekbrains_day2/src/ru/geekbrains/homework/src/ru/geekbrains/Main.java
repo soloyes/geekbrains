@@ -1,5 +1,5 @@
-package ru.geekbrains;
-;
+package ru.geekbrains.homework.src.ru.geekbrains;
+
 import java.util.Arrays;
 
 public class Main {
@@ -101,14 +101,10 @@ public class Main {
          int max = array[0];
          for (int i = 1; i < array.length; i++) {
              if (array[i] < min){
-                 int tmp = array[i];
-                 array[i] = min;
-                 min = tmp;
+                 min = array[i];
              }
              if (array[i] > max){
-                 int tmp = array[i];
-                 array[i] = max;
-                 max = tmp;
+                 max = array[i];
              }
          }
          out(array);
