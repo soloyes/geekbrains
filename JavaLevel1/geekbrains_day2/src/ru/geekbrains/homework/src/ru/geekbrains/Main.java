@@ -29,7 +29,7 @@ public class Main {
         System.out.println();
         System.out.println(Arrays.toString(method7(new int[]{1}, -1)));
         System.out.println();
-        System.out.println(Arrays.toString(method7(new int[]{1, 2, 3, 4, 5}, 0)));
+        System.out.println(Arrays.toString(method7(new int[]{1, 2, 3, 4, 5}, 6)));
         //
 
         //Extra methods
@@ -127,6 +127,7 @@ public class Main {
 
      public static int[] method7 (int[] array, int n){
          System.out.println(Arrays.toString(array));
+         n = n%array.length;
          if (n == 0 || array.length == 1) return array;
          if (n > 0) {
              for (int i = 0; i < n; i++) {
