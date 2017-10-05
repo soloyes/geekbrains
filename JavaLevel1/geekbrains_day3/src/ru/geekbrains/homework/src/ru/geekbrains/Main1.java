@@ -31,7 +31,10 @@ public class Main1 {
             }
             System.out.println("Повторить игру еще раз? 1 – да / 0 – нет");
             int choise;
-            if ((choise = scanner.nextInt()) == 0) return;
+            if ((choise = scanner.nextInt()) == 0) {
+                scanner.close();
+                return;
+            }
             number = randomNumber(9);
         }
     }
