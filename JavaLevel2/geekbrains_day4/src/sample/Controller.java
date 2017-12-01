@@ -10,12 +10,12 @@ import java.util.Properties;
 
 public class Controller {
 
-    static Properties properties = new Properties();
+    private static Properties properties = new Properties();
 
-    String[] s = getClass().getResource("Properties.properties").toString().split(":");
+    private static String fileName = Controller.class.getResource("Properties.properties").getFile();
+
     static {
-        String s1 = new Controller().s[1];
-        try(BufferedReader reader = new BufferedReader(new FileReader(s1))){
+        try(BufferedReader reader = new BufferedReader(new FileReader(fileName))){
             properties.load(reader);
         } catch (IOException e){
             e.printStackTrace();
@@ -32,15 +32,21 @@ public class Controller {
 
     }
 
-    void commit(){
-        Stage stage = Main.getPrimaryStage();
+    static void commit(Stage primaryStage){
+        TextArea inArea = (TextArea) primaryStage.getScene().lookup("#inArea");
 
-        TextArea outArea = (TextArea) stage.getScene().getRoot().getChildrenUnmodifiable().get(0);
-        TextArea inArea = (TextArea) stage.getScene().getRoot().getChildrenUnmodifiable().get(1);
+        TextArea outArea = (TextArea) primaryStage.getScene().lookup("#outArea");
 
-        if (!inArea.getText().isEmpty()) {
-            outArea.appendText(inArea.getText() + System.lineSeparator());
-            inArea.clear();
-        }
+        if (inArea == null) throw new CommitMessageException("inArea value seems null");
+
+        if (outArea == null) throw new CommitMessageException("outArea value seems null");
+
+        StringBuilder inAreaString = new StringBuilder(inArea.getText());
+        //Delete ending "\n" because no need to input only "\n" without any text
+        inAreaString.deleteCharAt(inAreaString.length() - 1);
+
+        if (inAreaString.length() != 0)
+            outArea.appendText(inAreaString.append("\n").toString());
+        inArea.clear();
     }
 }
