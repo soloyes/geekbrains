@@ -3,8 +3,6 @@ package sample;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -12,11 +10,9 @@ public class Controller {
 
     private static Properties properties = new Properties();
 
-    private static String fileName = Controller.class.getResource("Properties.properties").getFile();
-
     static {
-        try(BufferedReader reader = new BufferedReader(new FileReader(fileName))){
-            properties.load(reader);
+        try{
+            properties.load(Controller.class.getResourceAsStream("Properties.properties"));
         } catch (IOException e){
             e.printStackTrace();
         }
