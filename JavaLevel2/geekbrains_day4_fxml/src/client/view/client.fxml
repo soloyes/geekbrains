@@ -10,11 +10,11 @@
     <HBox VBox.vgrow="ALWAYS">
         <VBox HBox.hgrow="ALWAYS">
             <HBox VBox.vgrow="ALWAYS">
-                <TextArea fx:id="outArea" editable="false" focusTraversable="false" promptText="No any message" HBox.hgrow="ALWAYS" style="-fx-focus-color: transparent;">
+                <TextArea fx:id="outArea" editable="false" focusTraversable="false" promptText="No any message" style="-fx-focus-color: transparent;" HBox.hgrow="ALWAYS">
                 </TextArea>
             </HBox>
             <HBox>
-                <TextArea fx:id="inArea" onKeyPressed="#commitField" HBox.hgrow="ALWAYS" style="-fx-focus-color: transparent">
+                <TextArea fx:id="inArea" onKeyPressed="#commitField" style="-fx-focus-color: transparent" HBox.hgrow="ALWAYS">
                 </TextArea>
             </HBox>
             <HBox>
@@ -23,7 +23,7 @@
         </VBox>
         <VBox minWidth="150" HBox.hgrow="ALWAYS">
             <HBox VBox.vgrow="ALWAYS">
-                <ListView fx:id="currentUsers" focusTraversable="false" HBox.hgrow="ALWAYS" mouseTransparent="true">
+                <ListView fx:id="currentUsers" focusTraversable="false" mouseTransparent="true" HBox.hgrow="ALWAYS">
                 </ListView>
             </HBox>
         </VBox>

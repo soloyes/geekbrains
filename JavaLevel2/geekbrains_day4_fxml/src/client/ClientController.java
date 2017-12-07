@@ -10,14 +10,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 public class ClientController implements Initializable{
 
@@ -30,8 +28,7 @@ public class ClientController implements Initializable{
     @FXML
     ListView<String> currentUsers = new ListView<>();
 
-
-    ObservableList<String> observableList = FXCollections.observableArrayList();
+    private ObservableList<String> observableList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,7 +38,7 @@ public class ClientController implements Initializable{
 
     private String userName = "User";
 
-    public String getUserName() {
+    String getUserName() {
         return userName;
     }
 
@@ -73,8 +70,8 @@ public class ClientController implements Initializable{
     }
 
     public void commitButton(MouseEvent mouseEvent) {
-       commit();
-       inArea.requestFocus();
+        commit();
+        inArea.requestFocus();
     }
 
     private void commit(){
@@ -88,6 +85,4 @@ public class ClientController implements Initializable{
             observableList.add("Maybe other User");
         }
     }
-
-
 }
