@@ -18,8 +18,8 @@ public class Main extends Application {
                 "view/login.fxml");
 
         Scene scene = new Scene(RootsController.getScenes().get("login"),
-                ClientController.getIntProperty("setWidth", 500),
-                ClientController.getIntProperty("setHeight", 600));
+                GetProperty.getInt("setWidth", 500),
+                GetProperty.getInt("setHeight", 600));
 
         RootsController.mainScene = scene;
 

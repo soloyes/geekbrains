@@ -10,9 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import java.io.IOException;
 import java.net.URL;
-import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,25 +42,6 @@ public class ClientController implements Initializable{
 
     private Pattern pattern = Pattern.compile("\n*");
 
-    private static Properties properties = new Properties();
-
-    static {
-        try{
-            properties.load(ClientController.class.getResourceAsStream("view/Properties.properties"));
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    static int getIntProperty(String property, int defaultValue){
-        try{
-            return Integer.parseInt(properties.getProperty(property, String.valueOf(defaultValue)));
-        }
-        catch (NumberFormatException e){
-            return defaultValue;
-        }
-
-    }
     public void commitField(KeyEvent keyEvent) {
         if (keyEvent.isControlDown() && keyEvent.getCode().equals(KeyCode.ENTER)){
             commit();
