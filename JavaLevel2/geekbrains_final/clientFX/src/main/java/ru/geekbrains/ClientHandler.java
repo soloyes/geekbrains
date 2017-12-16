@@ -11,9 +11,9 @@ class ClientHandler {
         Thread t = new Thread(() -> {
             try {
                 String msg;
-                Connect.out.writeUTF("/login" + " " +  name + " " +  password);
+                Connect.getOut().writeUTF("/login" + " " +  name + " " +  password);
                 for(;;) {
-                    msg = Connect.in.readUTF();
+                    msg = Connect.getIn().readUTF();
                     if (msg.startsWith("/clientlist")) {
                         msg = msg.replace("/clientlist ", "");
                         String[] users = msg.split(" ");
@@ -39,19 +39,19 @@ class ClientHandler {
             finally {
                 //Something to do need to be here
                 try {
-                    Connect.socket.close();
+                    Connect.getSocket().close();
                 } catch (IOException e) {
                     System.out.println("Socket close in trouble");
                     e.printStackTrace();
                 }
                 try {
-                    Connect.in.close();
+                    Connect.getIn().close();
                 } catch (IOException e) {
                     System.out.println("in close in trouble");
                     e.printStackTrace();
                 }
                 try {
-                    Connect.out.close();
+                    Connect.getOut().close();
                 } catch (IOException e) {
                     System.out.println("out close in trouble");
                     e.printStackTrace();
@@ -64,8 +64,8 @@ class ClientHandler {
 
     static boolean isInList(String login){
         try {
-            Connect.out.writeUTF("/inlist " + login);
-            if (Connect.in.readUTF().equals("/e_ok")) {
+            Connect.getOut().writeUTF("/inlist " + login);
+            if (Connect.getIn().readUTF().equals("/e_ok")) {
                 return true;
             }
         } catch (IOException e) {

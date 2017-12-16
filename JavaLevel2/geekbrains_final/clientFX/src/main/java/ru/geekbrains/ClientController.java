@@ -49,7 +49,7 @@ public class ClientController implements Initializable{
     }
 
     private void commit(){
-        DataOutputStream out = Connect.out;
+        DataOutputStream out = Connect.getOut();
 
         Matcher matcher = pattern.matcher(inArea.getText());
 

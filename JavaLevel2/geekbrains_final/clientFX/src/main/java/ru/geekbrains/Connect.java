@@ -9,13 +9,29 @@ import java.net.Socket;
 
 class Connect {
 
-    static DataInputStream in;
+    private static DataInputStream in;
 
-    static DataOutputStream out;
+    private static DataOutputStream out;
 
-    static Socket socket;
+    private static Socket socket;
 
-    static boolean isConnected = false;
+    private static boolean isConnected = false;
+
+    public static DataInputStream getIn() {
+        return in;
+    }
+
+    public static DataOutputStream getOut() {
+        return out;
+    }
+
+    public static Socket getSocket() {
+        return socket;
+    }
+
+    public static boolean isIsConnected() {
+        return isConnected;
+    }
 
     static void connect() {
 

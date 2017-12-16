@@ -20,7 +20,7 @@ public class LoginController {
     TextArea logArea;
 
     public void loginButton(MouseEvent mouseEvent) {
-        if (Connect.isConnected) {
+        if (Connect.isIsConnected()) {
             if (loginField.getText().length() == 0 || passwordField.getText().length() == 0) {
                 logArea.appendText("Incorrect Password/Login.\n");
             } else if(!ClientHandler.isInList(loginField.getText())){
