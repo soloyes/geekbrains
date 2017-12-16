@@ -53,7 +53,13 @@ public class ServerClientHandler {
                             out.writeUTF("/loginok");
                             continue;
                         }
-                        server.broadcast(ServerClientHandler.this, msg);
+
+                        if (msg.startsWith("/w")){
+                            server.unicast(ServerClientHandler.this, msg);
+                        }
+                        else {
+                            server.broadcast(ServerClientHandler.this, msg);
+                        }
                     }
                 } catch (IOException e) {
                     System.out.println("readUTF in trouble");

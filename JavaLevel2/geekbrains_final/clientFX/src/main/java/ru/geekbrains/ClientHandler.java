@@ -24,7 +24,7 @@ class ClientHandler {
                         continue;
                     }
 
-                    //For future auth flag
+                    //For future auth flag, for example greeting message
                     if (msg.startsWith("/loginok")) {
                         continue;
                     }

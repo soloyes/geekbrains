@@ -23,7 +23,7 @@
         </VBox>
         <VBox minWidth="150" HBox.hgrow="ALWAYS">
             <HBox VBox.vgrow="ALWAYS">
-                <ListView fx:id="currentUsers" focusTraversable="false" mouseTransparent="true" HBox.hgrow="ALWAYS">
+                <ListView fx:id="currentUsers" focusTraversable="false" HBox.hgrow="ALWAYS" onMouseClicked="#clickOnList">
                 </ListView>
             </HBox>
         </VBox>

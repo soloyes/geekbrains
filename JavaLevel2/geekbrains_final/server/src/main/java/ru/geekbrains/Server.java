@@ -1,8 +1,10 @@
 package ru.geekbrains;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Vector;
 
 public class Server {
@@ -47,17 +49,30 @@ public class Server {
 
     private void refreshList(){
         StringBuilder stringBuilder = new StringBuilder("/clientlist");
-        for (ServerClientHandler s: clients) {
+        for (ServerClientHandler s : clients) {
             stringBuilder.append(" ").append(s.getName());
         }
-        for (ServerClientHandler s:clients) {
+        for (ServerClientHandler s : clients) {
             s.sendMsg(stringBuilder.toString());
         }
     }
 
     void broadcast(ServerClientHandler client, String msg){
-        for (ServerClientHandler s:clients) {
+        for (ServerClientHandler s : clients) {
             s.sendMsg(client.getName() + ": " + msg);
+        }
+    }
+
+    void unicast(ServerClientHandler client, String msg){
+        for (ServerClientHandler s : clients) {
+            String[] umsg = msg.split(" ",2);
+            String[] rmsg = umsg[1].split(" ",2);
+            if (rmsg[0].replaceAll("/", "").equals(s.getName())) {
+                s.sendMsg(client.getName() + ": " + rmsg[1]);
+                if (!(rmsg[0].replaceAll("/", "").equals(client.getName()))) {
+                    client.sendMsg(client.getName() + ": " + rmsg[1]);
+                }
+            }
         }
     }
 }
