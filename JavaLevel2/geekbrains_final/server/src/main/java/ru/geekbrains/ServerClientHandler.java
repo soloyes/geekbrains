@@ -33,7 +33,6 @@ public class ServerClientHandler {
                 try {
                     for (;;) {
                         String msg = in.readUTF();
-                        System.out.println(msg);
                         if (msg.startsWith("/inlist")){
                             String exists = "/e_ok";
                             if (server.getClients().size() != 0){

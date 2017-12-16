@@ -35,7 +35,7 @@ class Connect {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(12000);
+                        Thread.sleep(120000);
                     } catch (InterruptedException e) {
                         System.out.println("Interrupted (120s)");
                         e.printStackTrace();
