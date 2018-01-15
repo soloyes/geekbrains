@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+
+@MinMax
 public class TestClass {
 
     static void start(Class clazz){
@@ -72,12 +74,17 @@ public class TestClass {
         }
 
         for (Map.Entry<Method, Integer> m: list) {
-            try {
-                m.getKey().invoke(o);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+            if (
+                    m.getValue() >= TestClass.class.getAnnotation(MinMax.class).min() &&
+                    m.getValue() <= TestClass.class.getAnnotation(MinMax.class).max()
+               ) {
+                try {
+                    m.getKey().invoke(o);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
