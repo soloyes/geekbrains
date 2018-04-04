@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.backend.dao;
+package xyz.shuttle.filebox.frontend.dao;
 
 import java.util.HashMap;
 import java.util.Map;

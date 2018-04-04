@@ -1,7 +1,7 @@
-package xyz.shuttle.filebox.backend.service;
+package xyz.shuttle.filebox.frontend.services.auth;
 
 import org.springframework.stereotype.Service;
-import xyz.shuttle.filebox.backend.dao.LoginDaoData;
+import xyz.shuttle.filebox.frontend.dao.LoginDaoData;
 
 @Service
 public class Authentication implements AuthenticationService {
