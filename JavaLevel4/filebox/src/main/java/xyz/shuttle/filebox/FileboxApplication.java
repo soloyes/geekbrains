@@ -1,5 +1,6 @@
 package xyz.shuttle.filebox;
 
+import com.vaadin.spring.annotation.EnableVaadin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
