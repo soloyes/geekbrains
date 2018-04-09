@@ -20,11 +20,10 @@ public class LoginView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         LoginForm loginForm = new LoginForm();
         loginForm.addLoginListener((LoginForm.LoginListener) loginEvent -> {
-            if (authenticationService.login(loginEvent.getLoginParameter("password"),
-                    loginEvent.getLoginParameter("username"))) {
+            if(authenticationService.login(
+                    loginEvent.getLoginParameter("password"),
+                    loginEvent.getLoginParameter("username"))){
                 navigator.navigateTo("main");
-            } else {
-                Notification.show("Wrong login/password", Notification.Type.ERROR_MESSAGE);
             }
         });
         this.addComponent(loginForm);

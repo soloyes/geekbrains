@@ -10,7 +10,7 @@ import java.io.OutputStream;
 
 @Component
 public class SaveFileServiceImpl implements SaveFile {
-    //Почему инжектит только тут. Больше нигде в код заинжектить не могу :(
+
     @Value("${filePath}")
     private String filePath;
 

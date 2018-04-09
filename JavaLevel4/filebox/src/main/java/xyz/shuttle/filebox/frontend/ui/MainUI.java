@@ -18,7 +18,5 @@ public class MainUI extends UI {
     public void init(VaadinRequest request) {
         getPage().setTitle("FileBox");
         navigator.init(this, this);
-        navigator.navigateTo("login");
-
     }
 }
