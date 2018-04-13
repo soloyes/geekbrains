@@ -1,5 +1,6 @@
 package xyz.shuttle.filebox.frontend.ui.views;
 
+import com.vaadin.annotations.DesignRoot;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ErrorHandler;
@@ -9,12 +10,16 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.*;
+import com.vaadin.ui.declarative.Design;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import xyz.shuttle.filebox.frontend.services.SaveFileService;
 import xyz.shuttle.filebox.frontend.services.auth.AuthenticationService;
 import xyz.shuttle.filebox.frontend.ui.GridOutput;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,8 +29,6 @@ import java.util.NoSuchElementException;
 
 @SpringView(name = "main")
 public class MainView extends VerticalLayout implements View {
-
-    private StringBuilder deleteName = new StringBuilder();
 
     @Value("${filePath}")
     private String filePath;
@@ -42,20 +45,40 @@ public class MainView extends VerticalLayout implements View {
     @Autowired
     GridOutput gridFiles;
 
+    private StringBuilder deleteName = new StringBuilder();
+
+    private HorizontalLayout gridLayout;
+    private VerticalLayout uploadLayout;
+    private HorizontalLayout btnLayout;
+
+    private Button btnDownload;
+    private Button btnLogout;
+    private Button btnDelete;
+
+    private Upload uploadFile;
+    private FileDownloader fileDownloader;
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        HorizontalLayout gridLayout = new HorizontalLayout();
-        VerticalLayout uploadLayout = new VerticalLayout();
-        HorizontalLayout btnLayout = new HorizontalLayout();
 
-        Upload uploadFile = new Upload("Upload", saveFileService);
+        gridLayout = new HorizontalLayout();
+        uploadLayout = new VerticalLayout();
+        btnLayout = new HorizontalLayout();
+
+        btnDownload = new Button("Download");
+        btnLogout = new Button("Logout");
+        btnDelete = new Button("Delete");
+
+        uploadFile = new Upload("Upload", saveFileService);
+        fileDownloader = new FileDownloader((Resource) () -> null);
+
         uploadFile.setImmediateMode(false);
         uploadFile.setReceiver(saveFileService);
         uploadFile.addSucceededListener(saveFileService);
         uploadFile.setErrorHandler((ErrorHandler) errorEvent -> {
         });
 
-        Button btnDelete = new Button("Delete", (Button.ClickListener) clickEvent -> {
+        btnDelete.addClickListener(clickEvent -> {
             try {
                 deleteName.setLength(0);
                 deleteName.append(
@@ -77,16 +100,9 @@ public class MainView extends VerticalLayout implements View {
             }
         });
 
-        FileDownloader fileDownloader = new FileDownloader((Resource) () -> null);
-
-        Button btnDownload = new Button("Download");
-
-        Button btnLogout = new Button("Logout", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                authenticationService.logout();
-                navigator.navigateTo("login");
-            }
+        btnLogout.addClickListener((Button.ClickListener) clickEvent -> {
+            authenticationService.logout();
+            navigator.navigateTo("login");
         });
 
         gridFiles.getGridFiles().addItemClickListener(itemClick -> {
@@ -105,11 +121,7 @@ public class MainView extends VerticalLayout implements View {
             fileDownloader.extend(btnDownload);
         });
 
-        gridFiles.getGridFiles().setErrorHandler(new ErrorHandler() {
-            @Override
-            public void error(com.vaadin.server.ErrorEvent errorEvent) {
-
-            }
+        gridFiles.getGridFiles().setErrorHandler((ErrorHandler) errorEvent -> {
         });
 
         gridLayout.setSizeFull();

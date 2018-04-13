@@ -1,5 +1,6 @@
 package xyz.shuttle.filebox.frontend.ui.views;
 
+import com.vaadin.annotations.DesignRoot;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
