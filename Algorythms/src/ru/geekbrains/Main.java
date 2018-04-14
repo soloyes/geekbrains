@@ -1,5 +1,7 @@
 package ru.geekbrains;
 
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -13,6 +15,8 @@ public class Main {
         for (int i = 0; i < n - 1; i++) {
             res *= a;
         }
+
+        ArrayList
         return res;
     }
 

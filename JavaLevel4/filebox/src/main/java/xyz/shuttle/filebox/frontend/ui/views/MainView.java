@@ -1,6 +1,5 @@
 package xyz.shuttle.filebox.frontend.ui.views;
 
-import com.vaadin.annotations.DesignRoot;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ErrorHandler;
@@ -8,18 +7,15 @@ import com.vaadin.server.FileDownloader;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.*;
-import com.vaadin.ui.declarative.Design;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import xyz.shuttle.filebox.frontend.services.SaveFileService;
 import xyz.shuttle.filebox.frontend.services.auth.AuthenticationService;
 import xyz.shuttle.filebox.frontend.ui.GridOutput;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.NoSuchElementException;
 
+@ViewScope
 @SpringView(name = "main")
 public class MainView extends VerticalLayout implements View {
 
@@ -47,30 +44,21 @@ public class MainView extends VerticalLayout implements View {
 
     private StringBuilder deleteName = new StringBuilder();
 
-    private HorizontalLayout gridLayout;
-    private VerticalLayout uploadLayout;
-    private HorizontalLayout btnLayout;
+    private HorizontalLayout gridLayout = new HorizontalLayout();
+    private VerticalLayout uploadLayout = new VerticalLayout();
+    private HorizontalLayout btnLayout = new HorizontalLayout();
+    private HorizontalLayout filterLayout = new HorizontalLayout();
 
-    private Button btnDownload;
-    private Button btnLogout;
-    private Button btnDelete;
+    private Button btnDownload = new Button("Download");
+    private Button btnLogout = new Button("Logout");
+    private Button btnDelete = new Button("Delete");
+    private Button btnFilter = new Button("Filter");
 
-    private Upload uploadFile;
-    private FileDownloader fileDownloader;
+    private Upload uploadFile = new Upload("Upload", saveFileService);
+    private FileDownloader fileDownloader = new FileDownloader((Resource) () -> null);
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-
-        gridLayout = new HorizontalLayout();
-        uploadLayout = new VerticalLayout();
-        btnLayout = new HorizontalLayout();
-
-        btnDownload = new Button("Download");
-        btnLogout = new Button("Logout");
-        btnDelete = new Button("Delete");
-
-        uploadFile = new Upload("Upload", saveFileService);
-        fileDownloader = new FileDownloader((Resource) () -> null);
 
         uploadFile.setImmediateMode(false);
         uploadFile.setReceiver(saveFileService);
@@ -126,14 +114,22 @@ public class MainView extends VerticalLayout implements View {
 
         gridLayout.setSizeFull();
         btnLayout.setSizeFull();
+        filterLayout.setSizeFull();
+
         gridLayout.addComponent(gridFiles.getGridFiles());
         uploadLayout.addComponents(uploadFile);
         btnLayout.addComponents(btnDelete, btnDownload, btnLogout);
+
+        //
+        FilterComponent filterComponent = new FilterComponent();
+        filterLayout.addComponents(filterComponent);
+        //
 
         uploadLayout.setComponentAlignment(uploadFile, Alignment.MIDDLE_CENTER);
         btnLayout.setComponentAlignment(btnDelete, Alignment.MIDDLE_CENTER);
         btnLayout.setComponentAlignment(btnDownload, Alignment.MIDDLE_CENTER);
         btnLayout.setComponentAlignment(btnLogout, Alignment.MIDDLE_CENTER);
-        this.addComponents(uploadLayout, gridLayout, btnLayout);
+
+        this.addComponents(uploadLayout, gridLayout, btnLayout, filterLayout);
     }
 }
