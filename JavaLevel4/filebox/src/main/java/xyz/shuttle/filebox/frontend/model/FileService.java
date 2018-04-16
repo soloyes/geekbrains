@@ -1,9 +1,16 @@
 package xyz.shuttle.filebox.frontend.model;
 
-import java.io.*;
+import com.vaadin.ui.TextField;
 
-public interface SaveFile {
+import java.io.*;
+import java.util.List;
+
+public interface FileService {
     OutputStream getFileOutputStream(String fileName) throws IOException;
 
     File getFileByName(String fileName);
+
+    List<File> getFileList();
+
+    List<File> filterList(List<TextField> textFields);
 }

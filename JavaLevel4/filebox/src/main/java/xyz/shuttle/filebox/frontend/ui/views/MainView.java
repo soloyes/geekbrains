@@ -7,14 +7,11 @@ import com.vaadin.server.FileDownloader;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import xyz.shuttle.filebox.frontend.services.SaveFileService;
+import xyz.shuttle.filebox.frontend.model.FileServiceImpl;
 import xyz.shuttle.filebox.frontend.services.auth.AuthenticationService;
-import xyz.shuttle.filebox.frontend.ui.GridOutput;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,15 +20,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.NoSuchElementException;
 
-@ViewScope
 @SpringView(name = "main")
 public class MainView extends VerticalLayout implements View {
 
-    @Value("${filePath}")
-    private String filePath;
-
     @Autowired
-    private SaveFileService saveFileService;
+    private FileServiceImpl fileService;
 
     @Autowired
     SpringNavigator navigator;
@@ -40,8 +33,10 @@ public class MainView extends VerticalLayout implements View {
     AuthenticationService authenticationService;
 
     @Autowired
-    GridOutput gridFiles;
+    FilterComponent filterComponent;
 
+    private Grid<File> gridFiles = new Grid<>();
+    
     private StringBuilder deleteName = new StringBuilder();
 
     private HorizontalLayout gridLayout = new HorizontalLayout();
@@ -54,15 +49,21 @@ public class MainView extends VerticalLayout implements View {
     private Button btnDelete = new Button("Delete");
     private Button btnFilter = new Button("Filter");
 
-    private Upload uploadFile = new Upload("Upload", saveFileService);
+    private Upload uploadFile = new Upload("Upload", fileService);
     private FileDownloader fileDownloader = new FileDownloader((Resource) () -> null);
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
+        gridFiles.addColumn(File::getName).setCaption("File");
+        gridFiles.addColumn(File::length).setCaption("Size, b");
+        gridFiles.setSizeFull();
+        gridFiles.setItems(fileService.getFileList());
+
         uploadFile.setImmediateMode(false);
-        uploadFile.setReceiver(saveFileService);
-        uploadFile.addSucceededListener(saveFileService);
+        uploadFile.setReceiver(fileService);
+        uploadFile.addSucceededListener(fileService);
+        uploadFile.addFinishedListener(finishedEvent -> gridFiles.setItems(fileService.getFileList()));
         uploadFile.setErrorHandler((ErrorHandler) errorEvent -> {
         });
 
@@ -71,14 +72,14 @@ public class MainView extends VerticalLayout implements View {
                 deleteName.setLength(0);
                 deleteName.append(
                         gridFiles
-                                .getGridFiles()
                                 .getSelectedItems()
                                 .iterator()
                                 .next()
-                                .getFilename());
+                                .getName());
                 try {
-                    Files.delete(Paths.get(filePath + deleteName));
-                    gridFiles.calcGrid();
+                    gridFiles.deselectAll();
+                    Files.delete(Paths.get(fileService.getFileByName(deleteName.toString()).toURI()));
+                    gridFiles.setItems(fileService.getFileList());
                     Notification.show("File deleted!");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -93,14 +94,15 @@ public class MainView extends VerticalLayout implements View {
             navigator.navigateTo("login");
         });
 
-        gridFiles.getGridFiles().addItemClickListener(itemClick -> {
-            String fileName = itemClick.getItem().getFilename();
+        gridFiles.addItemClickListener(itemClick -> {
+            String fileName = itemClick.getItem().getName();
             StreamResource resource = new StreamResource((StreamResource.StreamSource) () -> {
                 FileInputStream fileInputStream = null;
                 try {
                     fileInputStream = new FileInputStream(
-                            new File(filePath + fileName));
+                            new File(fileService.getFileByName(fileName).toURI()));
                 } catch (IOException e) {
+                    Notification.show("Select a file!", Notification.Type.WARNING_MESSAGE);
                     e.printStackTrace();
                 }
                 return fileInputStream;
@@ -109,20 +111,20 @@ public class MainView extends VerticalLayout implements View {
             fileDownloader.extend(btnDownload);
         });
 
-        gridFiles.getGridFiles().setErrorHandler((ErrorHandler) errorEvent -> {
+        gridFiles.setErrorHandler((ErrorHandler) errorEvent -> {
         });
 
         gridLayout.setSizeFull();
         btnLayout.setSizeFull();
         filterLayout.setSizeFull();
 
-        gridLayout.addComponent(gridFiles.getGridFiles());
+        gridLayout.addComponent(gridFiles);
         uploadLayout.addComponents(uploadFile);
         btnLayout.addComponents(btnDelete, btnDownload, btnLogout);
 
         //
-        FilterComponent filterComponent = new FilterComponent();
         filterLayout.addComponents(filterComponent);
+        filterComponent.apply(gridFiles);
         //
 
         uploadLayout.setComponentAlignment(uploadFile, Alignment.MIDDLE_CENTER);

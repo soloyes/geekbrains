@@ -3,8 +3,9 @@ package xyz.shuttle.filebox.frontend.ui.views;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import xyz.shuttle.filebox.frontend.services.SaveFileService;
+import xyz.shuttle.filebox.frontend.model.FileServiceImpl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +13,12 @@ import java.util.List;
 public class FilterComponent extends CustomComponent {
 
     @Autowired
-    private SaveFileService saveFileService;
+    private FileServiceImpl fileService;
 
     private List<TextField> textFields = new ArrayList<>();
     private List<Label> labels = new ArrayList<>();
 
     private Button addBtn = new Button("Add filter");
-
     private Button applyBtn = new Button("Apply");
 
     private Panel panel = new Panel("Filter by name");
@@ -58,16 +58,17 @@ public class FilterComponent extends CustomComponent {
         btnLayout.addComponents(addBtn, applyBtn);
         panelContent.addComponents(btnLayout);
         panel.setContent(panelContent);
-        apply();
         setCompositionRoot(panel);
     }
 
-    private void apply() {
+    public void apply(Grid<File> fileGrid) {
         applyBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                System.out.println(saveFileService);
-                textFields.forEach(textField -> System.out.println(textField.getValue()));
+                if (textFields.size() == 0)
+                    fileGrid.setItems(fileService.getFileList());
+                else
+                    fileGrid.setItems(fileService.filterList(textFields));
             }
         });
     }
