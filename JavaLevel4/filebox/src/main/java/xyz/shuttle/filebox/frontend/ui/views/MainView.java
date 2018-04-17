@@ -36,7 +36,7 @@ public class MainView extends VerticalLayout implements View {
     FilterComponent filterComponent;
 
     private Grid<File> gridFiles = new Grid<>();
-    
+
     private StringBuilder deleteName = new StringBuilder();
 
     private HorizontalLayout gridLayout = new HorizontalLayout();
