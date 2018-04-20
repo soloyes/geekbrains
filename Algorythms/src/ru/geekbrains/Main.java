@@ -14,8 +14,57 @@ public class Main {
      действий и сравнить его со сложностью сортировки.
      */
 
+    /**** Создать программу, которая переворачивает вводимые строки
+     **** Создать класс для реализации дека
+     **** Описать класс с реализацией приоритетной очереди
+     */
+
     public static void main(String[] args) {
-        int N = 100000;
+        task3();
+    }
+
+    private static void task3() {
+        Reverser reverser = new Reverser();
+        reverser.reverse(reverser.setString());
+
+
+        Deque deque = new Deque(15);
+        for (int i = 0; i < 15; i++) {
+            deque.insertLeft(i);
+        }
+        deque.removeLeft();
+        deque.removeRight();
+        deque.insertLeft(44);
+        deque.insertRight(55);
+        for (int i = 0; i < 15; i++) {
+            deque.removeRight();
+        }
+
+        for (int i = 0; i < 15; i++) {
+            deque.insertLeft(i+10);
+        }
+        System.out.println(deque);
+
+
+        PriorityQueue priorityQueue = new PriorityQueue(5);
+        priorityQueue.insert(1);
+        priorityQueue.insert(3);
+        priorityQueue.insert(2);
+        priorityQueue.insert(4);
+        priorityQueue.insert(5);
+        System.out.println(priorityQueue);
+        System.out.println(priorityQueue.remove());
+        priorityQueue.insert(6);
+        System.out.println(priorityQueue.remove());
+        System.out.println(priorityQueue);
+        priorityQueue.insert(1);
+        priorityQueue.insert(15);
+        priorityQueue.remove();
+        System.out.println(priorityQueue);
+    }
+
+    private static void task2() {
+        int N = 1000;
         ///
         MyArray<Integer> arrayInsert = new MyArray<Integer>(N);
         SecureRandom random = new SecureRandom();
@@ -29,7 +78,7 @@ public class Main {
                 BigInteger.valueOf(arrayInsert.getSize()).pow(2) +
                 " Actual = " +
                 arrayInsert.getIterations());
-        System.out.println("Time cost: " + (System.currentTimeMillis() - timeBefore)  + " ms");
+        System.out.println("Time cost: " + (System.currentTimeMillis() - timeBefore) + " ms");
         System.out.println();
         ///
         ///
@@ -45,7 +94,7 @@ public class Main {
                 BigInteger.valueOf(arraySelect.getSize()).pow(2) +
                 " Actual = " +
                 arraySelect.getIterations());
-        System.out.println("Time cost: " + (System.currentTimeMillis() - timeBefore)  + " ms");
+        System.out.println("Time cost: " + (System.currentTimeMillis() - timeBefore) + " ms");
         System.out.println();
         ///
         ///
