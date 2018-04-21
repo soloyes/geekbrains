@@ -59,24 +59,24 @@ public class Deque {
         if (++head > size - 1)
             head = 0;
         capacity--;
-        return array[head];
+        return array[head - 1];
     }
 
     public void insertRight(int i) {
-        if (++tail > size-1) {
+        if (++tail > size - 1) {
             if (isFull()) throw new FullDeque();
             else {
                 tail = 0;
             }
         }
-        array[tail] = i;
+        array[tail - 1] = i;
         capacity++;
     }
 
     public int removeRight() {
-        if (--tail < 0) tail = 0;
+        if (--tail < 0) tail = size - 1;
         capacity--;
-        return array[tail--];
+        return array[tail];
     }
 
     @Override

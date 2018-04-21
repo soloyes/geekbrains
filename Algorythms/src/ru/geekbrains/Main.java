@@ -32,10 +32,20 @@ public class Main {
         for (int i = 0; i < 15; i++) {
             deque.insertLeft(i);
         }
-        deque.removeLeft();
-        deque.removeRight();
+        System.out.println(deque);
+        System.out.println(deque.removeLeft());
+        System.out.println(deque.removeRight());
+        System.out.println(deque.removeLeft());
+        System.out.println(deque.removeRight());
+        deque.insertLeft(22);
+        System.out.println(deque.getTail());
+        deque.insertLeft(33);
+        System.out.println(deque.getTail());
         deque.insertLeft(44);
+        System.out.println(deque.getTail());
         deque.insertRight(55);
+        System.out.println(deque.getTail());
+        System.out.println(deque);
         for (int i = 0; i < 15; i++) {
             deque.removeRight();
         }
