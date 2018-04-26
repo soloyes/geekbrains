@@ -3,6 +3,10 @@ package ru.geekbrains;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Queue;
 
 public class Main {
 
@@ -12,15 +16,41 @@ public class Main {
      **** Заполнить массив случайными числами.
      **** Написать методы, сортировок и вывести на экран количество
      действий и сравнить его со сложностью сортировки.
-     */
 
-    /**** Создать программу, которая переворачивает вводимые строки
+
+     **** Создать программу, которая переворачивает вводимые строки
      **** Создать класс для реализации дека
      **** Описать класс с реализацией приоритетной очереди
+
+
+
+     **** Реализовать класс итератора
+     **** Написать программу, использующую двусвязный список через методы итератора
      */
 
     public static void main(String[] args) {
-        task3();
+        Bag bag = new Bag(5,
+                new Bag.Item(1,6),
+                new Bag.Item(3,12),
+                new Bag.Item(2,10));
+        System.out.println(bag.getBag());
+    }
+
+    private static void task4() {
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        linkedList.putRight(3);
+        linkedList.putRight(3);
+        linkedList.putRight(3);
+
+        LinkedList.Iterator iterator = linkedList.getIterator();
+
+        for (; iterator.hasNext(); ) {
+            iterator.remove();
+        }
+        System.out.println(linkedList.getSize());
+        System.out.println(iterator);
+        linkedList.putRight(1);
+        System.out.println(iterator);
     }
 
     private static void task3() {
@@ -51,11 +81,19 @@ public class Main {
         }
 
         for (int i = 0; i < 15; i++) {
-            deque.insertLeft(i+10);
+            deque.insertLeft(i + 10);
         }
         System.out.println(deque);
 
-
+        System.out.println(deque.getCapacity() + " " + deque.getSize());
+        System.out.println(deque.isFull());
+        System.out.println(deque.getHead() + " " + deque.getTail());
+        deque.removeRight();
+        System.out.println(deque.getHead() + " " + deque.getTail());
+        deque.insertLeft(77);
+        System.out.println(deque.getHead() + " " + deque.getTail());
+        System.out.println(deque);
+        //
         PriorityQueue priorityQueue = new PriorityQueue(5);
         priorityQueue.insert(1);
         priorityQueue.insert(3);

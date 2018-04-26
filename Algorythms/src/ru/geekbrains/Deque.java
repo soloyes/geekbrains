@@ -40,16 +40,18 @@ public class Deque {
         return capacity == 0;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
     public boolean isFull() {
         return size == capacity;
     }
 
     public void insertLeft(int i) {
+        if (isFull()) throw new FullDeque();
         if (--head < 0) {
-            if (isFull()) throw new FullDeque();
-            else {
                 head = size - 1;
-            }
         }
         array[head] = i;
         capacity++;
@@ -63,11 +65,9 @@ public class Deque {
     }
 
     public void insertRight(int i) {
-        if (++tail > size - 1) {
-            if (isFull()) throw new FullDeque();
-            else {
+        if (isFull()) throw new FullDeque();
+        if (++tail > size){
                 tail = 0;
-            }
         }
         array[tail - 1] = i;
         capacity++;
