@@ -11,7 +11,7 @@ import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import xyz.shuttle.filebox.frontend.model.FileServiceImpl;
-import xyz.shuttle.filebox.frontend.services.auth.AuthenticationService;
+import xyz.shuttle.filebox.frontend.services.AuthenticationService;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -6,12 +6,16 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import xyz.shuttle.filebox.frontend.services.auth.AuthenticationService;
+import xyz.shuttle.filebox.frontend.services.AuthenticationService;
+import xyz.shuttle.filebox.frontend.services.user.UserService;
 
 @SpringView(name = "login")
 public class LoginView extends VerticalLayout implements View {
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     SpringNavigator navigator;
@@ -21,8 +25,8 @@ public class LoginView extends VerticalLayout implements View {
         LoginForm loginForm = new LoginForm();
         loginForm.addLoginListener((LoginForm.LoginListener) loginEvent -> {
             if (authenticationService.login(
-                    loginEvent.getLoginParameter("password"),
-                    loginEvent.getLoginParameter("username"))) {
+                    loginEvent.getLoginParameter("username"),
+                    loginEvent.getLoginParameter("password"))) {
                 navigator.navigateTo("main");
             }
         });
