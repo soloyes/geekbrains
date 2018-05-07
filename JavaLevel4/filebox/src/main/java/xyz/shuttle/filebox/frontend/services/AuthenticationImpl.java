@@ -4,26 +4,16 @@ import com.vaadin.ui.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import xyz.shuttle.filebox.frontend.services.user.UserService;
 
 @Service
 public class AuthenticationImpl implements AuthenticationService {
 
     @Autowired
     AuthenticationManager authenticationManager;
-
-    @Autowired
-    DaoAuthenticationProvider daoAuthenticationProvider;
-
-    @Autowired
-    UserService userService;
 
     @Override
     public boolean isAuthenticated() {

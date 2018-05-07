@@ -27,9 +27,6 @@ public class MainView extends VerticalLayout implements View {
     private FileServiceImpl fileService;
 
     @Autowired
-    SpringNavigator navigator;
-
-    @Autowired
     AuthenticationService authenticationService;
 
     @Autowired
@@ -47,7 +44,6 @@ public class MainView extends VerticalLayout implements View {
     private Button btnDownload = new Button("Download");
     private Button btnLogout = new Button("Logout");
     private Button btnDelete = new Button("Delete");
-    private Button btnFilter = new Button("Filter");
 
     private Upload uploadFile = new Upload("Upload", fileService);
     private FileDownloader fileDownloader = new FileDownloader((Resource) () -> null);
@@ -91,7 +87,7 @@ public class MainView extends VerticalLayout implements View {
 
         btnLogout.addClickListener((Button.ClickListener) clickEvent -> {
             authenticationService.logout();
-            navigator.navigateTo("login");
+            getUI().getPage().setLocation("/login");
         });
 
         gridFiles.addItemClickListener(itemClick -> {

@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserDao userDao;
 
-    //Test
+    //Test, add users if no exists
     @PostConstruct
     public void init() {
         if (!userDao.findByUserName("user").isPresent()) {
@@ -42,7 +42,24 @@ public class UserService implements UserDetailsService {
                     });
 
         }
+        if (!userDao.findByUserName("admin").isPresent()) {
+            userDao.save(User.builder()
+                    .username("admin")
+                    .password("password")
+                    .authorities(new LinkedList<>(Arrays.asList(Role.USER)))
+                    .accountNonExpired(true)
+                    .accountNonLocked(true)
+                    .credentialsNonExpired(true)
+                    .enabled(true).build());
+        } else {
+            userDao.findByUserName("admin").ifPresent(
+                    user -> {
+                        user.setPassword(new BCryptPasswordEncoder().encode("password"));
+                        userDao.save(user);
+                    });
+        }
     }
+    //
 
     @Override
     public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {

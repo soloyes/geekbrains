@@ -26,33 +26,27 @@ public class FilterComponent extends CustomComponent {
     private HorizontalLayout btnLayout = new HorizontalLayout();
 
     public FilterComponent() {
-        addBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                HorizontalLayout layout = new HorizontalLayout();
-                Button button = new Button("Del");
-                TextField textField = new TextField();
-                Label label = new Label();
+        addBtn.addClickListener((Button.ClickListener) clickEvent -> {
+            HorizontalLayout layout = new HorizontalLayout();
+            Button button = new Button("Del");
+            TextField textField = new TextField();
+            Label label = new Label();
 
-                textFields.add(textField);
-                labels.add(label);
+            textFields.add(textField);
+            labels.add(label);
+            refreshLabels();
+
+            layout.addComponents(label, textField, button);
+
+            button.addClickListener((Button.ClickListener) clickEvent1 -> {
+                panelContent.removeComponent(layout);
+                textFields.remove(textField);
+                labels.remove(label);
                 refreshLabels();
-
-                layout.addComponents(label, textField, button);
-
-                button.addClickListener(new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        panelContent.removeComponent(layout);
-                        textFields.remove(textField);
-                        labels.remove(label);
-                        refreshLabels();
-                        addBtn.focus();
-                    }
-                });
-                panelContent.addComponents(layout);
-                textField.focus();
-            }
+                addBtn.focus();
+            });
+            panelContent.addComponents(layout);
+            textField.focus();
         });
 
         btnLayout.addComponents(addBtn, applyBtn);
@@ -62,14 +56,11 @@ public class FilterComponent extends CustomComponent {
     }
 
     public void apply(Grid<File> fileGrid) {
-        applyBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                if (textFields.size() == 0)
-                    fileGrid.setItems(fileService.getFileList());
-                else
-                    fileGrid.setItems(fileService.filterList(textFields));
-            }
+        applyBtn.addClickListener((Button.ClickListener) clickEvent -> {
+            if (textFields.size() == 0)
+                fileGrid.setItems(fileService.getFileList());
+            else
+                fileGrid.setItems(fileService.filterList(textFields));
         });
     }
 

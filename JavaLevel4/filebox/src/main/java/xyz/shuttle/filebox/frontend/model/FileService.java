@@ -4,6 +4,7 @@ import com.vaadin.ui.TextField;
 
 import java.io.*;
 import java.util.List;
+import java.util.Set;
 
 public interface FileService {
     OutputStream getFileOutputStream(String fileName) throws IOException;
@@ -12,5 +13,5 @@ public interface FileService {
 
     List<File> getFileList();
 
-    List<File> filterList(List<TextField> textFields);
+    Set<File> filterList(List<TextField> textFields);
 }

@@ -81,7 +81,7 @@ public class FileServiceImpl implements FileService, Upload.Receiver, Upload.Suc
     }
 
     @Override
-    public List<File> filterList(List<TextField> textFields) {
+    public Set<File> filterList(List<TextField> textFields) {
         Set<File> set = new HashSet<>();
         textFields.forEach(textField ->
                 set.addAll(getFileList()
@@ -89,8 +89,6 @@ public class FileServiceImpl implements FileService, Upload.Receiver, Upload.Suc
                         .filter(file -> file.getName()
                                 .contains(textField.getValue()))
                         .collect(Collectors.toList())));
-        List<File> list = new ArrayList<>();
-        list.addAll(set);
-        return list;
+        return set;
     }
 }
