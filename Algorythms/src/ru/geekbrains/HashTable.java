@@ -6,20 +6,6 @@ import java.util.List;
 
 public class HashTable {
 
-    public static void main(String[] args) {
-        HashTable hashTable = new HashTable(10);
-        for (int i = 0; i < 50; i++) {
-            hashTable.insert(new Item(i));
-        }
-        System.out.println(hashTable);
-        hashTable.delete(new Item(15));
-        System.out.println(hashTable);
-        hashTable.insert(new Item(15));
-        System.out.println(hashTable);
-        hashTable.delete(new Item(15));
-        System.out.println(hashTable);
-    }
-
     private ArrayList<List<Item>> list = new ArrayList<>();
 
     public HashTable(int size) {
@@ -28,18 +14,18 @@ public class HashTable {
         }
     }
 
-    public void insert(Item item){
+    public void insert(Item item) {
         int key = item.getData();
         int hash = hash(key);
         list.get(hash).add(item);
     }
 
-    public Item find(int key){
+    public Item find(int key) {
         int hash = hash(key);
         return hash > list.get(hash).size() ? new Item(-1) : list.get(hash).get(hash);
     }
 
-    public Item delete(Item item){
+    public Item delete(Item item) {
         int hash = hash(item.getData());
         for (int i = 0; i < list.get(hash).size(); i++) {
             if (list.get(hash).get(i).getData() == item.getData()) return list.get(hash).remove(i);
@@ -51,19 +37,18 @@ public class HashTable {
         return value % list.size();
     }
 
-
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (List<Item> l:list) {
-            for (Item i:l) {
+        for (List<Item> l : list) {
+            for (Item i : l) {
                 stringBuilder.append(i.getData()).append(" ");
             }
             stringBuilder.append("\n");
         }
         return stringBuilder
                 .delete(
-                        stringBuilder.length()-2,
+                        stringBuilder.length() - 2,
                         stringBuilder.length()
                 )
                 .toString();
