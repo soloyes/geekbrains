@@ -8,19 +8,15 @@ public class HashTable {
 
     public static void main(String[] args) {
         HashTable hashTable = new HashTable(10);
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 50; i++) {
             hashTable.insert(new Item(i));
         }
         System.out.println(hashTable);
-        System.out.println("Data: " + hashTable.find(12).getData());
-        System.out.println();
-        hashTable.delete(0);
+        hashTable.delete(new Item(15));
         System.out.println(hashTable);
-        System.out.println();
-        hashTable.delete(12);
+        hashTable.insert(new Item(15));
         System.out.println(hashTable);
-        System.out.println();
-        hashTable.insert(new Item(0));
+        hashTable.delete(new Item(15));
         System.out.println(hashTable);
     }
 
@@ -43,10 +39,12 @@ public class HashTable {
         return hash > list.get(hash).size() ? new Item(-1) : list.get(hash).get(hash);
     }
 
-    public Item delete(int key){
-        int hash = hash(key);
-        if (hash > list.get(hash).size()) return new Item(-1);
-        else return list.get(hash).remove(hash);
+    public Item delete(Item item){
+        int hash = hash(item.getData());
+        for (int i = 0; i < list.get(hash).size(); i++) {
+            if (list.get(hash).get(i).getData() == item.getData()) return list.get(hash).remove(i);
+        }
+        return new Item(-1);
     }
 
     public int hash(int value) {
