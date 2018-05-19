@@ -1,12 +1,10 @@
 package csi;
 
-import com.sun.xml.internal.messaging.saaj.util.Base64;
-
 import java.util.*;
 
 public class PriceJoiner {
 
-    public List<Price> join(List<Price> oldPrices, List<Price> newPrices) {
+    public List<Price> join(List<Price> oldPrices, List<Price> newPrices) throws CloneNotSupportedException {
 
         List<Price> result = new LinkedList<>();
 
@@ -18,40 +16,97 @@ public class PriceJoiner {
         //
 
         for (Map.Entry<Integer, LinkedList<Price>> e : newPricesByDepartments.entrySet()) {
-            if (oldPricesByDepartments.get(e.getKey()) == null)
-                //Add new prices for whole new department
-                result.addAll(e.getValue());
-            else {
-                //
+            if (oldPricesByDepartments.get(e.getKey()) != null)
                 while (e.getValue().size() != 0) {
                     LinkedList<Price> newPricesByIDAndNumber =
                             separateByIDAndNumber(e.getValue(), e.getValue().getFirst());
-                    //System.out.println(newPricesByIDAndNumber);
                     LinkedList<Price> oldPricesByIDAndNumber =
                             separateByIDAndNumber(oldPricesByDepartments.get(e.getKey()), newPricesByIDAndNumber.getFirst());
                     //Add new prices for whole new ID and Number
-                    System.out.println(oldPricesByIDAndNumber);
                     if (oldPricesByIDAndNumber.size() == 0)
                         result.addAll(newPricesByIDAndNumber);
                     else {
-                        System.out.println("BLA");
+                        //Join dates
+                        TreeSet<Date> allDates = new TreeSet<>();
+                        makeDatesSet(newPricesByIDAndNumber, oldPricesByIDAndNumber, allDates);
+                        ArrayList<Date> allDatesList = new ArrayList<>(allDates);
+                        //
+                        //Restore Prices from allDates collection
+                        LinkedList<Price> consolidateList = new LinkedList<>();
+                        //Here addAll order is important by algorithm
+                        consolidateList.addAll(oldPricesByIDAndNumber);
+                        consolidateList.addAll(newPricesByIDAndNumber);
+                        //
+
+                        for (int i = 0; i < allDatesList.size() - 1; i++) {
+                            Price p;
+                            if ((p = findBegin(consolidateList, allDatesList.get(i))) != null) {
+                                Price pp = (Price) p.clone();
+                                pp.setEnd(allDatesList.get(i + 1));
+                                result.add(pp);
+                            } else {
+                                if ((p = findEnd(consolidateList, allDatesList.get(i + 1))) != null) {
+                                    Price pp = (Price) p.clone();
+                                    pp.setBegin(allDatesList.get(i));
+                                    result.add(pp);
+                                }
+                            }
+                        }
+                        //
                     }
                 }
-                //
+            //Add new prices for whole new department
+            result.addAll(e.getValue());
+        }
+        return result;
+    }
+
+    private Price findBegin(LinkedList<Price> linkedList, Date date) {
+        Iterator<Price> iterator = linkedList.descendingIterator();
+        while (iterator.hasNext()) {
+            Price p = iterator.next();
+            if (p.getBegin().equals(date)) {
+                return p;
             }
         }
-
-        System.out.println(result);
         return null;
+    }
+
+    private Price findEnd(LinkedList<Price> linkedList, Date date) {
+        for (Price p : linkedList) {
+            if (p.getEnd().equals(date)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    private void makeDatesSet(LinkedList<Price> newPricesByIDAndNumber, LinkedList<Price> oldPricesByIDAndNumber, TreeSet<Date> allDates) {
+        TreeSet<Date> excluded = new TreeSet<>();
+        for (Price np : newPricesByIDAndNumber) {
+            for (Price op : oldPricesByIDAndNumber) {
+                if (op.getBegin().before(np.getBegin()) && !excluded.contains(op.getBegin())) {
+                    allDates.add(op.getBegin());
+                } else excluded.add(op.getBegin());
+                if (op.getEnd().after(np.getEnd()) && !excluded.contains(op.getEnd())) {
+                    allDates.add(op.getEnd());
+                } else excluded.add(op.getEnd());
+                allDates.add(np.getEnd());
+                allDates.add(np.getBegin());
+            }
+        }
+        excluded = null;
     }
 
     private LinkedList<Price> separateByIDAndNumber(LinkedList<Price> list, Price price) {
         LinkedList<Price> result = new LinkedList<>();
-        for (Price p : list) {
+        Iterator<Price> iterator = list.listIterator();
+        while (iterator.hasNext()) {
+            Price p = iterator.next();
             if (price.getProduct_code().equals(p.getProduct_code()) &&
                     price.getNumber() == p.getNumber()) {
                 result.add(p);
-                list.remove(p);
+                iterator.remove();
             }
         }
         return result;
@@ -67,4 +122,3 @@ public class PriceJoiner {
         }
     }
 }
-

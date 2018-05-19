@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class PriceJoinerTest {
+public class PriceJoinerTest5 {
 
     private PriceJoiner priceJoiner;
     private Date beginDate1;
@@ -30,16 +30,14 @@ public class PriceJoinerTest {
 
         String bd1 = "01.01.2013 00:00:00";
         String ed1 = "31.01.2013 23:59:59";
-        String bd2 = "10.01.2013 00:00:00";
-        String ed2 = "20.01.2013 23:59:59";
-        String bd3 = "01.01.2013 00:00:00";
-        String ed3 = "31.01.2013 00:00:00";
-        String bd4 = "20.01.2013 00:00:00";
-        String ed4 = "20.02.2013 23:59:59";
-        String bd5 = "15.01.2013 00:00:00";
-        String ed5 = "25.01.2013 23:59:59";
-        String bd6 = "12.01.2013 00:00:00";
-        String ed6 = "13.01.2013 00:00:00";
+        String bd2 = "01.02.2013 00:00:00";
+        String ed2 = "20.02.2013 23:59:59";
+        String bd3 = "21.02.2013 00:00:00";
+        String ed3 = "31.03.2013 00:00:00";
+        String bd4 = "15.01.2013 00:00:00";
+        String ed4 = "15.02.2013 23:59:59";
+        String bd5 = "16.02.2013 00:00:00";
+        String ed5 = "15.03.2013 23:59:59";
 
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.ENGLISH);
         try {
@@ -48,20 +46,18 @@ public class PriceJoinerTest {
             beginDate3 = dateFormat.parse(bd3);
             beginDate4 = dateFormat.parse(bd4);
             beginDate5 = dateFormat.parse(bd5);
-            beginDate6 = dateFormat.parse(bd6);
             endDate1 = dateFormat.parse(ed1);
             endDate2 = dateFormat.parse(ed2);
             endDate3 = dateFormat.parse(ed3);
             endDate4 = dateFormat.parse(ed4);
             endDate5 = dateFormat.parse(ed5);
-            endDate6 = dateFormat.parse(ed6);
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void test1() {
+    public void test1() throws CloneNotSupportedException {
 
         List<Price> oldPriceList = new LinkedList<>(Arrays.asList(
                 Price.builder()
@@ -76,7 +72,7 @@ public class PriceJoinerTest {
                 Price.builder()
                         .id(new Random().nextInt())
                         .product_code("122856")
-                        .number(2)
+                        .number(1)
                         .depart(1)
                         .begin(beginDate2)
                         .end(endDate2)
@@ -84,9 +80,9 @@ public class PriceJoinerTest {
                         .build(),
                 Price.builder()
                         .id(new Random().nextInt())
-                        .product_code("6654")
+                        .product_code("122856")
                         .number(1)
-                        .depart(2)
+                        .depart(1)
                         .begin(beginDate3)
                         .end(endDate3)
                         .value(5000)
@@ -106,41 +102,20 @@ public class PriceJoinerTest {
                 Price.builder()
                         .id(new Random().nextInt())
                         .product_code("122856")
-                        .number(2)
+                        .number(1)
                         .depart(1)
                         .begin(beginDate5)
                         .end(endDate5)
                         .value(92000)
-                        .build(),
-                Price.builder()
-                        .id(new Random().nextInt())
-                        .product_code("6654")
-                        .number(1)
-                        .depart(2)
-                        .begin(beginDate6)
-                        .end(endDate6)
-                        .value(4000)
-                        .build()
-//                ,Price.builder()
-//                        .id(new Random().nextInt())
-//                        .product_code("6654")
-//                        .number(1)
-//                        .depart(4)
-//                        .begin(beginDate6)
-//                        .end(endDate6)
-//                        .value(4000)
-//                        .build()
-                ,Price.builder()
-                        .id(new Random().nextInt())
-                        .product_code("6655")
-                        .number(1)
-                        .depart(2)
-                        .begin(beginDate6)
-                        .end(endDate6)
-                        .value(4000)
                         .build()
         ));
 
-        priceJoiner.join(oldPriceList, newPriceList);
+        print(priceJoiner.join(oldPriceList, newPriceList));
+    }
+
+    private void print(List<Price> linkedList) {
+        for (Price p : linkedList) {
+            System.out.println(p);
+        }
     }
 }

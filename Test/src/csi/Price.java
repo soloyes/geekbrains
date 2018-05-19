@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @Builder
-public class Price {
+public class Price implements Cloneable{
     private long id;
     private String product_code;
     private int number;
@@ -15,4 +15,9 @@ public class Price {
     private Date begin;
     private Date end;
     private long value;
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
