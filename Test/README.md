@@ -73,6 +73,8 @@ product_code | number | depart | begin | end | value |
 
 ### Разделение исходных коллекций
 
+![step1](/pictures/step1.jpg)
+
 ### Поиск уникальных наборов
 
 ### Объединение периодов действия
