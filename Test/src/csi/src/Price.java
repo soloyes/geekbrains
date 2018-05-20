@@ -1,4 +1,4 @@
-package csi;
+package csi.src;
 
 import lombok.*;
 

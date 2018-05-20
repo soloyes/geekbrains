@@ -1,5 +1,7 @@
-package ru.geekbrains;
+package gost_group.test;
 
+import gost_group.src.Main;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.LinkedHashMap;
@@ -60,7 +62,7 @@ public class MainTestTask3_1 {
 
     @Test
     public void method1() {
-        assertEquals(Main.method3_1(text1).toString(), map1.toString());
+        Assert.assertEquals(Main.method3_1(text1).toString(), map1.toString());
         assertEquals(Main.method3_1(text2).toString(), map2.toString());
         assertNotEquals(Main.method3_1(text1).toString(), map2.toString());
     }

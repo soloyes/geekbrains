@@ -1,4 +1,4 @@
-package ru.geekbrains;
+package gost_group.src;
 
 //20:05
 

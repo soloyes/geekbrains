@@ -1,5 +1,7 @@
-package csi;
+package csi.test;
 
+import csi.src.Price;
+import csi.src.PriceJoiner;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,10 +12,9 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-public class PriceJoinerTest6 {
+public class PriceJoinerTest4 {
 
     private PriceJoiner priceJoiner;
-
     private Date beginDate1;
     private Date beginDate2;
     private Date beginDate3;
@@ -29,10 +30,10 @@ public class PriceJoinerTest6 {
 
         String bd1 = "01.01.2013 00:00:00";
         String ed1 = "31.01.2013 23:59:59";
-        String bd2 = "18.02.2013 00:00:00";
-        String ed2 = "20.02.2013 23:59:59";
+        String bd2 = "15.01.2013 00:00:00";
+        String ed2 = "31.01.2013 23:59:59";
         String bd3 = "15.01.2013 00:00:00";
-        String ed3 = "15.02.2013 00:00:00";
+        String ed3 = "18.01.2013 00:00:00";
 
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.ENGLISH);
         try {
@@ -53,7 +54,7 @@ public class PriceJoinerTest6 {
                         .number(1)
                         .depart(1)
                         .begin(beginDate1)
-                        .end(beginDate3)
+                        .end(beginDate2)
                         .value(11000)
                         .build(),
                 Price.builder()
@@ -61,20 +62,20 @@ public class PriceJoinerTest6 {
                         .product_code("122856")
                         .number(1)
                         .depart(1)
-                        .begin(beginDate3)
+                        .begin(beginDate2)
                         .end(endDate3)
-                        .value(12000)
+                        .value(13000)
                         .build(),
                 Price.builder()
                         .id(new Random().nextInt())
                         .product_code("122856")
                         .number(1)
                         .depart(1)
-                        .begin(beginDate2)
+                        .begin(endDate3)
                         .end(endDate2)
-                        .value(99000)
+                        .value(12000)
                         .build()
-                ));
+        ));
     }
 
     @Test
@@ -89,15 +90,6 @@ public class PriceJoinerTest6 {
                         .begin(beginDate1)
                         .end(endDate1)
                         .value(11000)
-                        .build(),
-                Price.builder()
-                        .id(new Random().nextInt())
-                        .product_code("122856")
-                        .number(1)
-                        .depart(1)
-                        .begin(beginDate2)
-                        .end(endDate2)
-                        .value(99000)
                         .build()
         ));
 
@@ -107,9 +99,18 @@ public class PriceJoinerTest6 {
                         .product_code("122856")
                         .number(1)
                         .depart(1)
+                        .begin(beginDate2)
+                        .end(endDate2)
+                        .value(12000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("122856")
+                        .number(1)
+                        .depart(1)
                         .begin(beginDate3)
                         .end(endDate3)
-                        .value(12000)
+                        .value(13000)
                         .build()
         ));
 

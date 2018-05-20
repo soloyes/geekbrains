@@ -1,5 +1,6 @@
-package ru.geekbrains;
+package gost_group.test;
 
+import gost_group.src.Main;
 import org.junit.Test;
 
 public class MainTestTask2_Time {

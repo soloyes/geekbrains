@@ -1,5 +1,7 @@
-package csi;
+package csi.test;
 
+import csi.src.Price;
+import csi.src.PriceJoiner;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,15 +12,13 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-public class PriceJoinerTest4 {
+public class PriceJoinerTest2 {
 
     private PriceJoiner priceJoiner;
     private Date beginDate1;
     private Date beginDate2;
-    private Date beginDate3;
     private Date endDate1;
     private Date endDate2;
-    private Date endDate3;
 
     private LinkedList<Price> result;
 
@@ -28,19 +28,15 @@ public class PriceJoinerTest4 {
 
         String bd1 = "01.01.2013 00:00:00";
         String ed1 = "31.01.2013 23:59:59";
-        String bd2 = "15.01.2013 00:00:00";
-        String ed2 = "31.01.2013 23:59:59";
-        String bd3 = "15.01.2013 00:00:00";
-        String ed3 = "18.01.2013 00:00:00";
+        String bd2 = "10.01.2013 00:00:00";
+        String ed2 = "20.01.2013 23:59:59";
 
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.ENGLISH);
         try {
             beginDate1 = dateFormat.parse(bd1);
             beginDate2 = dateFormat.parse(bd2);
-            beginDate3 = dateFormat.parse(bd3);
             endDate1 = dateFormat.parse(ed1);
             endDate2 = dateFormat.parse(ed2);
-            endDate3 = dateFormat.parse(ed3);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -48,7 +44,7 @@ public class PriceJoinerTest4 {
         result = new LinkedList<>(Arrays.asList(
                 Price.builder()
                         .id(new Random().nextInt())
-                        .product_code("122856")
+                        .product_code("1")
                         .number(1)
                         .depart(1)
                         .begin(beginDate1)
@@ -57,21 +53,21 @@ public class PriceJoinerTest4 {
                         .build(),
                 Price.builder()
                         .id(new Random().nextInt())
-                        .product_code("122856")
+                        .product_code("1")
                         .number(1)
                         .depart(1)
                         .begin(beginDate2)
-                        .end(endDate3)
-                        .value(13000)
+                        .end(endDate2)
+                        .value(12000)
                         .build(),
                 Price.builder()
                         .id(new Random().nextInt())
-                        .product_code("122856")
+                        .product_code("1")
                         .number(1)
                         .depart(1)
-                        .begin(endDate3)
-                        .end(endDate2)
-                        .value(12000)
+                        .begin(endDate2)
+                        .end(endDate1)
+                        .value(11000)
                         .build()
         ));
     }
@@ -82,7 +78,7 @@ public class PriceJoinerTest4 {
         List<Price> oldPriceList = new LinkedList<>(Arrays.asList(
                 Price.builder()
                         .id(new Random().nextInt())
-                        .product_code("122856")
+                        .product_code("1")
                         .number(1)
                         .depart(1)
                         .begin(beginDate1)
@@ -94,21 +90,12 @@ public class PriceJoinerTest4 {
         List<Price> newPriceList = new LinkedList<>(Arrays.asList(
                 Price.builder()
                         .id(new Random().nextInt())
-                        .product_code("122856")
+                        .product_code("1")
                         .number(1)
                         .depart(1)
                         .begin(beginDate2)
                         .end(endDate2)
                         .value(12000)
-                        .build(),
-                Price.builder()
-                        .id(new Random().nextInt())
-                        .product_code("122856")
-                        .number(1)
-                        .depart(1)
-                        .begin(beginDate3)
-                        .end(endDate3)
-                        .value(13000)
                         .build()
         ));
 

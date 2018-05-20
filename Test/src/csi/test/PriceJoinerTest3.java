@@ -1,5 +1,7 @@
-package csi;
+package csi.test;
 
+import csi.src.Price;
+import csi.src.PriceJoiner;
 import org.junit.Before;
 import org.junit.Test;
 

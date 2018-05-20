@@ -1,5 +1,7 @@
-package ru.geekbrains;
+package gost_group.test;
 
+import gost_group.src.Main;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
@@ -59,7 +61,7 @@ public class MainTestTask3 {
 
     @Test
     public void method1() {
-        assertEquals(Main.method3(text1).toString(), map1.toString());
+        Assert.assertEquals(Main.method3(text1).toString(), map1.toString());
         assertEquals(Main.method3(text2).toString(), map2.toString());
         assertNotEquals(Main.method3(text1).toString(), map2.toString());
     }

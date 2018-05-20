@@ -1,5 +1,7 @@
-package ru.geekbrains;
+package gost_group.test;
 
+import gost_group.src.Main;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -43,6 +45,6 @@ public class MainTestTask2 {
 
     @Test
     public void method1() {
-        assertEquals(Main.method2(m,r), expect);
+        Assert.assertEquals(Main.method2(m,r), expect);
     }
 }
