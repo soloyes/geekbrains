@@ -58,7 +58,7 @@ public class PriceJoiner {
             //Add new prices for whole new department
             result.addAll(e.getValue());
         }
-        return result;
+        return merge(result);
     }
 
     private Price findBegin(LinkedList<Price> linkedList, Date date) {
@@ -120,5 +120,19 @@ public class PriceJoiner {
                 map.put(p.getDepart(), list);
             } else map.get(p.getDepart()).add(p);
         }
+    }
+
+    private List<Price> merge(List<Price> linkedList) {
+        List<Price> result = new LinkedList<>();
+        for (int i = 0; i < linkedList.size() - 1; i++) {
+            if (linkedList.get(i).getValue() == linkedList.get(i + 1).getValue()) {
+                linkedList.get(i).setEnd(linkedList.get(i + 1).getEnd());
+                result.add(linkedList.get(i));
+                i++;
+
+            } else
+                result.add(linkedList.get(i));
+        }
+        return result;
     }
 }
