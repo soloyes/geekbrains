@@ -10,9 +10,10 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-public class PriceJoinerTest3 {
+public class PriceJoinerTest6 {
 
     private PriceJoiner priceJoiner;
+
     private Date beginDate1;
     private Date beginDate2;
     private Date beginDate3;
@@ -28,7 +29,7 @@ public class PriceJoinerTest3 {
 
         String bd1 = "01.01.2013 00:00:00";
         String ed1 = "31.01.2013 23:59:59";
-        String bd2 = "01.02.2013 00:00:00";
+        String bd2 = "18.02.2013 00:00:00";
         String ed2 = "20.02.2013 23:59:59";
         String bd3 = "15.01.2013 00:00:00";
         String ed3 = "15.02.2013 00:00:00";
@@ -69,11 +70,11 @@ public class PriceJoinerTest3 {
                         .product_code("122856")
                         .number(1)
                         .depart(1)
-                        .begin(endDate3)
+                        .begin(beginDate2)
                         .end(endDate2)
                         .value(99000)
                         .build()
-        ));
+                ));
     }
 
     @Test

@@ -6,7 +6,7 @@ public class PriceJoiner {
 
     public List<Price> join(List<Price> oldPrices, List<Price> newPrices) throws CloneNotSupportedException {
 
-        List<Price> result = new LinkedList<>();
+        LinkedList<Price> result = new LinkedList<>();
 
         //
         Map<Integer, LinkedList<Price>> oldPricesByDepartments = new TreeMap<>();
@@ -73,7 +73,9 @@ public class PriceJoiner {
     }
 
     private Price findEnd(LinkedList<Price> linkedList, Date date) {
-        for (Price p : linkedList) {
+        Iterator<Price> iterator = linkedList.descendingIterator();
+        while (iterator.hasNext()) {
+            Price p = iterator.next();
             if (p.getEnd().equals(date)) {
                 return p;
             }
@@ -85,17 +87,27 @@ public class PriceJoiner {
         TreeSet<Date> excluded = new TreeSet<>();
         for (Price np : newPricesByIDAndNumber) {
             for (Price op : oldPricesByIDAndNumber) {
-                if (op.getBegin().before(np.getBegin()) && !excluded.contains(op.getBegin())) {
-                    allDates.add(op.getBegin());
-                } else excluded.add(op.getBegin());
-                if (op.getEnd().after(np.getEnd()) && !excluded.contains(op.getEnd())) {
-                    allDates.add(op.getEnd());
-                } else excluded.add(op.getEnd());
-                allDates.add(np.getEnd());
-                allDates.add(np.getBegin());
+                if (!excluded.contains(op.getBegin())) {
+                    if (op.getBegin().after(np.getBegin()) && op.getBegin().before(np.getEnd())) {
+                        excluded.add(op.getBegin());
+                    }
+                }
+
+                if (!excluded.contains(op.getEnd())) {
+                    if (op.getEnd().after(np.getBegin()) && op.getEnd().before(np.getEnd())) {
+                        excluded.add(op.getEnd());
+                    }
+                }
+                allDates.add(op.getBegin());
+                allDates.add(op.getEnd());
             }
+            allDates.add(np.getEnd());
+            allDates.add(np.getBegin());
         }
-        excluded = null;
+
+        for (Date ex : excluded) {
+            allDates.remove(ex);
+        }
     }
 
     private LinkedList<Price> separateByIDAndNumber(LinkedList<Price> list, Price price) {
@@ -122,17 +134,25 @@ public class PriceJoiner {
         }
     }
 
-    private List<Price> merge(List<Price> linkedList) {
-        List<Price> result = new LinkedList<>();
+    private LinkedList<Price> merge(LinkedList<Price> linkedList) {
+        LinkedList<Price> result = new LinkedList<>();
         for (int i = 0; i < linkedList.size() - 1; i++) {
-            if (linkedList.get(i).getValue() == linkedList.get(i + 1).getValue()) {
+            if (linkedList.get(i).getValue() == linkedList.get(i + 1).getValue() &&
+                    linkedList.get(i).getDepart() == linkedList.get(i + 1).getDepart() &&
+                    linkedList.get(i).getNumber() == linkedList.get(i + 1).getNumber()) {
                 linkedList.get(i).setEnd(linkedList.get(i + 1).getEnd());
                 result.add(linkedList.get(i));
                 i++;
-
             } else
                 result.add(linkedList.get(i));
         }
+
+        if (linkedList.getLast().getValue() == result.getLast().getValue() &&
+                linkedList.getLast().getDepart() == result.getLast().getDepart() &&
+                linkedList.getLast().getNumber() == result.getLast().getNumber()) {
+            result.getLast().setEnd(linkedList.getLast().getEnd());
+        } else result.add(linkedList.getLast());
+
         return result;
     }
 }

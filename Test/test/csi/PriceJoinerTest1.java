@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
+
 public class PriceJoinerTest1 {
 
     private PriceJoiner priceJoiner;
@@ -23,6 +25,8 @@ public class PriceJoinerTest1 {
     private Date endDate4;
     private Date endDate5;
     private Date endDate6;
+
+    private LinkedList<Price> result;
 
     @Before
     public void init() {
@@ -58,6 +62,81 @@ public class PriceJoinerTest1 {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        result = new LinkedList<>(Arrays.asList(
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("122856")
+                        .number(1)
+                        .depart(1)
+                        .begin(beginDate1)
+                        .end(endDate4)
+                        .value(11000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("122856")
+                        .number(2)
+                        .depart(1)
+                        .begin(beginDate2)
+                        .end(beginDate5)
+                        .value(99000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("122856")
+                        .number(2)
+                        .depart(1)
+                        .begin(beginDate5)
+                        .end(endDate5)
+                        .value(92000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("6654")
+                        .number(1)
+                        .depart(2)
+                        .begin(beginDate3)
+                        .end(beginDate6)
+                        .value(5000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("6654")
+                        .number(1)
+                        .depart(2)
+                        .begin(beginDate6)
+                        .end(endDate6)
+                        .value(4000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("6654")
+                        .number(1)
+                        .depart(2)
+                        .begin(endDate6)
+                        .end(endDate3)
+                        .value(5000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("6655")
+                        .number(1)
+                        .depart(2)
+                        .begin(beginDate6)
+                        .end(endDate6)
+                        .value(4000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("6654")
+                        .number(1)
+                        .depart(4)
+                        .begin(beginDate6)
+                        .end(endDate6)
+                        .value(4000)
+                        .build()
+        ));
     }
 
     @Test
@@ -121,7 +200,7 @@ public class PriceJoinerTest1 {
                         .end(endDate6)
                         .value(4000)
                         .build()
-                ,Price.builder()
+                , Price.builder()
                         .id(new Random().nextInt())
                         .product_code("6654")
                         .number(1)
@@ -130,23 +209,30 @@ public class PriceJoinerTest1 {
                         .end(endDate6)
                         .value(4000)
                         .build()
-//                ,Price.builder()
-//                        .id(new Random().nextInt())
-//                        .product_code("6655")
-//                        .number(1)
-//                        .depart(2)
-//                        .begin(beginDate6)
-//                        .end(endDate6)
-//                        .value(4000)
-//                        .build()
+                , Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("6655")
+                        .number(1)
+                        .depart(2)
+                        .begin(beginDate6)
+                        .end(endDate6)
+                        .value(4000)
+                        .build()
         ));
 
-        print(priceJoiner.join(oldPriceList, newPriceList));
+        assertEquals(print(priceJoiner.join(oldPriceList, newPriceList)), print(result));
     }
 
-    private void print(List<Price> linkedList) {
+    private String print(List<Price> linkedList) {
+        StringBuilder builder = new StringBuilder();
         for (Price p : linkedList) {
-            System.out.println(p);
+            builder.append(p.getProduct_code());
+            builder.append(p.getDepart());
+            builder.append(p.getNumber());
+            builder.append(p.getBegin());
+            builder.append(p.getEnd());
+            builder.append(p.getValue());
         }
+        return builder.toString();
     }
 }

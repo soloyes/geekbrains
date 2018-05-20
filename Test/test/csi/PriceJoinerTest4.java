@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
+
 public class PriceJoinerTest4 {
 
     private PriceJoiner priceJoiner;
@@ -18,16 +20,18 @@ public class PriceJoinerTest4 {
     private Date endDate2;
     private Date endDate3;
 
+    private LinkedList<Price> result;
+
     @Before
     public void init() {
         priceJoiner = new PriceJoiner();
 
         String bd1 = "01.01.2013 00:00:00";
         String ed1 = "31.01.2013 23:59:59";
-        String bd2 = "01.02.2013 00:00:00";
-        String ed2 = "20.02.2013 23:59:59";
+        String bd2 = "15.01.2013 00:00:00";
+        String ed2 = "31.01.2013 23:59:59";
         String bd3 = "15.01.2013 00:00:00";
-        String ed3 = "15.02.2013 00:00:00";
+        String ed3 = "18.01.2013 00:00:00";
 
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.ENGLISH);
         try {
@@ -40,6 +44,36 @@ public class PriceJoinerTest4 {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        result = new LinkedList<>(Arrays.asList(
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("122856")
+                        .number(1)
+                        .depart(1)
+                        .begin(beginDate1)
+                        .end(beginDate2)
+                        .value(11000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("122856")
+                        .number(1)
+                        .depart(1)
+                        .begin(beginDate2)
+                        .end(endDate3)
+                        .value(13000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("122856")
+                        .number(1)
+                        .depart(1)
+                        .begin(endDate3)
+                        .end(endDate2)
+                        .value(12000)
+                        .build()
+        ));
     }
 
     @Test
@@ -54,15 +88,6 @@ public class PriceJoinerTest4 {
                         .begin(beginDate1)
                         .end(endDate1)
                         .value(11000)
-                        .build(),
-                Price.builder()
-                        .id(new Random().nextInt())
-                        .product_code("122856")
-                        .number(1)
-                        .depart(1)
-                        .begin(beginDate2)
-                        .end(endDate2)
-                        .value(99000)
                         .build()
         ));
 
@@ -72,18 +97,34 @@ public class PriceJoinerTest4 {
                         .product_code("122856")
                         .number(1)
                         .depart(1)
+                        .begin(beginDate2)
+                        .end(endDate2)
+                        .value(12000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("122856")
+                        .number(1)
+                        .depart(1)
                         .begin(beginDate3)
                         .end(endDate3)
-                        .value(12000)
+                        .value(13000)
                         .build()
         ));
 
-        print(priceJoiner.join(oldPriceList, newPriceList));
+        assertEquals(print(priceJoiner.join(oldPriceList, newPriceList)), print(result));
     }
 
-    private void print(List<Price> linkedList) {
+    private String print(List<Price> linkedList) {
+        StringBuilder builder = new StringBuilder();
         for (Price p : linkedList) {
-            System.out.println(p);
+            builder.append(p.getProduct_code());
+            builder.append(p.getDepart());
+            builder.append(p.getNumber());
+            builder.append(p.getBegin());
+            builder.append(p.getEnd());
+            builder.append(p.getValue());
         }
+        return builder.toString();
     }
 }

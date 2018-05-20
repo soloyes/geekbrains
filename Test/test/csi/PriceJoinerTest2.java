@@ -8,21 +8,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
+
 public class PriceJoinerTest2 {
 
     private PriceJoiner priceJoiner;
     private Date beginDate1;
     private Date beginDate2;
-    private Date beginDate3;
-    private Date beginDate4;
-    private Date beginDate5;
-    private Date beginDate6;
     private Date endDate1;
     private Date endDate2;
-    private Date endDate3;
-    private Date endDate4;
-    private Date endDate5;
-    private Date endDate6;
+
+    private LinkedList<Price> result;
 
     @Before
     public void init() {
@@ -42,6 +38,36 @@ public class PriceJoinerTest2 {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        result = new LinkedList<>(Arrays.asList(
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("1")
+                        .number(1)
+                        .depart(1)
+                        .begin(beginDate1)
+                        .end(beginDate2)
+                        .value(11000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("1")
+                        .number(1)
+                        .depart(1)
+                        .begin(beginDate2)
+                        .end(endDate2)
+                        .value(12000)
+                        .build(),
+                Price.builder()
+                        .id(new Random().nextInt())
+                        .product_code("1")
+                        .number(1)
+                        .depart(1)
+                        .begin(endDate2)
+                        .end(endDate1)
+                        .value(11000)
+                        .build()
+        ));
     }
 
     @Test
@@ -71,12 +97,19 @@ public class PriceJoinerTest2 {
                         .build()
         ));
 
-        print(priceJoiner.join(oldPriceList, newPriceList));
+        assertEquals(print(priceJoiner.join(oldPriceList, newPriceList)), print(result));
     }
 
-    private void print(List<Price> linkedList) {
+    private String print(List<Price> linkedList) {
+        StringBuilder builder = new StringBuilder();
         for (Price p : linkedList) {
-            System.out.println(p);
+            builder.append(p.getProduct_code());
+            builder.append(p.getDepart());
+            builder.append(p.getNumber());
+            builder.append(p.getBegin());
+            builder.append(p.getEnd());
+            builder.append(p.getValue());
         }
+        return builder.toString();
     }
 }
