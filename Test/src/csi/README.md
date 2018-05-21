@@ -79,7 +79,7 @@ product_code | number | depart | begin | end | value |
 
 ### Поиск уникальных наборов number-product_code
 
-Теперь необходимо найти уникальные наборы number-product_code. В новых данных выбираем первое значение (помним , что на департамент не обращаем внимание, мы внутри цикла по департаментам), и находим подколлекцию продуктов с таким же набором value-number-product_code (newPricesByIDAndNumber). Затем ищем в старых данных данный набор number-product_code, формируя коллекцию таких продуктов (oldPricesByIDAndNumber). Если набора value-number-product_code не существует (oldPricesByIDAndNumber.size = 0), то к результирующим данным добавляем всю подколлекцию по значению number-product_code (result.addAll(newPricesByIDAndNumber)). При этом, при формировании подколлекций, из набора старых данных и новых данных цены удаляются, в целях оптимизации (result.add(p);iterator.remove();).
+Теперь необходимо найти уникальные наборы number-product_code. В новых данных выбираем первое значение (помним , что на департамент не обращаем внимание, мы внутри цикла по департаментам), и находим подколлекцию продуктов с таким же набором number-product_code (newPricesByIDAndNumber). Затем ищем в старых данных данный набор number-product_code, формируя коллекцию таких продуктов (oldPricesByIDAndNumber). Если набора number-product_code не существует (oldPricesByIDAndNumber.size = 0), то к результирующим данным добавляем всю подколлекцию по значению number-product_code (result.addAll(newPricesByIDAndNumber)). При этом, при формировании подколлекций, из набора старых данных и новых данных цены удаляются, в целях оптимизации (result.add(p);iterator.remove();).
 
 ### Объединение периодов действия
 
