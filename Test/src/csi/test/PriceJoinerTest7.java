@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 /*
 Квадратичная сложность.
 10000 входных и исходных данных <5s при 4ГГц CPU.
-100000 - ~30min в один поток.
+100000 - ~11min в один поток i5 3 generation 4ГГц.
 */
 
 public class PriceJoinerTest7 {
