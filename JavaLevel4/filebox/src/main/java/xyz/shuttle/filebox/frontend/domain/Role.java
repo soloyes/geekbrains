@@ -3,7 +3,7 @@ package xyz.shuttle.filebox.frontend.domain;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Role implements GrantedAuthority{
-    USER;
+    ADMIN, USER;
 
     @Override
     public String getAuthority() {

@@ -12,9 +12,11 @@ public class LoginView extends VerticalLayout implements View {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @Autowired
+    MyLoginForm loginForm;
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        LoginForm loginForm = new LoginForm();
         loginForm.addLoginListener((LoginForm.LoginListener) loginEvent -> {
             if (authenticationService.login(
                     loginEvent.getLoginParameter("username"),

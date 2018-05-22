@@ -29,4 +29,3 @@ public class User implements UserDetails {
     private boolean credentialsNonExpired;
     private boolean enabled;
 }
-

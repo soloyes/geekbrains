@@ -18,7 +18,6 @@ public class AuthenticationImpl implements AuthenticationService {
     @Override
     public boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication.getCredentials());
         return authentication.isAuthenticated();
     }
 

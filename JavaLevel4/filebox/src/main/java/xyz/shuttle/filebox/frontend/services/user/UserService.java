@@ -14,6 +14,7 @@ import lombok.NonNull;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 
 @Service
@@ -22,41 +23,18 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserDao userDao;
 
-    //Test, add users if no exists
+    //Default init base users.
     @PostConstruct
     public void init() {
-        if (!userDao.findByUserName("user").isPresent()) {
-            userDao.save(User.builder()
-                    .username("user")
-                    .password("password")
-                    .authorities(new LinkedList<>(Arrays.asList(Role.USER)))
-                    .accountNonExpired(true)
-                    .accountNonLocked(true)
-                    .credentialsNonExpired(true)
-                    .enabled(true).build());
-        } else {
-            userDao.findByUserName("user").ifPresent(
-                    user -> {
-                        user.setPassword(new BCryptPasswordEncoder().encode("password"));
-                        userDao.save(user);
-                    });
-
-        }
         if (!userDao.findByUserName("admin").isPresent()) {
             userDao.save(User.builder()
                     .username("admin")
-                    .password("password")
-                    .authorities(new LinkedList<>(Arrays.asList(Role.USER)))
+                    .password(new BCryptPasswordEncoder().encode("admin"))
+                    .authorities(new LinkedList<>(Collections.singletonList(Role.ADMIN)))
                     .accountNonExpired(true)
                     .accountNonLocked(true)
                     .credentialsNonExpired(true)
                     .enabled(true).build());
-        } else {
-            userDao.findByUserName("admin").ifPresent(
-                    user -> {
-                        user.setPassword(new BCryptPasswordEncoder().encode("password"));
-                        userDao.save(user);
-                    });
         }
     }
     //

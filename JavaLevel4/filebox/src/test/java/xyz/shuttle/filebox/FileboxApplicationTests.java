@@ -12,7 +12,7 @@ public class FileboxApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		System.out.println(new BCryptPasswordEncoder().encode("password"));
+		System.out.println(new BCryptPasswordEncoder().encode("admin"));
 	}
 
 }
