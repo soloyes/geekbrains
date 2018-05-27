@@ -3,6 +3,7 @@ package xyz.shuttle.filebox.frontend.persistence;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 import xyz.shuttle.filebox.frontend.domain.User;
 import xyz.shuttle.filebox.frontend.domain.UserField;
@@ -29,6 +30,16 @@ public class UserDao {
 
     public List<User> findAllUsers(){
         return mongoTemplate.findAll(User.class);
+    }
+
+    public void updateUser(@NonNull String username, boolean enabled){
+        mongoTemplate.updateFirst(
+                query(
+                        where(UserField.USER_NAME.field()).is(username)
+                ),
+                new Update().set("enabled", enabled),
+                User.class
+        );
     }
 
     public void save(@NonNull User user) {
