@@ -34,13 +34,13 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/vaadinServlet/**", "/VAADIN/**", "/PUSH/**",
-                        "/UIDL/**", "/login", "/login/**", "/register",
+                        "/UIDL/**", "/login_view", "/login_view/**", "/register",
                         "/environment").permitAll()
                 .antMatchers("/**").fullyAuthenticated()
                 .and()
                 .csrf().disable()
                 .exceptionHandling()
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login_view"));
     }
 
     @Bean

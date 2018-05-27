@@ -1,6 +1,5 @@
 package xyz.shuttle.filebox.frontend.services;
 
-import com.vaadin.ui.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,17 +21,11 @@ public class AuthenticationImpl implements AuthenticationService {
     }
 
     @Override
-    public boolean login(String login, String password) {
+    public void login(String login, String password) throws AuthenticationException{
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(login, password);
         Authentication authentication;
-        try {
             authentication = authenticationManager.authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return true;
-        } catch (AuthenticationException e) {
-            Notification.show("Wrong login/password!", Notification.Type.ERROR_MESSAGE);
-            return false;
-        }
     }
 
     @Override

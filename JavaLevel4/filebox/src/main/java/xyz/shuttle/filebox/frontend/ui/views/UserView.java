@@ -20,8 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.NoSuchElementException;
 
-@SpringView(name = "main")
-public class MainView extends VerticalLayout implements View {
+@SpringView(name = "user_view")
+public class UserView extends VerticalLayout implements View {
 
     @Autowired
     private FileServiceImpl fileService;

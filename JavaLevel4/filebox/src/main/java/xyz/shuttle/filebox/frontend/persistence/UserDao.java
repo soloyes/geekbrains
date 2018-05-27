@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import xyz.shuttle.filebox.frontend.domain.User;
 import xyz.shuttle.filebox.frontend.domain.UserField;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -24,6 +25,10 @@ public class UserDao {
                                 where(UserField.USER_NAME.field()).is(username))
 
                         , User.class));
+    }
+
+    public List<User> findAllUsers(){
+        return mongoTemplate.findAll(User.class);
     }
 
     public void save(@NonNull User user) {

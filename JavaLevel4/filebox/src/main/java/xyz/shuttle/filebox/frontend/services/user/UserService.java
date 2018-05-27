@@ -13,9 +13,9 @@ import xyz.shuttle.filebox.frontend.persistence.UserDao;
 import lombok.NonNull;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserDao userDao;
 
-    //Default init base users.
+    //Default init users.
     @PostConstruct
     public void init() {
         if (!userDao.findByUserName("admin").isPresent()) {
@@ -43,5 +43,9 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
         return userDao.findByUserName(username).orElseThrow(() ->
                 new UsernameNotFoundException("User " + username + " was not found!"));
+    }
+
+    public List<User> getUsers(){
+        return userDao.findAllUsers();
     }
 }
