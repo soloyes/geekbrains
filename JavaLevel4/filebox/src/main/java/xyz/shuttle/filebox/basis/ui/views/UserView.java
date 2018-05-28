@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.frontend.ui.views;
+package xyz.shuttle.filebox.basis.ui.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -7,11 +7,10 @@ import com.vaadin.server.FileDownloader;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import xyz.shuttle.filebox.frontend.model.FileServiceImpl;
-import xyz.shuttle.filebox.frontend.services.AuthenticationService;
+import xyz.shuttle.filebox.basis.model.FileServiceImpl;
+import xyz.shuttle.filebox.basis.services.AuthenticationService;
 
 import java.io.File;
 import java.io.FileInputStream;

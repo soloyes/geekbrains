@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.frontend.ui.views;
+package xyz.shuttle.filebox.basis.ui.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -7,7 +7,7 @@ import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import xyz.shuttle.filebox.frontend.services.AuthenticationService;
+import xyz.shuttle.filebox.basis.services.AuthenticationService;
 
 @SpringView(name = "login_view")
 public class LoginView extends VerticalLayout implements View {

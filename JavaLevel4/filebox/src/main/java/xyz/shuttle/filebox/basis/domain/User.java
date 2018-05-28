@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.frontend.domain;
+package xyz.shuttle.filebox.basis.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

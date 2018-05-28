@@ -1,9 +1,9 @@
-package xyz.shuttle.filebox.frontend.ui.views;
+package xyz.shuttle.filebox.basis.ui.views;
 
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import xyz.shuttle.filebox.frontend.model.FileServiceImpl;
+import xyz.shuttle.filebox.basis.model.FileServiceImpl;
 
 import java.io.File;
 import java.util.ArrayList;

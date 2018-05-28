@@ -1,9 +1,9 @@
-package xyz.shuttle.filebox.frontend.ui.views;
+package xyz.shuttle.filebox.basis.ui.views;
 
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import xyz.shuttle.filebox.frontend.services.RegistrationService;
+import xyz.shuttle.filebox.basis.services.RegistrationService;
 
 @org.springframework.stereotype.Component
 @Scope("prototype")

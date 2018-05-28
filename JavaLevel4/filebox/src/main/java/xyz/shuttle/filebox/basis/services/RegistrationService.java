@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.frontend.services;
+package xyz.shuttle.filebox.basis.services;
 
 public interface RegistrationService {
     boolean register(String username, String password);

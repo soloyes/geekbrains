@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.frontend.ui;
+package xyz.shuttle.filebox.basis.ui;
 
 import com.vaadin.navigator.PushStateNavigation;
 import com.vaadin.server.*;
