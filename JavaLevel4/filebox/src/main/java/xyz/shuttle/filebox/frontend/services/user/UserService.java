@@ -48,8 +48,4 @@ public class UserService implements UserDetailsService {
     public List<User> getUsers(){
         return userDao.findAllUsers();
     }
-
-    public void updateUser(String username, boolean enabled){
-        userDao.updateUser(username, enabled);
-    }
 }
