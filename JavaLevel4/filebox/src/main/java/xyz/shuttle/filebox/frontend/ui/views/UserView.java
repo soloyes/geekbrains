@@ -6,6 +6,7 @@ import com.vaadin.server.ErrorHandler;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class UserView extends VerticalLayout implements View {
     @Autowired
     FilterComponent filterComponent;
 
+
+    MyPopupView myPopupView = new MyPopupView();
+
     private Grid<File> gridFiles = new Grid<>();
 
     private StringBuilder sbName = new StringBuilder();
@@ -48,7 +52,9 @@ public class UserView extends VerticalLayout implements View {
     private Button btnShare = new Button("Share");
     private Button btnLogout = new Button("Logout");
 
-    Label shareLabel = new Label();
+    private Label shareLabel = new Label();
+
+    private PopupView popupView = new PopupView(null, myPopupView);
 
     private Upload uploadFile = new Upload("Upload", fileService);
     private FileDownloader fileDownloader = new FileDownloader((Resource) () -> null);
@@ -91,7 +97,19 @@ public class UserView extends VerticalLayout implements View {
         });
 
         btnShare.addClickListener(clickEvent -> {
-            System.out.println("BLA");
+            try {
+                myPopupView.makeLink(
+                        getUI().getPage().getLocation(),
+                        gridFiles
+                                .getSelectedItems()
+                                .iterator()
+                                .next());
+
+                popupView.setPopupVisible(true);
+
+            } catch (NoSuchElementException e) {
+                Notification.show("Select a file!", Notification.Type.ERROR_MESSAGE);
+            }
         });
 
         btnLogout.addClickListener((Button.ClickListener) clickEvent -> {
@@ -115,26 +133,6 @@ public class UserView extends VerticalLayout implements View {
 
             fileDownloader.setFileDownloadResource(resource);
             fileDownloader.extend(btnDownload);
-        });
-
-        gridFiles.addSelectionListener(selectionEvent -> {
-            sbName.setLength(0);
-            sbName.append(
-                    gridFiles
-                            .getSelectedItems()
-                            .iterator()
-                            .next()
-                            .getName());
-            shareLabel.setValue(
-                    getUI().getPage().getLocation().getScheme() + "://" +
-                            getUI().getPage().getLocation().getAuthority() + "/share/" +
-                            new BCryptPasswordEncoder().encode(
-                                    sbName
-                                            .append(":time_stamp:")
-                                            .append(new Date())
-                            )
-            );
-            System.out.println(selectionEvent.getAllSelectedItems().size());
         });
 
         gridFiles.setErrorHandler((ErrorHandler) errorEvent -> {
@@ -164,6 +162,7 @@ public class UserView extends VerticalLayout implements View {
         btnLayout.setComponentAlignment(btnShare, Alignment.MIDDLE_CENTER);
         btnLayout.setComponentAlignment(btnLogout, Alignment.MIDDLE_CENTER);
 
-        this.addComponents(uploadLayout, gridLayout, btnLayout, shareLayout, filterLayout);
+        this.addComponents(popupView, uploadLayout, gridLayout, btnLayout, shareLayout, filterLayout);
+        this.setComponentAlignment(popupView, Alignment.TOP_CENTER);
     }
 }
