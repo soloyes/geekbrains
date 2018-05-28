@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.basis.domain;
+package xyz.shuttle.filebox.frontend.domain;
 
 import org.springframework.security.core.GrantedAuthority;
 

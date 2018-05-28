@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.basis.domain;
+package xyz.shuttle.filebox.frontend.domain;
 
 public enum UserField {
     USER_NAME("username");

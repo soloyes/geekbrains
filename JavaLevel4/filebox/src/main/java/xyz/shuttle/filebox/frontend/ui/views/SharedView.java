@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.basis.ui.views;
+package xyz.shuttle.filebox.frontend.ui.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -9,6 +9,8 @@ import com.vaadin.ui.VerticalLayout;
 public class SharedView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-
+        System.out.println(getUI().getPage().getLocation());
     }
+
+
 }

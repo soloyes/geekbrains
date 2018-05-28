@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.basis.conf;
+package xyz.shuttle.filebox.frontend.conf;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import xyz.shuttle.filebox.basis.services.user.UserService;
+import xyz.shuttle.filebox.frontend.services.user.UserService;
 
 @Configuration
 @EnableWebSecurity

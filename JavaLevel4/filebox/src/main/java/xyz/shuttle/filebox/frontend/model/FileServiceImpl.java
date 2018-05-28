@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.basis.model;
+package xyz.shuttle.filebox.frontend.model;
 
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;

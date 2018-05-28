@@ -1,11 +1,11 @@
-package xyz.shuttle.filebox.basis.services;
+package xyz.shuttle.filebox.frontend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import xyz.shuttle.filebox.basis.domain.Role;
-import xyz.shuttle.filebox.basis.domain.User;
-import xyz.shuttle.filebox.basis.persistence.UserDao;
+import xyz.shuttle.filebox.frontend.domain.Role;
+import xyz.shuttle.filebox.frontend.domain.User;
+import xyz.shuttle.filebox.frontend.persistence.UserDao;
 
 import java.util.Collections;
 import java.util.LinkedList;
