@@ -3,7 +3,7 @@ package xyz.shuttle.filebox.frontend.ui.views;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import xyz.shuttle.filebox.frontend.services.RegistrationService;
+import xyz.shuttle.filebox.frontend.model.registration.RegistrationService;
 
 @org.springframework.stereotype.Component
 @Scope("prototype")
@@ -11,18 +11,18 @@ public class MyLoginForm extends LoginForm {
     private Label label = new Label();
 
     @Autowired
-    RegistrationService register;
+    RegistrationService registrationService;
 
     @Override
     protected Component createContent(TextField userNameField, PasswordField passwordField, Button loginButton) {
 
         VerticalLayout verticalLayout = new VerticalLayout();
         HorizontalLayout horizontalLayout = new HorizontalLayout();
-        Button auth = new Button("Registration");
+        Button regBtn = new Button("Registration");
 
-        horizontalLayout.addComponents(loginButton, auth);
+        horizontalLayout.addComponents(loginButton, regBtn);
         horizontalLayout.setComponentAlignment(loginButton, Alignment.BOTTOM_LEFT);
-        horizontalLayout.setComponentAlignment(auth, Alignment.BOTTOM_RIGHT);
+        horizontalLayout.setComponentAlignment(regBtn, Alignment.BOTTOM_RIGHT);
 
         verticalLayout.setMargin(true);
         verticalLayout.addComponents(userNameField, passwordField, horizontalLayout, label);
@@ -30,8 +30,8 @@ public class MyLoginForm extends LoginForm {
         verticalLayout.setComponentAlignment(userNameField, Alignment.BOTTOM_CENTER);
         verticalLayout.setComponentAlignment(passwordField, Alignment.BOTTOM_CENTER);
 
-        auth.addClickListener(clickEvent -> {
-            if (register.register(userNameField.getValue(), passwordField.getValue()))
+        regBtn.addClickListener(clickEvent -> {
+            if (registrationService.register(userNameField.getValue(), passwordField.getValue()))
                 label.setValue("User " + userNameField.getValue() + " is registered!");
             else
                 label.setValue("User " + userNameField.getValue() + " already existed!");

@@ -3,7 +3,7 @@ package xyz.shuttle.filebox.frontend.ui.views;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import xyz.shuttle.filebox.frontend.model.FileServiceImpl;
+import xyz.shuttle.filebox.frontend.model.files.FSServiceImpl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
 public class FilterComponent extends CustomComponent {
 
     @Autowired
-    private FileServiceImpl fileService;
+    private FSServiceImpl fileService;
 
     private List<TextField> textFields = new ArrayList<>();
     private List<Label> labels = new ArrayList<>();

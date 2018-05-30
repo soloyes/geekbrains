@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.frontend.services;
+package xyz.shuttle.filebox.frontend.model.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

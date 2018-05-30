@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.frontend.model;
+package xyz.shuttle.filebox.frontend.model.files;
 
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
@@ -16,10 +16,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class FileServiceImpl implements FileService, Upload.Receiver, Upload.SucceededListener {
+public class FSServiceImpl implements FSService, Upload.Receiver, Upload.SucceededListener {
 
     @Value("${filePath}")
     private String filePath;
+
+    @Autowired
+    FSServiceImpl fsService;
 
     @Autowired
     FileServiceImpl fileService;
@@ -67,7 +70,7 @@ public class FileServiceImpl implements FileService, Upload.Receiver, Upload.Suc
     public OutputStream receiveUpload(String filename, String mimeType) {
         try {
             Notification.show("Upload start!");
-            return fileService.getFileOutputStream(filename);
+            return fsService.getFileOutputStream(filename);
         } catch (IOException e) {
             Notification.show("Upload failed!");
             e.printStackTrace();
@@ -77,7 +80,10 @@ public class FileServiceImpl implements FileService, Upload.Receiver, Upload.Suc
 
     @Override
     public void uploadSucceeded(Upload.SucceededEvent succeededEvent) {
-
+        fileService.save(
+                SecurityContextHolder.getContext().getAuthentication().getName(),
+                succeededEvent.getFilename()
+        );
     }
 
     @Override

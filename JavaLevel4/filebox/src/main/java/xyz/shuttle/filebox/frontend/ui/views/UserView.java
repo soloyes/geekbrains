@@ -6,36 +6,33 @@ import com.vaadin.server.ErrorHandler;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import xyz.shuttle.filebox.frontend.model.FileServiceImpl;
-import xyz.shuttle.filebox.frontend.services.AuthenticationService;
+import xyz.shuttle.filebox.frontend.model.files.FSServiceImpl;
+import xyz.shuttle.filebox.frontend.model.auth.AuthenticationService;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Date;
 import java.util.NoSuchElementException;
 
 @SpringView(name = "user_view")
 public class UserView extends VerticalLayout implements View {
 
     @Autowired
-    private FileServiceImpl fileService;
+    private FSServiceImpl fsService;
 
     @Autowired
-    AuthenticationService authenticationService;
+    private AuthenticationService authenticationService;
 
     @Autowired
-    FilterComponent filterComponent;
+    private FilterComponent filterComponent;
 
-
-    MyPopupView myPopupView = new MyPopupView();
+    @Autowired
+    private MyPopup myPopup;
 
     private Grid<File> gridFiles = new Grid<>();
 
@@ -54,9 +51,9 @@ public class UserView extends VerticalLayout implements View {
 
     private Label shareLabel = new Label();
 
-    private PopupView popupView = new PopupView(null, myPopupView);
+    private PopupView popupView;
 
-    private Upload uploadFile = new Upload("Upload", fileService);
+    private Upload uploadFile = new Upload("Upload", fsService);
     private FileDownloader fileDownloader = new FileDownloader((Resource) () -> null);
 
     @Override
@@ -65,12 +62,12 @@ public class UserView extends VerticalLayout implements View {
         gridFiles.addColumn(File::getName).setCaption("File");
         gridFiles.addColumn(File::length).setCaption("Size, b");
         gridFiles.setSizeFull();
-        gridFiles.setItems(fileService.getFileList());
+        gridFiles.setItems(fsService.getFileList());
 
         uploadFile.setImmediateMode(false);
-        uploadFile.setReceiver(fileService);
-        uploadFile.addSucceededListener(fileService);
-        uploadFile.addFinishedListener(finishedEvent -> gridFiles.setItems(fileService.getFileList()));
+        uploadFile.setReceiver(fsService);
+        uploadFile.addSucceededListener(fsService);
+        uploadFile.addFinishedListener(finishedEvent -> gridFiles.setItems(fsService.getFileList()));
         uploadFile.setErrorHandler((ErrorHandler) errorEvent -> {
         });
 
@@ -85,8 +82,8 @@ public class UserView extends VerticalLayout implements View {
                                 .getName());
                 try {
                     gridFiles.deselectAll();
-                    Files.delete(Paths.get(fileService.getFileByName(sbName.toString()).toURI()));
-                    gridFiles.setItems(fileService.getFileList());
+                    Files.delete(Paths.get(fsService.getFileByName(sbName.toString()).toURI()));
+                    gridFiles.setItems(fsService.getFileList());
                     Notification.show("File deleted!");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -96,9 +93,11 @@ public class UserView extends VerticalLayout implements View {
             }
         });
 
+        popupView = new PopupView(null, myPopup);
+
         btnShare.addClickListener(clickEvent -> {
             try {
-                myPopupView.makeLink(
+                myPopup.popup(
                         getUI().getPage().getLocation(),
                         gridFiles
                                 .getSelectedItems()
@@ -123,7 +122,7 @@ public class UserView extends VerticalLayout implements View {
                 FileInputStream fileInputStream = null;
                 try {
                     fileInputStream = new FileInputStream(
-                            new File(fileService.getFileByName(fileName).toURI()));
+                            new File(fsService.getFileByName(fileName).toURI()));
                 } catch (IOException e) {
                     Notification.show("Select a file!", Notification.Type.WARNING_MESSAGE);
                     e.printStackTrace();

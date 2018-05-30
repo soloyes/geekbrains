@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.frontend.services.user;
+package xyz.shuttle.filebox.frontend.model.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import xyz.shuttle.filebox.frontend.domain.Role;
 import xyz.shuttle.filebox.frontend.domain.User;
-import xyz.shuttle.filebox.frontend.persistence.UserDao;
+import xyz.shuttle.filebox.frontend.dao.UserDao;
 
 import lombok.NonNull;
 
@@ -23,21 +23,25 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserDao userDao;
 
-    //Default init users.
+    //Default admin init.
     @PostConstruct
-    public void init() {
-        if (!userDao.findByUserName("admin").isPresent()) {
+    private void init(){
+        save("admin", "admin", Role.ADMIN);
+    }
+    //
+
+    public void save(String userName, String password, Role role) {
+        if (!userDao.findByUserName(userName).isPresent()) {
             userDao.save(User.builder()
-                    .username("admin")
-                    .password(new BCryptPasswordEncoder().encode("admin"))
-                    .authorities(new LinkedList<>(Collections.singletonList(Role.ADMIN)))
+                    .username(userName)
+                    .password(new BCryptPasswordEncoder().encode(password))
+                    .authorities(new LinkedList<>(Collections.singletonList(role)))
                     .accountNonExpired(true)
                     .accountNonLocked(true)
                     .credentialsNonExpired(true)
                     .enabled(true).build());
         }
     }
-    //
 
     @Override
     public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {

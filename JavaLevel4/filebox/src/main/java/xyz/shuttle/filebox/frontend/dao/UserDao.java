@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.frontend.persistence;
+package xyz.shuttle.filebox.frontend.dao;
 
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;

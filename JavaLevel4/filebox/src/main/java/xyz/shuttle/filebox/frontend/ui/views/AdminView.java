@@ -8,7 +8,7 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import xyz.shuttle.filebox.frontend.domain.User;
-import xyz.shuttle.filebox.frontend.services.user.UserService;
+import xyz.shuttle.filebox.frontend.model.user.UserService;
 
 @SpringView(name = "admin_view")
 public class AdminView extends VerticalLayout implements View {

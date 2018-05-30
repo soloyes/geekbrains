@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import xyz.shuttle.filebox.frontend.services.user.UserService;
+import xyz.shuttle.filebox.frontend.model.user.UserService;
 
 @Configuration
 @EnableWebSecurity
