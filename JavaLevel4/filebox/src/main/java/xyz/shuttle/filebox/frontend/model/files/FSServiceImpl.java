@@ -4,9 +4,9 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import xyz.shuttle.filebox.frontend.dao.FSDao;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,11 +15,8 @@ import java.io.OutputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class FSServiceImpl implements FSService, Upload.Receiver, Upload.SucceededListener {
-
-    @Value("${filePath}")
-    private String filePath;
 
     @Autowired
     FSServiceImpl fsService;
@@ -27,33 +24,16 @@ public class FSServiceImpl implements FSService, Upload.Receiver, Upload.Succeed
     @Autowired
     FileServiceImpl fileService;
 
+    @Autowired
+    FSDao fsDao;
+
     @Override
     public List<File> getFileList() {
-        List<File> fileList = new ArrayList<>();
-        try {
-            File folder = new File(getUserDirectory());
-            return Arrays.stream(folder.listFiles())
-                    .filter(x -> !x.isDirectory())
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return fileList;
+        return fsDao.getFileList();
     }
 
     private String getUserDirectory() {
-        String userPath =
-                filePath                            // директория общая
-                        + File.separator            // разделитель для ОС
-                        + SecurityContextHolder     // Контекст секюрити
-                        .getContext()               // Получаем контекст
-                        .getAuthentication()        // Получаем авторизацию текущего пользователя
-                        .getName()                  // Имя текущего пользователя
-                        + File.separator;           // разделитель для ОС
-        File userFiles = new File(userPath);
-        if (!userFiles.exists())
-            userFiles.mkdirs();
-        return userPath;
+        return fsDao.getUserDirectory();
     }
 
     @Override
