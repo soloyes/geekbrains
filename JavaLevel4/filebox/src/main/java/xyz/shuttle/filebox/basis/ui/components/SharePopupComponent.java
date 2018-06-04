@@ -4,16 +4,14 @@ import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import xyz.shuttle.filebox.basis.model.share.ShareService;
+import sun.misc.BASE64Encoder;
 import xyz.shuttle.filebox.basis.model.share.ShareServiceImpl;
 import xyz.shuttle.filebox.basis.model.user.UserService;
 
 import java.io.File;
 import java.net.URI;
-import java.util.Date;
 
 @Component
 public class SharePopupComponent extends VerticalLayout {
@@ -29,6 +27,8 @@ public class SharePopupComponent extends VerticalLayout {
     private TextField textField = new TextField();
     private Label shareLabel = new Label();
     private String link;
+
+    private int i;
 
     private Button linkBtn = new Button("Link", clickEvent -> {
         makeLink();
@@ -50,14 +50,21 @@ public class SharePopupComponent extends VerticalLayout {
                 "://",
                 uri.getAuthority(),
                 "/share/",
-                new BCryptPasswordEncoder()
+                new BASE64Encoder()
                         .encode(
                                 String.join("",
-                                        file.getName(),
-                                        ":user:",
+                                        "userFrom:",
+                                        SecurityContextHolder
+                                                .getContext()
+                                                .getAuthentication()
+                                                .getName(),
+                                        ":userTo:",
                                         textField.getValue(),
-                                        ":timestamp:",
-                                        new Date().toString())
+                                        ":filename:",
+                                        file.getName(),
+                                        ":salt:",
+                                        String.valueOf(++i)
+                                ).getBytes()
                         )
         );
     }
