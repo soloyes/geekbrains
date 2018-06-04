@@ -7,10 +7,12 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import xyz.shuttle.filebox.basis.domain.User;
 import xyz.shuttle.filebox.basis.model.user.UserService;
 
 @SpringView(name = "admin_view")
+@Scope(value = "request")
 public class AdminView extends VerticalLayout implements View {
     private Grid<User> gridUsers = new Grid<>();
 

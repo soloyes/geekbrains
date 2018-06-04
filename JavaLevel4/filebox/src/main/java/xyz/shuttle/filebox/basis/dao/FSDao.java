@@ -1,5 +1,6 @@
 package xyz.shuttle.filebox.basis.dao;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +36,7 @@ public class FSDao {
         return Paths.get(userPath).toString();
     }
 
-    public List<File> getFileList(String username) {
+    public List<File> getFileList(@NonNull String username) {
         List<File> fileList = new LinkedList<>();
         try {
             Files.walkFileTree(Paths.get(getUserDirectory()), new FileVisitor<Path>() {
@@ -68,7 +69,7 @@ public class FSDao {
         return fileList;
     }
 
-    public File getFileByName(String name) {
+    public File getFileByName(@NonNull String name) {
         return new File(
                 String.join("",
                         getUserDirectory(),
@@ -77,7 +78,7 @@ public class FSDao {
         );
     }
 
-    public void initUserDirectory(String username) throws IOException {
+    public void initUserDirectory(@NonNull String username) throws IOException {
         String userPath = String.join("",
                 filePath,
                 File.separator,
@@ -87,7 +88,7 @@ public class FSDao {
             Files.createDirectories(Paths.get(userPath));
     }
 
-    public void delete(String name) throws IOException {
+    public void delete(@NonNull String name) throws IOException {
         Files.delete(
                 Paths.get(
                         String.join("",

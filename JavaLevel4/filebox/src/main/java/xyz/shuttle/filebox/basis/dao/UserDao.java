@@ -16,6 +16,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Repository
 public class UserDao {
+
     @Autowired
     private MongoTemplate mongoTemplate;
 

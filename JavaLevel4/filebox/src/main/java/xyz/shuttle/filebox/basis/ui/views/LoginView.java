@@ -5,17 +5,20 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import xyz.shuttle.filebox.basis.model.auth.AuthenticationService;
+import xyz.shuttle.filebox.basis.ui.components.LoginFormComponent;
 
 @SpringView(name = "login_view")
+@Scope(value = "request")
 public class LoginView extends VerticalLayout implements View {
     @Autowired
     private AuthenticationService authenticationService;
 
     @Autowired
-    MyLoginForm loginForm;
+    LoginFormComponent loginForm;
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {

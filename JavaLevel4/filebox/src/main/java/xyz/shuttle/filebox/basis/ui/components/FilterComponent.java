@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.basis.ui.views;
+package xyz.shuttle.filebox.basis.ui.components;
 
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;

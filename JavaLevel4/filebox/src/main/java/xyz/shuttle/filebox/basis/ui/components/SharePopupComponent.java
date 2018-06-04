@@ -1,36 +1,41 @@
-package xyz.shuttle.filebox.basis.ui.views;
+package xyz.shuttle.filebox.basis.ui.components;
 
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import xyz.shuttle.filebox.basis.model.share.ShareService;
+import xyz.shuttle.filebox.basis.model.share.ShareServiceImpl;
 import xyz.shuttle.filebox.basis.model.user.UserService;
 
 import java.io.File;
 import java.net.URI;
 import java.util.Date;
 
-@org.springframework.stereotype.Component
-@Scope("prototype")
-public class MyPopup extends VerticalLayout {
+@Component
+public class SharePopupComponent extends VerticalLayout {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ShareServiceImpl shareService;
 
     private URI uri;
     private File file;
 
     private TextField textField = new TextField();
     private Label shareLabel = new Label();
-    private StringBuilder link = new StringBuilder();
+    private String link;
 
     private Button linkBtn = new Button("Link", clickEvent -> {
         makeLink();
         showLink();
     });
 
-    public MyPopup() {
+    public SharePopupComponent() {
         this.addComponents(textField, linkBtn, shareLabel);
         this.setComponentAlignment(linkBtn, Alignment.TOP_CENTER);
         this.setComponentAlignment(textField, Alignment.TOP_CENTER);
@@ -40,47 +45,36 @@ public class MyPopup extends VerticalLayout {
     }
 
     private void makeLink() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append(uri.getScheme())
-                .append("://")
-                .append(uri.getAuthority())
-                .append("/share/")
-                .append(
-                        new BCryptPasswordEncoder().encode(
-                                file.getName() +
-                                        ":user:" +
-                                        textField.getValue() +
-                                        ":timestamp:" +
-                                        new Date()
+        link = String.join("",
+                uri.getScheme(),
+                "://",
+                uri.getAuthority(),
+                "/share/",
+                new BCryptPasswordEncoder()
+                        .encode(
+                                String.join("",
+                                        file.getName(),
+                                        ":user:",
+                                        textField.getValue(),
+                                        ":timestamp:",
+                                        new Date().toString())
                         )
-                );
-        link.setLength(0);
-        link.append(stringBuilder);
+        );
     }
 
     private void showLink() {
-        if (
-                !textField.getValue()
-                        .isEmpty() &&
-                !textField.getValue()
-                        .equals("admin") &&
-                !textField.getValue()
-                        .equals(
-                                SecurityContextHolder
-                                        .getContext()
-                                        .getAuthentication()
-                                        .getName()
-                        )
-                ) {
-            shareLabel.setValue(link.toString());
+        String userFrom = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!textField.getValue().isEmpty() &&
+                !textField.getValue().equals("admin") &&
+                !textField.getValue().equals(userFrom)) {
             try {
                 userService.loadUserByUsername(textField.getValue());
+                shareLabel.setValue(link);
+                shareService.save(userFrom, textField.getValue(), file.getName());
             } catch (UsernameNotFoundException e) {
                 shareLabel.setValue("User not found!");
             }
-        }
-        else
+        } else
             clearLink();
     }
 

@@ -9,10 +9,14 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import xyz.shuttle.filebox.basis.model.files.FSServiceImpl;
 import xyz.shuttle.filebox.basis.model.auth.AuthenticationService;
 import xyz.shuttle.filebox.basis.model.files.FileServiceImpl;
+import xyz.shuttle.filebox.basis.model.share.ShareServiceImpl;
+import xyz.shuttle.filebox.basis.ui.components.FilterComponent;
+import xyz.shuttle.filebox.basis.ui.components.SharePopupComponent;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,13 +24,17 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 
 @SpringView(name = "user_view")
+@Scope(value = "request")
 public class UserView extends VerticalLayout implements View {
 
     @Autowired
     private FSServiceImpl fsService;
 
     @Autowired
-    FileServiceImpl fileService;
+    private FileServiceImpl fileService;
+
+    @Autowired
+    ShareServiceImpl shareService;
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -35,7 +43,7 @@ public class UserView extends VerticalLayout implements View {
     private FilterComponent filterComponent;
 
     @Autowired
-    private MyPopup myPopup;
+    private SharePopupComponent sharePopupComponent;
 
     private Grid<File> gridFiles = new Grid<>();
 
@@ -52,14 +60,13 @@ public class UserView extends VerticalLayout implements View {
 
     private Label shareLabel = new Label();
 
-    private PopupView popupView;
+    private PopupView sharePopup;
 
     private Upload uploadFile = new Upload("Upload", fsService);
     private FileDownloader fileDownloader = new FileDownloader((Resource) () -> null);
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         gridFiles.addColumn(File::getName).setCaption("File");
         gridFiles.addColumn(File::length).setCaption("Size, b");
@@ -75,32 +82,34 @@ public class UserView extends VerticalLayout implements View {
 
         btnDelete.addClickListener(clickEvent -> {
             try {
-                String name = gridFiles
+                String filename = gridFiles
                         .getSelectedItems()
                         .iterator()
                         .next()
                         .getName();
                 try {
                     gridFiles.deselectAll();
-                    fsService.delete(name);
+                    fsService.delete(filename);
                     fileService.delete(
                             username,
-                            name);
+                            filename
+                    );
+                    shareService.deleteByFile(username, filename);
                     gridFiles.setItems(fsService.getFileList(username));
                     Notification.show("File deleted!");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } catch (NoSuchElementException e) {
-                Notification.show("Select a file!", Notification.Type.ERROR_MESSAGE);
+                Notification.show("Select a file!");
             }
         });
 
-        popupView = new PopupView(null, myPopup);
+        sharePopup = new PopupView(null, sharePopupComponent);
 
         btnShare.addClickListener(clickEvent -> {
             try {
-                myPopup.popup(
+                sharePopupComponent.popup(
                         getUI().getPage().getLocation(),
                         gridFiles
                                 .getSelectedItems()
@@ -108,10 +117,10 @@ public class UserView extends VerticalLayout implements View {
                                 .next()
                 );
 
-                popupView.setPopupVisible(true);
+                sharePopup.setPopupVisible(true);
 
             } catch (NoSuchElementException e) {
-                Notification.show("Select a file!", Notification.Type.ERROR_MESSAGE);
+                Notification.show("Select a file!");
             }
         });
 
@@ -164,7 +173,7 @@ public class UserView extends VerticalLayout implements View {
         btnLayout.setComponentAlignment(btnShare, Alignment.MIDDLE_CENTER);
         btnLayout.setComponentAlignment(btnLogout, Alignment.MIDDLE_CENTER);
 
-        this.addComponents(popupView, uploadLayout, gridLayout, btnLayout, shareLayout, filterLayout);
-        this.setComponentAlignment(popupView, Alignment.TOP_CENTER);
+        this.addComponents(sharePopup, uploadLayout, gridLayout, btnLayout, shareLayout, filterLayout);
+        this.setComponentAlignment(sharePopup, Alignment.TOP_CENTER);
     }
 }

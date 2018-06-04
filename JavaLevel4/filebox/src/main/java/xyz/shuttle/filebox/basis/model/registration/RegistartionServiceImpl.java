@@ -20,7 +20,8 @@ public class RegistartionServiceImpl implements RegistrationService {
 
     @Override
     public boolean register(String username, String password) {
-        try{
+        if (username.isEmpty()) return false;
+        try {
             userService.loadUserByUsername(username);
         } catch (UsernameNotFoundException e) {
             userService.save(username, password, Role.USER);
@@ -31,16 +32,6 @@ public class RegistartionServiceImpl implements RegistrationService {
             }
             return true;
         }
-        return false;
-    }
-
-    @Override
-    public boolean isRegistered() {
-        return false;
-    }
-
-    @Override
-    public boolean unRegister() {
         return false;
     }
 }

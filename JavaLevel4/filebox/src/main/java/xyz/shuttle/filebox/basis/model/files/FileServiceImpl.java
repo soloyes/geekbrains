@@ -1,6 +1,5 @@
 package xyz.shuttle.filebox.basis.model.files;
 
-import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.shuttle.filebox.basis.dao.FileDao;
@@ -12,7 +11,7 @@ public class FileServiceImpl implements FileService {
     FileDao fileDao;
 
     public void save(String username, String filename) {
-        if (!fileDao.findFileByName(username, filename).isPresent()) {
+        if (!findFileByName(username, filename)) {
             fileDao.save(
                     UserFiles.builder()
                             .username(username)
@@ -26,7 +25,7 @@ public class FileServiceImpl implements FileService {
         fileDao.delete(username, filename);
     }
 
-    public boolean findFileByName(@NonNull String username, @NonNull String fileName){
+    public boolean findFileByName(String username, String fileName){
         return fileDao.findFileByName(username, fileName).isPresent();
     }
 }

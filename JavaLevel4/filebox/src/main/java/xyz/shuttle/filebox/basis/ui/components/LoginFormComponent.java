@@ -1,4 +1,4 @@
-package xyz.shuttle.filebox.basis.ui.views;
+package xyz.shuttle.filebox.basis.ui.components;
 
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Scope;
 import xyz.shuttle.filebox.basis.model.registration.RegistrationService;
 
 @org.springframework.stereotype.Component
-@Scope("prototype")
-public class MyLoginForm extends LoginForm {
+@Scope(value = "prototype")
+public class LoginFormComponent extends LoginForm {
     private Label label = new Label();
 
     @Autowired
