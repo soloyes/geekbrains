@@ -23,14 +23,11 @@ public class FSDao {
     @Autowired
     private FileServiceImpl fileService;
 
-    private String getUserDirectory() {
+    private String getUserDirectory(String username) {
         String userPath = String.join("",
                 filePath,
                 File.separator,
-                SecurityContextHolder
-                        .getContext()
-                        .getAuthentication()
-                        .getName(),
+                username,
                 File.separator);
 
         return Paths.get(userPath).toString();
@@ -39,7 +36,7 @@ public class FSDao {
     public List<File> getFileList(@NonNull String username) {
         List<File> fileList = new LinkedList<>();
         try {
-            Files.walkFileTree(Paths.get(getUserDirectory()), new FileVisitor<Path>() {
+            Files.walkFileTree(Paths.get(getUserDirectory(username)), new FileVisitor<Path>() {
                 @Override
                 public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
                     return FileVisitResult.CONTINUE;
@@ -69,12 +66,19 @@ public class FSDao {
         return fileList;
     }
 
-    public File getFileByName(@NonNull String name) {
+    public File getFileByName(@NonNull String filename) {
+        return getFileByNameAndUsername(
+                SecurityContextHolder.getContext().getAuthentication().getName(),
+                filename
+        );
+    }
+
+    public File getFileByNameAndUsername(@NonNull String username, @NonNull String filename){
         return new File(
                 String.join("",
-                        getUserDirectory(),
+                        getUserDirectory(username),
                         File.separator,
-                        name)
+                        filename)
         );
     }
 
@@ -88,13 +92,14 @@ public class FSDao {
             Files.createDirectories(Paths.get(userPath));
     }
 
-    public void delete(@NonNull String name) throws IOException {
+    public void delete(@NonNull String filename) throws IOException {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Files.delete(
                 Paths.get(
                         String.join("",
-                                getUserDirectory(),
+                                getUserDirectory(username),
                                 File.separator,
-                                name))
+                                filename))
         );
     }
 }

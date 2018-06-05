@@ -1,6 +1,7 @@
 package xyz.shuttle.filebox.basis.model.share;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import xyz.shuttle.filebox.basis.dao.ShareDao;
 import xyz.shuttle.filebox.basis.domain.UserShare;

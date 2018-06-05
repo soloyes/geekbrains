@@ -1,20 +1,24 @@
 package xyz.shuttle.filebox.basis.ui.components;
 
 import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import sun.misc.BASE64Encoder;
 import xyz.shuttle.filebox.basis.model.share.ShareServiceImpl;
 import xyz.shuttle.filebox.basis.model.user.UserService;
 
 import java.io.File;
 import java.net.URI;
+import java.util.Base64;
 
 @Component
 public class SharePopupComponent extends VerticalLayout {
+
     @Autowired
     private UserService userService;
 
@@ -24,24 +28,36 @@ public class SharePopupComponent extends VerticalLayout {
     private URI uri;
     private File file;
 
+    private HorizontalLayout horizontalLayout = new HorizontalLayout();
     private TextField textField = new TextField();
-    private Label shareLabel = new Label();
-    private String link;
+    private TextArea shareArea = new TextArea();
 
-    private int i;
+    private String link;
 
     private Button linkBtn = new Button("Link", clickEvent -> {
         makeLink();
         showLink();
     });
 
-    public SharePopupComponent() {
-        this.addComponents(textField, linkBtn, shareLabel);
-        this.setComponentAlignment(linkBtn, Alignment.TOP_CENTER);
-        this.setComponentAlignment(textField, Alignment.TOP_CENTER);
-        this.setComponentAlignment(shareLabel, Alignment.TOP_CENTER);
+    private Button unLinkBtn = new Button("Unlink", clickEvent -> shareService.delete(
+            SecurityContextHolder.getContext().getAuthentication().getName(),
+            textField.getValue(),
+            file.getName()
+    ));
 
-        this.setWidth(1024, Unit.PIXELS);
+    public SharePopupComponent() {
+        horizontalLayout.addComponents(linkBtn, unLinkBtn);
+        horizontalLayout.setComponentAlignment(linkBtn, Alignment.TOP_LEFT);
+        horizontalLayout.setComponentAlignment(unLinkBtn, Alignment.TOP_RIGHT);
+
+        this.addComponents(textField, horizontalLayout, shareArea);
+        this.setComponentAlignment(textField, Alignment.TOP_CENTER);
+        this.setComponentAlignment(shareArea, Alignment.TOP_CENTER);
+        this.setComponentAlignment(horizontalLayout, Alignment.TOP_CENTER);
+
+        shareArea.setReadOnly(true);
+        shareArea.setWordWrap(true);
+        shareArea.setRows(5);
     }
 
     private void makeLink() {
@@ -50,22 +66,19 @@ public class SharePopupComponent extends VerticalLayout {
                 "://",
                 uri.getAuthority(),
                 "/share/",
-                new BASE64Encoder()
-                        .encode(
-                                String.join("",
-                                        "userFrom:",
-                                        SecurityContextHolder
-                                                .getContext()
-                                                .getAuthentication()
-                                                .getName(),
-                                        ":userTo:",
-                                        textField.getValue(),
-                                        ":filename:",
-                                        file.getName(),
-                                        ":salt:",
-                                        String.valueOf(++i)
-                                ).getBytes()
-                        )
+                new String(Base64.getEncoder().encode(
+                        String.join("",
+                                "uf/",
+                                SecurityContextHolder
+                                        .getContext()
+                                        .getAuthentication()
+                                        .getName(),
+                                "/ut/",
+                                textField.getValue(),
+                                "/fn/",
+                                file.getName()
+                        ).getBytes())
+                )
         );
     }
 
@@ -76,17 +89,17 @@ public class SharePopupComponent extends VerticalLayout {
                 !textField.getValue().equals(userFrom)) {
             try {
                 userService.loadUserByUsername(textField.getValue());
-                shareLabel.setValue(link);
+                shareArea.setValue(link);
                 shareService.save(userFrom, textField.getValue(), file.getName());
             } catch (UsernameNotFoundException e) {
-                shareLabel.setValue("User not found!");
+                shareArea.setValue("User not found!");
             }
         } else
             clearLink();
     }
 
     private void clearLink() {
-        shareLabel.setValue("");
+        shareArea.setValue("");
         textField.setValue("");
     }
 

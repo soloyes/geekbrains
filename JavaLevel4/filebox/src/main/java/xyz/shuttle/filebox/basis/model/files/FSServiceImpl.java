@@ -35,6 +35,11 @@ public class FSServiceImpl implements FSService, Upload.Receiver, Upload.Succeed
     }
 
     @Override
+    public File getFileByNameAndUsername(String username, String filename) {
+        return fsDao.getFileByNameAndUsername(username, filename);
+    }
+
+    @Override
     public OutputStream getFileOutputStream(String name) throws IOException {
         return new FileOutputStream(getFileByName(name));
     }
@@ -77,7 +82,7 @@ public class FSServiceImpl implements FSService, Upload.Receiver, Upload.Succeed
     }
 
     @Override
-    public void delete(String name) throws IOException {
-        fsDao.delete(name);
+    public void delete(String filename) throws IOException {
+        fsDao.delete(filename);
     }
 }

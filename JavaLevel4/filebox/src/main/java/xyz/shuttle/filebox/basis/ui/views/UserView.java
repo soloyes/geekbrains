@@ -1,5 +1,6 @@
 package xyz.shuttle.filebox.basis.ui.views;
 
+import com.vaadin.annotations.StyleSheet;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ErrorHandler;

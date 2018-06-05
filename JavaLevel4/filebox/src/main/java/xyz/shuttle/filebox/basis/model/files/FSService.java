@@ -1,15 +1,18 @@
 package xyz.shuttle.filebox.basis.model.files;
 
 import com.vaadin.ui.TextField;
+import lombok.NonNull;
 
 import java.io.*;
 import java.util.List;
 import java.util.Set;
 
 public interface FSService {
-    OutputStream getFileOutputStream(String fileName) throws IOException;
+    OutputStream getFileOutputStream(String filename) throws IOException;
 
-    File getFileByName(String fileName);
+    File getFileByName(String filename);
+
+    File getFileByNameAndUsername(String username, String filename);
 
     List<File> getFileList(String username);
 
@@ -17,5 +20,5 @@ public interface FSService {
 
     void initUserDirectory(String username) throws IOException;
 
-    void delete(String name) throws IOException;
+    void delete(String filename) throws IOException;
 }
