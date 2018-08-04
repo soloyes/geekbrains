@@ -1,8 +1,8 @@
-<%@ page import="xyz.solovev.enterprise.utils.Attributes" %>
+<%@ page import="xyz.solovev.enterprise.utils.MenuAttributes" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
     <%
-        final String pageAttribute = (String) request.getAttribute(Attributes.PAGE_ATTRIBUTE);
+        final String pageAttribute = (String) request.getAttribute(MenuAttributes.PAGE_ATTRIBUTE);
     %>
     <title><%=pageAttribute%>
     </title>

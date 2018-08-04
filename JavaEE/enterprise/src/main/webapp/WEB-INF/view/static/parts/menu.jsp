@@ -1,29 +1,29 @@
-<%@ page import="xyz.solovev.enterprise.utils.Attributes" %>
+<%@ page import="xyz.solovev.enterprise.utils.MenuAttributes" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    final String pageAttribute = (String) request.getAttribute(Attributes.PAGE_ATTRIBUTE);
+    final String pageAttribute = (String) request.getAttribute(MenuAttributes.PAGE_ATTRIBUTE);
 %>
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item <% if (pageAttribute.equals(Attributes.MAIN)) {%>active <%}%>">
-                <a class="nav-link" href="/"><%=Attributes.MAIN%></a>
+            <li class="nav-item <% if (pageAttribute.equals(MenuAttributes.MAIN)) {%>active <%}%>">
+                <a class="nav-link" href="/"><%=MenuAttributes.MAIN%></a>
             </li>
-            <li class="nav-item <% if (pageAttribute.equals(Attributes.CATALOG)) {%>active <%}%>">
-                <a class="nav-link" href="/catalog"><%=Attributes.CATALOG%></a>
+            <li class="nav-item <% if (pageAttribute.equals(MenuAttributes.CATALOG)) {%>active <%}%>">
+                <a class="nav-link" href="/catalog"><%=MenuAttributes.CATALOG%></a>
             </li>
-            <li class="nav-item <% if (pageAttribute.equals(Attributes.CART)) {%>active <%}%>">
-                <a class="nav-link" href="/cart"><%=Attributes.CART%></a>
+            <li class="nav-item <% if (pageAttribute.equals(MenuAttributes.CART)) {%>active <%}%>">
+                <a class="nav-link" href="/cart"><%=MenuAttributes.CART%></a>
             </li>
-            <li class="nav-item <% if (pageAttribute.equals(Attributes.ORDERS)) {%>active <%}%>">
-                <a class="nav-link" href="/orders"><%=Attributes.ORDERS%></a>
+            <li class="nav-item <% if (pageAttribute.equals(MenuAttributes.ORDERS)) {%>active <%}%>">
+                <a class="nav-link" href="/orders"><%=MenuAttributes.ORDERS%></a>
             </li>
-            <li class="nav-item <% if (pageAttribute.equals(Attributes.PRODUCTS)) {%>active <%}%>">
-                <a class="nav-link" href="/products"><%=Attributes.PRODUCTS%></a>
+            <li class="nav-item <% if (pageAttribute.equals(MenuAttributes.PRODUCTS)) {%>active <%}%>">
+                <a class="nav-link" href="/products"><%=MenuAttributes.PRODUCTS%></a>
             </li>
-            <li class="nav-item <% if (pageAttribute.equals(Attributes.CHECKOUT)) {%>active <%}%>">
-                <a class="nav-link" href="/checkout"><%=Attributes.CHECKOUT%></a>
+            <li class="nav-item <% if (pageAttribute.equals(MenuAttributes.CHECKOUT)) {%>active <%}%>">
+                <a class="nav-link" href="/checkout"><%=MenuAttributes.CHECKOUT%></a>
             </li>
         </ul>
     </div>
