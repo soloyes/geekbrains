@@ -20,7 +20,7 @@ public class FilterAddUTF8 implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         LogSystem.getLogger().info("Enter FilterAddUTF8");
         servletRequest.setCharacterEncoding("UTF-8");
-        servletResponse.setContentType("text/html; charset=UTF-8");
+        servletResponse.setCharacterEncoding("UTF-8");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

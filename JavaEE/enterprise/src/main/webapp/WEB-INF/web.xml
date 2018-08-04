@@ -9,13 +9,12 @@
     </welcome-file-list>
 
     <error-page>
-        <error-code>404</error-code>
-        <location>/view/static/404.jsp</location>
-    </error-page>
-
-    <error-page>
         <error-code>403</error-code>
-        <location>/view/static/403.jsp</location>
+        <location>/WEB-INF/view/403.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/view/404.jsp</location>
     </error-page>
 
 </web-app>
