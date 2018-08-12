@@ -77,7 +77,7 @@
                     <h:inputText value="#{productsController.selectedProduct.description}"/>
                 </p:panelGrid>
                 <p:commandButton value="Modify" update="products"
-                                 actionListener="#{productsController.modify(productsController.selectedProduct)}"
+                                 actionListener="#{productsController.merge(productsController.selectedProduct)}"
                                  icon="ui-icon-add"
                                  onclick="PF('productDetail').close()"/>
             </p:outputPanel>

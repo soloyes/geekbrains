@@ -36,8 +36,8 @@ public class ProductsController {
         reload();
     }
 
-    public void modify(Products product) {
-        productsDAO.modify(product);
+    public void merge(Products product) {
+        productsDAO.merge(product);
         reload();
     }
 }

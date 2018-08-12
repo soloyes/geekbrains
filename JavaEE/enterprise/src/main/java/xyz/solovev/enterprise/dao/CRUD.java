@@ -13,5 +13,5 @@ public interface CRUD {
 
     void removeById(final Long id);
 
-    void modify(MyEntity entity);
+    void merge(MyEntity entity);
 }

@@ -70,7 +70,7 @@
                     <h:inputText value="#{ordersController.selectedOrder.product_id}"/>
                 </p:panelGrid>
                 <p:commandButton value="Modify" update="orders"
-                                 actionListener="#{ordersController.modify(ordersController.selectedOrder)}"
+                                 actionListener="#{ordersController.merge(ordersController.selectedOrder)}"
                                  icon="ui-icon-add"
                                  onclick="PF('orderDetail').close()"/>
             </p:outputPanel>

@@ -47,7 +47,7 @@ public class CategoriesDAO extends AbstractDAO {
     }
 
     @Override
-    public void modify(MyEntity entity) {
+    public void merge(MyEntity entity) {
         em.merge(entity);
     }
 }

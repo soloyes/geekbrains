@@ -3,7 +3,6 @@ package xyz.solovev.enterprise.controller;
 import lombok.Data;
 import xyz.solovev.enterprise.dao.CategoriesDAO;
 import xyz.solovev.enterprise.entity.Categories;
-import xyz.solovev.enterprise.entity.MyEntity;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -37,8 +36,8 @@ public class CategoriesController {
         reload();
     }
 
-    public void modify(Categories category) {
-        categoriesDAO.modify(category);
+    public void merge(Categories category) {
+        categoriesDAO.merge(category);
         reload();
     }
 }

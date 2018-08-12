@@ -36,8 +36,8 @@ public class OrdersController {
         reload();
     }
 
-    public void modify(Orders order) {
-        ordersDAO.modify(order);
+    public void merge(Orders order) {
+        ordersDAO.merge(order);
         reload();
     }
 }
