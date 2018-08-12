@@ -18,6 +18,6 @@ public class CheckoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LogSystem.getLogger().info("Enter "+ NAME);
         req.setAttribute(MenuAttributes.PAGE_ATTRIBUTE, MenuAttributes.CHECKOUT);
-        req.getRequestDispatcher("WEB-INF/view/static/checkout.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/view/jsp/checkout.jsp").forward(req, resp);
     }
 }

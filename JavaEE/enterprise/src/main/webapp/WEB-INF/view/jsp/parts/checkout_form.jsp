@@ -22,7 +22,7 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
-                        <h6 class="my-0">Second product</h6>
+                        <h6 class="my-0">Second productDTO</h6>
                         <small class="text-muted">Brief description</small>
                     </div>
                     <span class="text-muted">$8</span>
