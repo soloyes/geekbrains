@@ -22,22 +22,22 @@ public class OrdersController {
     private Orders selectedOrder;
 
     @PostConstruct
-    private void init() {
+    private void reload() {
         ordersList = ordersDAO.getAll();
     }
 
     public void add(Orders order) {
         ordersDAO.add(order);
-        init();
+        reload();
     }
 
     public void del(Long id) {
         ordersDAO.removeById(id);
-        init();
+        reload();
     }
 
     public void modify(Orders order) {
         ordersDAO.modify(order);
-        init();
+        reload();
     }
 }

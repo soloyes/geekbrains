@@ -18,7 +18,6 @@ public class OrdersDAO extends AbstractDAO {
     }
 
     @Override
-    @Nullable
     public MyEntity add(@Nullable MyEntity entity) {
         return em.merge(entity);
     }
@@ -43,6 +42,6 @@ public class OrdersDAO extends AbstractDAO {
 
     @Override
     public void modify(MyEntity entity) {
-
+        em.merge(entity);
     }
 }

@@ -3,6 +3,7 @@ package xyz.solovev.enterprise.controller;
 import lombok.Data;
 import xyz.solovev.enterprise.dao.CategoriesDAO;
 import xyz.solovev.enterprise.entity.Categories;
+import xyz.solovev.enterprise.entity.MyEntity;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -22,22 +23,22 @@ public class CategoriesController {
     private Categories selectedCategory;
 
     @PostConstruct
-    private void init() {
+    private void reload() {
         categoriesList = categoriesDAO.getAll();
     }
 
     public void add(Categories category) {
         categoriesDAO.add(category);
-        init();
+        reload();
     }
 
     public void del(Long id) {
         categoriesDAO.removeById(id);
-        init();
+        reload();
     }
 
     public void modify(Categories category) {
         categoriesDAO.modify(category);
-        init();
+        reload();
     }
 }

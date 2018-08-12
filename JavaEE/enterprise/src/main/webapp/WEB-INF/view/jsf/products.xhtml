@@ -12,7 +12,7 @@
 <h:body>
     <h:form id="form">
 
-        <p:dataGrid var="categories" value="#{productsController.productsList}" columns="3" layout="grid"
+        <p:dataGrid var="products" value="#{productsController.productsList}" columns="3" layout="grid"
                     rows="12" paginator="true" id="products"
                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                     rowsPerPageTemplate="6,12,16">
@@ -21,31 +21,31 @@
                 Products
             </f:facet>
 
-            <p:panel header="#{categories.id}" style="text-align:center" rendered="#{categories.id != 1}">
+            <p:panel header="#{products.id}" style="text-align:center" rendered="#{products.id != 1}">
                 <h:panelGrid columns="1" style="width:100%">
 
-                    <h:outputText value="#{categories.name}"/>
+                    <h:outputText value="#{products.name}"/>
 
                     <p:commandLink update=":form:productDetail" oncomplete="PF('productDialog').show()"
                                    title="View Detail">
                         <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;"/>
-                        <f:setPropertyActionListener value="#{categories}"
+                        <f:setPropertyActionListener value="#{products}"
                                                      target="#{productsController.selectedProduct}"/>
                     </p:commandLink>
 
                     <p:commandButton value="Delete" id="delete" update="products"
-                                     actionListener="#{productsController.del(categories.id)}" icon="ui-icon-trash"/>
+                                     actionListener="#{productsController.del(products.id)}" icon="ui-icon-trash"/>
                 </h:panelGrid>
             </p:panel>
 
-            <p:panel header="add" style="text-align:center" rendered="#{categories.id == 1}">
+            <p:panel header="add" style="text-align:center" rendered="#{products.id == 1}">
                 <h:panelGrid columns="1" style="width:100%">
                     <h:outputText value="Add product"/>
 
                     <p:commandLink update=":form:addProductDetail" oncomplete="PF('addProductDialog').show()"
                                    title="Add Detail">
                         <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;"/>
-                        <f:setPropertyActionListener value="#{categories}"
+                        <f:setPropertyActionListener value="#{products}"
                                                      target="#{productsController.selectedProduct}"/>
                     </p:commandLink>
                 </h:panelGrid>

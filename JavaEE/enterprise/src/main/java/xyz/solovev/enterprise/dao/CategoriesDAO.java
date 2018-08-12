@@ -16,16 +16,16 @@ public class CategoriesDAO extends AbstractDAO {
         List<Categories> list = em.createQuery("SELECT e FROM Categories e", Categories.class).getResultList();
         if (list.size() == 0) {
             Categories category = new Categories();
-            category.setName("Category to add new categories");
+            category.setName("Category to persists new categories");
             add(category);
         }
         return list;
     }
 
     @Override
-    @Nullable
     public MyEntity add(@Nullable MyEntity entity) {
-        return em.merge(entity);
+        Categories category = new Categories((Categories) entity);
+        return em.merge(category);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class CategoriesDAO extends AbstractDAO {
 
     @Override
     public void modify(MyEntity entity) {
-
+        em.merge(entity);
     }
 }
 

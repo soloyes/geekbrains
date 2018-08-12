@@ -2,7 +2,6 @@ package xyz.solovev.enterprise.controller;
 
 import lombok.Data;
 import xyz.solovev.enterprise.dao.ProductsDAO;
-import xyz.solovev.enterprise.entity.MyEntity;
 import xyz.solovev.enterprise.entity.Products;
 
 import javax.annotation.PostConstruct;
@@ -23,22 +22,22 @@ public class ProductsController {
     private Products selectedProduct;
 
     @PostConstruct
-    private void init() {
+    private void reload() {
         productsList = productsDAO.getAll();
     }
 
     public void add(Products product) {
         productsDAO.add(product);
-        init();
+        reload();
     }
 
     public void del(Long id) {
         productsDAO.removeById(id);
-        init();
+        reload();
     }
 
     public void modify(Products product) {
         productsDAO.modify(product);
-        init();
+        reload();
     }
 }

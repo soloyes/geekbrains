@@ -17,14 +17,13 @@ public class ProductsDAO extends AbstractDAO {
         List<Products> list = em.createQuery("SELECT e FROM Products e", Products.class).getResultList();
         if (list.size() == 0) {
             Products product = new Products();
-            product.setDescription("Product to add new products");
+            product.setDescription("Product to persists new products");
             add(product);
         }
         return list;
     }
 
     @Override
-    @Nullable
     public MyEntity add(@NotNull MyEntity entity) {
         Products product = new Products((Products) entity);
         return em.merge(product);
