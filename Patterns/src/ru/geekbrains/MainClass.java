@@ -14,9 +14,9 @@ import ru.geekbrains.singleton.Singleton;
 
 import java.util.logging.Logger;
 
-public class Main {
+public class MainClass {
 
-    private static Logger LOGGER = Logger.getLogger(Main.class.getName());
+    private static Logger LOGGER = Logger.getLogger(MainClass.class.getName());
 
     public static void main(String[] args) {
         new Thread(new Runnable() {
