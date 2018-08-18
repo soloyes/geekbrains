@@ -1,6 +1,5 @@
 package xyz.solovev.enterprise.dao;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.solovev.enterprise.entity.MyEntity;
 import xyz.solovev.enterprise.entity.Orders;
@@ -18,14 +17,16 @@ public class OrdersDAO extends AbstractDAO {
     }
 
     @Override
-    public MyEntity add(@Nullable MyEntity entity) {
-        return em.merge(entity);
+    public MyEntity persists(@Nullable MyEntity entity) {
+        if (entity == null) return null;
+        em.persist(entity);
+        return entity;
     }
 
     @Override
     @Nullable
-    public Orders getById(@NotNull final Long id) {
-        if (id < 0) return null;
+    public Orders getById(@Nullable final String id) {
+        if (id == null || id.isEmpty()) return null;
         return getEntity(
                 em.createQuery(
                         "SELECT e FROM Orders e WHERE e.id=:id",
@@ -34,9 +35,9 @@ public class OrdersDAO extends AbstractDAO {
     }
 
     @Override
-    public void removeById(@NotNull final Long id) {
-        if (id < 0) return;
-        final Orders order = getById(id);
+    public void removeById(@Nullable final String id) {
+        @Nullable final Orders order = getById(id);
+        if (order == null) return;
         em.remove(order);
     }
 

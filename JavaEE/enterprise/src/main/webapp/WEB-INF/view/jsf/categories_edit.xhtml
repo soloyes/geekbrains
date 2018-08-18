@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputStylesheet library="css" name="main.css"/>
+</h:head>
+<f:metadata>
+    <f:viewParam name="id" value="#{categoryEditController.id}"/>
+    <f:viewAction action="#{categoryEditController.init}"/>
+</f:metadata>
+<h:body>
+    <h:form>
+        <p:fieldset legend="Edit category">
+            <p:spacer height="5"/>
+            <p:messages id="msg"/>
+            <p:outputPanel>
+                <p:outputPanel>
+                    <p:outputLabel value="NAME"/>
+                </p:outputPanel>
+                <p:inputText value="#{categoryEditController.category.name}" id="name"
+                             required="true" requiredMessage="Enter name">
+                    <p:ajax update="msg" event="keyup"/>
+                </p:inputText>
+
+            </p:outputPanel>
+            <p:spacer height="5"/>
+        </p:fieldset>
+        <p:spacer height="20"/>
+        <p:outputPanel>
+            <p:commandButton update="msg" value="SAVE" action="#{categoryEditController.save}"/>
+            <p:spacer width="20"/>
+            <p:button value="BACK" outcome="/WEB-INF/view/jsf/categories_list"/>
+            <p:button value="PRODUCTS" outcome="/WEB-INF/view/jsf/products_list"
+                      rendered="#{!categoryEditController.category.id.equals('1')}">
+                <f:param name="category" value="#{categoryEditController.category.id}"/>
+            </p:button>
+        </p:outputPanel>
+    </h:form>
+</h:body>
+</html>
