@@ -26,12 +26,12 @@ public class OrdersController {
         ordersList = ordersDAO.getAll();
     }
 
-    public void add(Orders order) {
-        ordersDAO.add(order);
+    public void persists(Orders order) {
+        ordersDAO.persists(order);
         reload();
     }
 
-    public void del(Long id) {
+    public void del(String id) {
         ordersDAO.removeById(id);
         reload();
     }

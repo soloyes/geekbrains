@@ -1,20 +1,18 @@
 package xyz.solovev.enterprise.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-public class Orders implements MyEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class Orders extends AbstractEntity {
 
     @Column
-    private String customer_id;
+    private String customer;
 
     @Column
-    private String product_id;
+    private String product;
 }
