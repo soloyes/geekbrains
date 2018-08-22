@@ -3,34 +3,44 @@ package xyz.solovev.enterprise.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Data
-public class Products implements MyEntity {
+public class Products extends AbstractEntity {
 
     public Products() {
     }
 
     public Products(Products product) {
         this.name = product.name;
-        this.category_id = product.category_id;
         this.description = product.description;
-        this.discount = product.discount;
+        this.price = product.price;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @ManyToOne
+    private Categories category;
 
     @Column
     private String name;
 
     @Column
-    private Long category_id;
-
-    @Column
     private String description;
 
     @Column
-    private Float discount;
+    private Float price;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Products products = (Products) o;
+        return Objects.equals(getId(), products.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getId());
+    }
 }

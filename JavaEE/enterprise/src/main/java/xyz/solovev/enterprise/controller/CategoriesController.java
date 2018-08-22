@@ -26,18 +26,8 @@ public class CategoriesController {
         categoriesList = categoriesDAO.getAll();
     }
 
-    public void add(Categories category) {
-        categoriesDAO.add(category);
-        reload();
-    }
-
-    public void del(Long id) {
+    public void del(String id) {
         categoriesDAO.removeById(id);
-        reload();
-    }
-
-    public void merge(Categories category) {
-        categoriesDAO.merge(category);
         reload();
     }
 }

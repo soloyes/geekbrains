@@ -4,7 +4,6 @@ import lombok.Data;
 import xyz.solovev.enterprise.dao.ProductsDAO;
 import xyz.solovev.enterprise.entity.Products;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
@@ -21,23 +20,14 @@ public class ProductsController {
 
     private Products selectedProduct;
 
-    @PostConstruct
-    private void reload() {
-        productsList = productsDAO.getAll();
+    private String category;
+
+    public void reload() {
+        productsList = productsDAO.getAllByCategory(category);
     }
 
-    public void add(Products product) {
-        productsDAO.add(product);
-        reload();
-    }
-
-    public void del(Long id) {
+    public void del(String id) {
         productsDAO.removeById(id);
-        reload();
-    }
-
-    public void merge(Products product) {
-        productsDAO.merge(product);
         reload();
     }
 }

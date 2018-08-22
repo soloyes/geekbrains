@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputStylesheet library="css" name="main.css"/>
+</h:head>
+<f:metadata>
+    <f:viewParam name="category" value="#{productEditController.category}"/>
+    <f:viewParam name="id" value="#{productEditController.prodID}"/>
+    <f:viewAction action="#{productEditController.init}"/>
+</f:metadata>
+<h:body>
+    <h:form>
+        <p:fieldset legend="ADD PRODUCT">
+            <p:spacer height="5"/>
+            <p:messages id="msg"/>
+            <p:outputPanel>
+                <p:inputText value="#{productEditController.product.name}" id="name"
+                             required="true" requiredMessage="Enter name">
+                    <p:ajax update="msg" event="keyup"/>
+                </p:inputText>
+                <p:spacer height="5"/>
+                <p:outputLabel value="name"/>
+            </p:outputPanel>
+            <p:outputPanel>
+                <p:inputText value="#{productEditController.product.description}" id="description"
+                             required="false">
+                </p:inputText>
+                <p:spacer height="5"/>
+                <p:outputLabel value="description"/>
+            </p:outputPanel>
+            <p:outputPanel>
+                <p:inputText value="#{productEditController.product.price}" id="price"
+                             required="false">
+                </p:inputText>
+                <p:spacer height="5"/>
+                <p:outputLabel value="price"/>
+            </p:outputPanel>
+            <p:spacer height="5"/>
+        </p:fieldset>
+
+        <p:spacer height="20"/>
+        <p:outputPanel>
+            <p:commandButton update="msg" value="SAVE" action="#{productEditController.save}"/>
+            <p:spacer width="20"/>
+            <p:button value="BACK" outcome="/WEB-INF/view/jsf/products_list">
+                <f:param name="category" value="#{productEditController.category}"/>
+            </p:button>
+        </p:outputPanel>
+     </h:form>
+</h:body>
+</html>

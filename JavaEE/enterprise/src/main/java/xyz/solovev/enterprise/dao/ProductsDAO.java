@@ -4,12 +4,22 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.solovev.enterprise.entity.MyEntity;
 import xyz.solovev.enterprise.entity.Products;
+import xyz.solovev.enterprise.interceptor.LogInterceptor;
 
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import java.util.*;
 
 @Stateless
+@Interceptors({LogInterceptor.class})
 public class ProductsDAO extends AbstractDAO {
+
+    public List<Products> getAllByCategory(String categoryId) {
+        return em
+                .createQuery("SELECT e FROM Products e where e.category.id=:categoryId", Products.class)
+                .setParameter("categoryId", categoryId)
+                .getResultList();
+    }
 
     @Override
     @Nullable
@@ -18,21 +28,23 @@ public class ProductsDAO extends AbstractDAO {
         if (list.size() == 0) {
             Products product = new Products();
             product.setDescription("Product to persists new products");
-            add(product);
+            product.setId("1");
+            persists(product);
         }
         return list;
     }
 
     @Override
-    public MyEntity add(@NotNull MyEntity entity) {
-        Products product = new Products((Products) entity);
-        return em.merge(product);
+    public MyEntity persists(@Nullable MyEntity entity) {
+        if (entity == null) return null;
+        em.persist(entity);
+        return entity;
     }
 
     @Override
     @Nullable
-    public Products getById(@NotNull final Long id) {
-        if (id < 0) return null;
+    public Products getById(@Nullable final String id) {
+        if (id == null || id.isEmpty()) return null;
         return getEntity(
                 em.createQuery(
                         "SELECT e FROM Products e WHERE e.id=:id",
@@ -41,14 +53,24 @@ public class ProductsDAO extends AbstractDAO {
     }
 
     @Override
-    public void removeById(@NotNull final Long id) {
-        if (id < 0) return;
-        final Products product = getById(id);
+    public void removeById(@Nullable final String id) {
+        @Nullable final Products product = getById(id);
+        if (product == null) return;
         em.remove(product);
     }
 
     @Override
     public void merge(MyEntity entity) {
         em.merge(entity);
+    }
+
+    @Nullable
+    public Products getByName(@Nullable final String name) {
+        if (name == null || name.isEmpty()) return null;
+        return getEntity(
+                em.createQuery(
+                        "SELECT e FROM Products e WHERE e.name=:name",
+                        Products.class
+                ).setParameter("name", name));
     }
 }
