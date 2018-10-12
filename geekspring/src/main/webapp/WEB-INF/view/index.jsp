@@ -12,5 +12,9 @@
         <a href="/showSimpleForm">Show Simple Form Page</a>
         <br>
         <a href="/students/showForm">Show Students Form Page</a>
+        <br>
+        <a href="/students/list">Show students list</a>
+        <br>
+        <a href="/students/sortedList">Show students sorted list</a>
     </body>
 </html>

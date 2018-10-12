@@ -1,16 +1,9 @@
 package com.geekbrains.repositories;
 
 import com.geekbrains.entities.Student;
-import org.springframework.stereotype.Component;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-@Component
-public class StudentsRepository {
-    
-    // Это заглушка, на самом деле достаем из БД
-    public Student findOneById(Long id) {
-        Student student = new Student();
-        student.setFirstName("test" + id);
-        student.setLastName("test" + id);
-        return student;
-    }
+@Repository
+public interface StudentsRepository extends CrudRepository<Student, Long> {
 }
