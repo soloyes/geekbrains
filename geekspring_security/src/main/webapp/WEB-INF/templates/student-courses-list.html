@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" th:src="@{/webjars/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/css/bootstrap.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
+</head>
+
+<body>
+<div th:replace="~{cool-navigation :: navi(Empty)}" />
+<div class="container">
+    <h1>Active Courses</h1>
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <td>Id</td>
+            <td>Title</td>
+            <td>Actions</td>
+        </tr>
+        </thead>
+
+        <tr class="myTableRow responsive-row" th:each="course : ${studentCourses}" th:attr="entryIndex=${course.id}">
+            <td th:text="${course.id}"/>
+            <td th:text="${course.title}"/>
+            <td>
+                <button class="btn btn-primary removeBtn" th:attr="entryIndex=${course.id}">Remove</button>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <h1>Missing Courses</h1>
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <td>Id</td>
+            <td>Title</td>
+            <td>Actions</td>
+        </tr>
+        </thead>
+
+        <tr class="myTableRow responsive-row" th:each="course : ${studentMissingCourses}" th:attr="entryIndex=${course.id}">
+            <td th:text="${course.id}"/>
+            <td th:text="${course.title}"/>
+            <td>
+                <button class="btn btn-primary removeBtn" th:attr="entryIndex=${course.id}">Remove</button>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" th:src="@{/webjars/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/css/bootstrap.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
+</head>
+
+<body>
+
+<div th:replace="~{cool-navigation :: navi(Home)}"/>
+
+<div class="container">
+    <h1>Profile</h1>
+
+    <div sec:authorize="isAuthenticated()">
+        Authenticated username:
+        <div sec:authentication="principal.username"></div>
+        Authenticated user roles:
+        <div sec:authentication="principal.authorities"></div>
+    </div>
+
+    <!--<div sec:authorize access="hasAnyRole('ADMIN', 'USER')">-->
+    <div sec:authorize="hasRole('ADMIN')">
+        This content will only be visible to users who have the "supervisor" authority in their list of <tt>GrantedAuthority</tt>s.
+    </div>
+</div>
+</body>
+</html>
