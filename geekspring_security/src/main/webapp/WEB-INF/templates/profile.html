@@ -14,7 +14,7 @@
 
 <body>
 
-<div th:replace="~{cool-navigation :: navi(Home)}"/>
+<div th:replace="~{cool-navigation :: navi(None)}"/>
 
 <div class="container">
     <h1>Profile</h1>
@@ -26,10 +26,12 @@
         <div sec:authentication="principal.authorities"></div>
     </div>
 
-    <!--<div sec:authorize access="hasAnyRole('ADMIN', 'USER')">-->
-    <div sec:authorize="hasRole('ADMIN')">
-        This content will only be visible to users who have the "supervisor" authority in their list of <tt>GrantedAuthority</tt>s.
-    </div>
+    <br>
+    <a href="/">Back To Main Page</a>
+    <br>
 </div>
 </body>
+<footer>
+    <div th:insert="~{my-footer :: foot}"></div>
+</footer>
 </html>

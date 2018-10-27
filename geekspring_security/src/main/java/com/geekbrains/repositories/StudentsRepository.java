@@ -1,12 +1,9 @@
 package com.geekbrains.repositories;
 
-import com.geekbrains.entities.Course;
 import com.geekbrains.entities.Student;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,5 +21,5 @@ public interface StudentsRepository extends PagingAndSortingRepository<Student, 
     @Query(value = "SELECT s FROM Student s LEFT JOIN s.courses c GROUP BY s.id ORDER BY count(c)")
     List<Student> getStudentsByCoursesCountDescHQL(Pageable pageable);
 
-    Student findOneById(Long id);
+    Student getStudentById(Long id);
 }

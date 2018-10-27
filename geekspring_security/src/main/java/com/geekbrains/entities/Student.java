@@ -16,7 +16,7 @@ public class Student {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "students_courses",
             joinColumns = @JoinColumn(name = "student_id"),

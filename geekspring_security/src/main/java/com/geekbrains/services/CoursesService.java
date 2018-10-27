@@ -5,6 +5,7 @@ import com.geekbrains.repositories.CoursesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -16,7 +17,11 @@ public class CoursesService {
         this.coursesRepository = coursesRepository;
     }
 
+    public CoursesService() {
+    }
+
+    @Transactional
     public List<Course> getAllCoursesList() {
-        return (List<Course>)coursesRepository.findAll();
+        return (List<Course>) coursesRepository.findAll();
     }
 }

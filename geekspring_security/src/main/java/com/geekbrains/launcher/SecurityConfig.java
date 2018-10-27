@@ -41,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/").hasAnyRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/profile").authenticated()
+                .antMatchers("/students/**/edu").authenticated()
+                .antMatchers("/students/list").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/")
@@ -49,7 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll();
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/accessDenied");
 
         /*
         http.authorizeRequests()

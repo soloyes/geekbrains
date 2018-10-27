@@ -16,29 +16,19 @@
 
 <div class="fluid-container" th:fragment="navi(activeTab)">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">
+        <a style="outline: none;" href="/">
             <img src="http://shrani.si/f/46/2Q/2Ps2wfOq/camera.png">
         </a>
-        <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"-->
-                <!--aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
-            <!--<span class="navbar-toggler-icon"></span>-->
-        <!--</button>-->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">GeekSpring</a>
-                </li>
                 <li sec:authorize="hasRole('ADMIN')" class="nav-item">
-                    <a class="nav-link" href="/admin">Admin Dashboard</a>
+                    <a class="nav-link disabled" href="/admin">Admin Dashboard</a>
                 </li>
                 <li class="nav-item" th:classappend="${activeTab == 'Home' ? 'active' : ''}">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li sec:authorize="hasRole('MANAGER')" class="nav-item" th:classappend="${activeTab == 'StudentsList' ? 'active' : ''}">
+                <li sec:authorize="isAuthenticated()" th:classappend="${activeTab == 'StudentsList' ? 'active' : ''}">
                     <a class="nav-link" href="/students/list">Student List</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
                 </li>
                 <div sec:authorize="isAuthenticated()">
                     <li class="nav-item">
@@ -58,11 +48,13 @@
 
             <ul class="navbar-nav" sec:authorize="!isAuthenticated()">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
                         Login
                     </a>
                     <div class="dropdown-menu p-2">
-                        <form class="form-horizontal" accept-charset="UTF-8" th:action="@{/authenticateTheUser}" method="POST">
+                        <form class="form-horizontal" accept-charset="UTF-8" th:action="@{/authenticateTheUser}"
+                              method="POST">
                             <div class="form-group">
                                 <div class="col-xs-15">
                                     <div>
@@ -86,7 +78,7 @@
                                 <input type="password" name="password" placeholder="password" class="form-control">
                             </div>
                             <div style="margin-top: 10px" class="form-group">
-                                <div >
+                                <div>
                                     <button type="submit" class="btn btn-success">Login</button>
                                 </div>
                             </div>

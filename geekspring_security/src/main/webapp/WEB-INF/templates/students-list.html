@@ -1,7 +1,8 @@
-<!--/*@thymesVar id="studentsList" type="java.util.List<com.geekbrains.entities.Student>"*/-->
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
 <head>
     <title>Students List</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -14,13 +15,12 @@
 </head>
 
 <body>
-<div th:replace="~{cool-navigation :: navi(Home)}"/>
-
+<div th:replace="~{cool-navigation :: navi(StudentList)}"/>
 <div class="container">
     <h1>Students List</h1>
     <table class="table">
         <thead>
-        <tr class="thead-dark">
+        <tr>
             <td>Id</td>
             <td>Name</td>
             <td>Info</td>
@@ -31,12 +31,18 @@
 
         <tr th:each="student : ${studentsList}">
             <td th:text="${student.id}"/>
-            <td th:text="${student.name}"/>
+            <td>
+                <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" class="pointer"
+                   th:href="'/students/' + ${student.id} + '/edu'"
+                   th:text="${student.name}"></a>
+                <a sec:authorize="hasRole('ROLE_USER')" class="pointer" th:text="${student.name}"></a>
+            </td>
             <!--<td th:text="${student.courses}"/>-->
             <td th:text="${student.name.length()}"/>
             <td>
                 <!--<button class="btn btn-primary removeBtn" th:attr="entryIndex=${student.id}">Remove</button>-->
-                <a class="btn btn-danger" th:href="'/students/remove/' + ${student.id}" role="button">Remove</a>
+                <a sec:authorize="hasRole('ADMIN')" class="btn btn-danger" th:href="'/students/remove/' + ${student.id}"
+                   role="button">Remove</a>
             </td>
             <td>
 
@@ -53,12 +59,11 @@
     <br>
     <a href="/">Back To Main Page</a>
     <br>
-    <button id="consoleTestBtn" >Console</button>
-    <input id="myInput" />
+    <button id="consoleTestBtn">Console</button>
+    <input id="myInput"/>
 </div>
 </body>
 <footer>
-    <div th:insert="~{my-footer :: foot}">
-    </div>
+    <div th:insert="~{my-footer :: foot}"></div>
 </footer>
 </html>

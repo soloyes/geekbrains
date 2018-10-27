@@ -12,14 +12,18 @@
     <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
 </head>
 <html>
-    <body>
-        <form th:action="@{/students/add}" th:object="${student}" method="post">
-            First Name: <input type="text" th:field="*{name}"/>
-            <br>
-            <div class="submit">
-                <button name="addStudent" type="submit">Add student</button>
-            </div>
+<body>
+<div th:replace="~{cool-navigation :: navi(None)}"/>
+<form th:action="@{/students/add}" th:object="${student}" method="post">
+    First Name: <input type="text" th:field="*{name}"/>
+    <br>
+    <div class="submit">
+        <button name="addStudent" type="submit">Add student</button>
+    </div>
 
-        </form>
-    </body>
+</form>
+</body>
+<footer>
+    <div th:insert="~{my-footer :: foot}"></div>
+</footer>
 </html>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
-<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
@@ -18,13 +17,9 @@
 
 <div class="container">
     <h1>Welcome page</h1>
-
-    <h2>Index:</h2>
-    <br>
-    <a href="/students/list">Show students list</a>
-    <br>
-    <a href="/students/add">Add new student</a>
-    <button id="testBtn">Test</button>
 </div>
 </body>
+<footer>
+    <div th:insert="~{my-footer :: foot}"></div>
+</footer>
 </html>

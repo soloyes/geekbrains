@@ -14,9 +14,4 @@ public class LoginController {
     public String showAccessDeniedPage() {
         return "access-denied";
     }
-
-//    @GetMapping("/ohSh")
-//    public String ohSh() {
-//        return "plain-login";
-//    }
 }
