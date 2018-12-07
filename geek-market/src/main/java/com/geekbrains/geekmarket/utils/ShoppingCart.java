@@ -18,6 +18,7 @@ public class ShoppingCart {
         products.add(product);
     }
 
+    // todo исправить кривизну удаления
     public void remove(Product product) {
         products.remove(product);
     }

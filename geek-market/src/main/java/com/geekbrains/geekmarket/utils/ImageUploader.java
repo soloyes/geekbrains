@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 @Controller
 @RequestMapping("/uploader")
 public class ImageUploader {
-    private static String UPLOADED_FOLDER = ".//products_images//";
+    private static String UPLOADED_FOLDER = "./images/";
 
     @GetMapping("")
     public String index() {

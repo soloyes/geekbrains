@@ -1,11 +1,11 @@
 package com.geekbrains.geekmarket.services;
 
 import com.geekbrains.geekmarket.entities.Category;
-import com.geekbrains.geekmarket.entities.Product;
 import com.geekbrains.geekmarket.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,7 +18,6 @@ public class CategoryService {
     }
 
     public List<Category> getAllCategories() {
-        List<Category> categories = (List<Category>) categoryRepository.findAll();
-        return categories;
+        return (List<Category>)categoryRepository.findAll();
     }
 }

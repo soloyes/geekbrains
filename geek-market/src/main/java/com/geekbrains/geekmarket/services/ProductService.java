@@ -4,7 +4,11 @@ import com.geekbrains.geekmarket.entities.Product;
 import com.geekbrains.geekmarket.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +34,9 @@ public class ProductService {
         return null;
     }
 
-    public void addProduct(Product product) {
+    public void saveProduct(Product product) {
+        if (product.getCreateAt() == null) // TODO: 01.12.2018 почему из базы приходит как нал и затирает в базе после апдейта
+        product.setCreateAt(new Date());
         productRepository.save(product);
-    }
-
-    public void removeProductById(Long id) {
-        productRepository.deleteById(id);
     }
 }
