@@ -59,4 +59,16 @@ public class ShopController {
         shoppingCartService.removeFromCart(httpServletRequest.getSession(), id);
         return "redirect:/shop/cart";
     }
+
+    @GetMapping("/cart/decrease/{id}")
+    public String decreaseProductFromCartById(Model model, HttpServletRequest httpServletRequest, @PathVariable(name = "id") Long id) {
+        shoppingCartService.decreaseFromCart(httpServletRequest.getSession(), id);
+        return "redirect:/shop/cart";
+    }
+
+    @GetMapping("/cart/increase/{id}")
+    public String increaseProductToCartById(Model model, HttpServletRequest httpServletRequest, @PathVariable(name = "id") Long id) {
+        shoppingCartService.increaseToCart(httpServletRequest.getSession(), id);
+        return "redirect:/shop/cart";
+    }
 }

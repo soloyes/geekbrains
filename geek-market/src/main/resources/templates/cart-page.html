@@ -25,23 +25,36 @@
             <th>Артикул</th>
             <th>Категория</th>
             <th>Название товара</th>
+            <th>Количество</th>
             <th>Цена</th>
             <th></th>
         </tr>
         </thead>
 
         <tr class="responsive-row" th:each="product : ${cart.products}">
-            <td th:text="${product.vendorCode}"/>
-            <td th:text="${product.category.title}"/>
+            <td th:text="${product.key.vendorCode}"/>
+            <td th:text="${product.key.category.title}"/>
             <td>
-                <span style="font-weight: bold;" th:text="${product.title}"></span>
+                <span style="font-weight: bold;" th:text="${product.key.title}"></span>
                 <br>
-                <span th:text="${product.shortDescription}"></span>
+                <span th:text="${product.key.shortDescription}"></span>
             </td>
-            <td th:text="${product.price}"/>
             <td>
-                <a th:href="@{'/shop/cart/remove/' + ${product.id}}">Удалить</a>
+                <span style="font-weight: bold;" th:text="${product.value}"></span>
+                <a class="btn btn-outline-success col-lg-1" th:href="@{'/shop/cart/increase/' + ${product.key.id}}">+</a>
+                <a class="btn btn-outline-danger col-lg-1" th:href="@{'/shop/cart/decrease/' + ${product.key.id}}">-</a>
+            </td>
+            <td>
+                <span th:text="${product.key.price * product.value}"></span>
+            </td>
+            <td>
+                <a class="btn btn-outline-danger" th:href="@{'/shop/cart/remove/' + ${product.key.id}}">Удалить</a>
             <td/>
+        </tr>
+        <tr>
+            <td colspan="6" align="right">
+                <a class="btn btn-outline-success" th:href="@{'/order/make/'}">Заказать</a>
+            </td>
         </tr>
     </table>
 </div>
