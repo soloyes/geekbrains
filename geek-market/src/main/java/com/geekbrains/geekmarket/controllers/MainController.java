@@ -11,14 +11,17 @@ import java.security.Principal;
 
 // Корректировки:
 // Поправить пути к картинкам
-// Исправить корзину
 // Сделать сохранение истории в таблицу
 // Выпилить в контроллере формы для товаров кусок загрузки файлов
-// Добавление валидации к товарам
-// rest security
+// Поправить Order cascade detached entity ...
+// Подсчет итоговой стоимости заказа
+// rest security (вариант Юрия), из варианта Юрия взять отображение корзины в навигации и количества позиций
+// на бекенде делать фильтрацию и pagination для ajax
 
 // Домашнее задание:
-// Добавить логику формирования заказов
+// Покопать доки по ajax и сделать ajax управление корзиной (изменение количества товаров в позиции,
+// удаление товара из корзины, отображение корзины в DataTable, переасчет стоимости позиции/заказа)
+
 
 @Controller
 public class MainController {
@@ -27,10 +30,5 @@ public class MainController {
     @RequestMapping("/")
     public String showHomePage() {
         return "index";
-    }
-
-    @RequestMapping("favicon.ico")
-    String favicon() {
-        return "forward:/favicon.ico";
     }
 }

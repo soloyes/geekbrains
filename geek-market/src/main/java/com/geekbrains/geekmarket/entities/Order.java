@@ -1,9 +1,12 @@
 package com.geekbrains.geekmarket.entities;
 
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -14,14 +17,23 @@ public class Order {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "create_at")
-    private Date createAt;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<OrderItem> orderItems;
+
+    @ManyToOne
     @JoinColumn(name = "status_id")
-    private OrderStatus orderStatus;
+    private OrderStatus status;
+
+    @Column(name = "create_at")
+    @CreationTimestamp
+    private LocalDateTime createAt;
+
+    @Column(name = "update_at")
+    @CreationTimestamp
+    private LocalDateTime updateAt;
 }

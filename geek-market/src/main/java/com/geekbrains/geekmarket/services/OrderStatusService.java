@@ -5,18 +5,16 @@ import com.geekbrains.geekmarket.repositories.OrderStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class OrderStatusService {
     private OrderStatusRepository orderStatusRepository;
 
     @Autowired
-    public void setOrderRepository(OrderStatusRepository orderStatusRepository) {
+    public void setOrderStatusRepository(OrderStatusRepository orderStatusRepository) {
         this.orderStatusRepository = orderStatusRepository;
     }
 
-    public Optional<OrderStatus> getOrderStatus(Long id){
-        return orderStatusRepository.findById(id);
+    public OrderStatus findById(Long id) {
+        return orderStatusRepository.findById(id).orElse(null);
     }
 }
