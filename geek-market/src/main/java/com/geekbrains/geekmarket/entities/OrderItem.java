@@ -1,7 +1,6 @@
 package com.geekbrains.geekmarket.entities;
 
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 

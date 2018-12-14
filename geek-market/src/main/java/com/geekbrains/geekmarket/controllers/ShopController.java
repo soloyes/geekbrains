@@ -43,7 +43,7 @@ public class ShopController {
     @GetMapping("/cart")
     public String cartPage(Model model, HttpServletRequest httpServletRequest) {
         model.addAttribute("cart", shoppingCartService.getCurrentCart(httpServletRequest.getSession()));
-        return "cart-page-old";
+        return "cart-page";
     }
 
 //    @GetMapping("/cart/add/{id}")

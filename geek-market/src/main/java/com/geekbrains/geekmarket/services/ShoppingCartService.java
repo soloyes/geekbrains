@@ -44,4 +44,16 @@ public class ShoppingCartService {
         ShoppingCart cart = getCurrentCart(session);
         cart.remove(product);
     }
+
+    public void decreaseFromCart(HttpSession session, Long productId) {
+        ShoppingCart cart = getCurrentCart(session);
+        Product product = productService.getProductById(productId);
+        cart.decrease(product);
+    }
+
+    public void increaseToCart(HttpSession session, Long productId) {
+        ShoppingCart cart = getCurrentCart(session);
+        Product product = productService.getProductById(productId);
+        cart.increase(product);
+    }
 }

@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 public class ShoppingCart {
@@ -22,7 +21,7 @@ public class ShoppingCart {
             orderItem = new OrderItem();
             orderItem.setProduct(product);
             orderItem.setQuantity(0L);
-            orderItem.setId(0L);
+            orderItem.setId((long) items.size());
             orderItem.setTotalPrice(0.0);
             items.add(orderItem);
         }
@@ -31,9 +30,26 @@ public class ShoppingCart {
 
     public void remove(Product product) {
         OrderItem orderItem = items.stream().filter(o -> o.getProduct().getId().equals(product.getId())).findFirst().orElse(null);
-        if (orderItem == null) {
-            return;
+        if (orderItem != null) {
+            items.remove(orderItem);
         }
-        items.remove(orderItem);
+    }
+
+    public void decrease(Product product) {
+        OrderItem orderItem = items.stream()
+                .filter(o -> o.getProduct().getId().equals(product.getId()))
+                .findFirst()
+                .orElse(null);
+
+        if (orderItem != null) {
+            orderItem.setQuantity(orderItem.getQuantity() - 1);
+            if (orderItem.getQuantity() == 0){
+                remove(product);
+            }
+        }
+    }
+
+    public void increase(Product product) {
+        add(product);
     }
 }
