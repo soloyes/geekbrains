@@ -1,4 +1,17 @@
 $(document).ready(function() {
+
+    $('#btnSavePhoneAndAddress').on('click', function(event) {
+       $.ajax({
+          type: "PUT",
+          url: "/geekmarket/api/cart/addAddressAndPhone",
+          async: false,
+          data: {
+            'address': $('#fieldAddress').val(),
+            'phone': $('#fieldPhone').val()
+          }
+       });
+    });
+
     $('.removeBtn').on('click', function(event) {
 		var studentId = $(this).attr('entryIndex');
 		$.get("/students/remove/" + studentId);

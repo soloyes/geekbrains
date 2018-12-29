@@ -79,6 +79,8 @@ DROP TABLE IF EXISTS orders;
 CREATE TABLE orders (
   id	      INT(11) NOT NULL AUTO_INCREMENT,
   user_id     INT(11) NOT NULL,
+  price       DECIMAL(8,2) NOT NULL,
+  delivery_address      VARCHAR(100) NOT NULL,
   status_id   INT(11) NOT NULL,
   create_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   update_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

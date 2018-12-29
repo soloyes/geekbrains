@@ -5,13 +5,14 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
 @Data
-public class Order {
+public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -21,13 +22,18 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 
     @ManyToOne
     @JoinColumn(name = "status_id")
     private OrderStatus status;
+
+    @Column(name = "price")
+    private Double price;
+
+    @Column(name = "delivery_address")
+    private String deliveryAddress;
 
     @Column(name = "create_at")
     @CreationTimestamp
@@ -36,4 +42,17 @@ public class Order {
     @Column(name = "update_at")
     @CreationTimestamp
     private LocalDateTime updateAt;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", user=" + user +
+                ", status=" + status +
+                ", price=" + price +
+                ", deliveryAddress='" + deliveryAddress + '\'' +
+                ", createAt=" + createAt +
+                ", updateAt=" + updateAt +
+                '}';
+    }
 }

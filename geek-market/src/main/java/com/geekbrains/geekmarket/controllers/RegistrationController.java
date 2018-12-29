@@ -33,7 +33,7 @@ public class RegistrationController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping("/registration")
+    @GetMapping("")
     public String registration(Model theModel) {
         theModel.addAttribute("systemUser", new SystemUser());
         return "registration-form";

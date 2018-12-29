@@ -1,7 +1,6 @@
 package com.geekbrains.geekmarket.controllers;
 
 import com.geekbrains.geekmarket.entities.OrderItem;
-import com.geekbrains.geekmarket.entities.Product;
 import com.geekbrains.geekmarket.services.ShoppingCartService;
 import com.geekbrains.geekmarket.utils.ShoppingCart;
 import com.sun.deploy.net.HttpResponse;
@@ -12,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.HttpResource;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 @RestController
 @RequestMapping("/api")
@@ -25,9 +24,10 @@ public class ShoppingCartRestController {
         this.shoppingCartService = shoppingCartService;
     }
 
-    @GetMapping(path = "/cart_items")
-    public List<OrderItem> getCurrentCart(HttpSession session){
-        return shoppingCartService.getCurrentCart(session).getItems();
+    @GetMapping("/cart_items")
+    public List<OrderItem> getAllCartOrderItems(HttpServletRequest httpServletRequest) {
+
+        return shoppingCartService.getCurrentCart(httpServletRequest.getSession()).getItems();
     }
 
     @PostMapping("/cart_items")
@@ -42,10 +42,22 @@ public class ShoppingCartRestController {
         return HttpStatus.OK.value();
     }
 
-    @DeleteMapping("/cart_items/decrease")
-    public int decreaseProductInCartById(HttpServletRequest httpServletRequest, @RequestParam(name = "id") Long id) {
-        shoppingCartService.decreaseFromCart(httpServletRequest.getSession(), id);
+    @GetMapping("/cart_items/cost")
+    public double getTotalCost(HttpServletRequest httpServletRequest) {
+        return shoppingCartService.getTotalCost(httpServletRequest.getSession());
+    }
+
+    @PutMapping("/cart_items")
+    public int setItemsCount(HttpServletRequest httpServletRequest, @RequestParam(name = "product_id") Long id, @RequestParam(name = "quantity") Long quantity) {
+        shoppingCartService.setProductCount(httpServletRequest.getSession(), id, quantity);
         return HttpStatus.OK.value();
+    }
+
+    @PutMapping("/cart/addAddressAndPhone")
+    public void addAddressAndPhone(HttpServletRequest httpServletRequest, @RequestParam(name = "address") String address, @RequestParam(name = "phone") String phone) {
+        ShoppingCart cart = shoppingCartService.getCurrentCart(httpServletRequest.getSession());
+        cart.setDeliveryAddress(address);
+        cart.setPhone(phone);
     }
 
 //    @GetMapping("/cart/remove/{id}")
