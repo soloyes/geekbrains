@@ -29,7 +29,7 @@ public class MailService {
         this.messageBuilder = messageBuilder;
     }
 
-    private void sendMail(String email, String subject, String text) {
+    public void sendMail(String email, String subject, String text) {
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 

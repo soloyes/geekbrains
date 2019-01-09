@@ -14,10 +14,12 @@
 
 <body>
 
-<div th:replace="~{navigation :: navi(AdminDashboard)}" />
+<div th:replace="~{navigation :: navi(AdminDashboard)}"/>
 
 <div class="container">
     <h1>Admin Panel</h1>
+    <br>
+    <a th:href="@{/products/edit/0}">Добавить товар</a>
 </div>
 </body>
 </html>

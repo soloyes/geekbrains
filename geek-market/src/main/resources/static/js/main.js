@@ -12,6 +12,10 @@ $(document).ready(function() {
        });
     });
 
+    $('#payBtn').on('click', function(event) {
+      $.post("/geekmarket/paypal/make/payment", { sum: "10" });
+    });
+
     $('.removeBtn').on('click', function(event) {
 		var studentId = $(this).attr('entryIndex');
 		$.get("/students/remove/" + studentId);

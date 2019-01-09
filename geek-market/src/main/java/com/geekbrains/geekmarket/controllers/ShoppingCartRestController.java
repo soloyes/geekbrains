@@ -53,13 +53,6 @@ public class ShoppingCartRestController {
         return HttpStatus.OK.value();
     }
 
-    @PutMapping("/cart/addAddressAndPhone")
-    public void addAddressAndPhone(HttpServletRequest httpServletRequest, @RequestParam(name = "address") String address, @RequestParam(name = "phone") String phone) {
-        ShoppingCart cart = shoppingCartService.getCurrentCart(httpServletRequest.getSession());
-        cart.setDeliveryAddress(address);
-        cart.setPhone(phone);
-    }
-
 //    @GetMapping("/cart/remove/{id}")
 //    public String removeProductFromCartById(Model model, HttpServletRequest httpServletRequest, @PathVariable(name = "id") Long id) {
 //        shoppingCartService.removeFromCart(httpServletRequest.getSession(), id);

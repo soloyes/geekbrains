@@ -1,20 +1,19 @@
 package com.geekbrains.geekmarket.jms;
 
-import com.geekbrains.geekmarket.entities.Order;
-import com.geekbrains.geekmarket.repositories.OrderRepository;
+import com.geekbrains.geekmarket.entities.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.jms.TextMessage;
 
 // http://localhost:8161/admin
 
-@Controller
+//@Controller
 @RequestMapping("/jms")
 public class JmsController {
     private static final Logger logger = LoggerFactory.getLogger(JmsController.class);
@@ -22,20 +21,21 @@ public class JmsController {
     @Autowired
     private JmsTemplate jmsTemplate;
 
-    private OrderRepository orderRepository;
-
-    public void setOrderRepository(@Autowired OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
-
     @GetMapping("/send")
     public String send() {
-        List<Long> ordersIDs = new ArrayList<>();
-        for (Order o : orderRepository.findAll()) {
-            if (o.getStatus().getId() == 1L) {
-                ordersIDs.add(o.getId());
-            }
-        }
+        jmsTemplate.send("geekmarket", session -> {
+            TextMessage jmsMessage = session.createTextMessage("Hello");
+            logger.info(">>> Sending: " + jmsMessage.getText());
+            return jmsMessage;
+        });
+
+        jmsTemplate.send("geekmarket.topic", session -> {
+            TextMessage jmsMessage = session.createTextMessage("Hello Topic");
+            logger.info(">>> Sending to topic: " + jmsMessage.getText());
+            return jmsMessage;
+        });
+
+        jmsTemplate.convertAndSend("geekmarket", new Product());
         return "redirect:/";
     }
 }

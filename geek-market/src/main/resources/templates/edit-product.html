@@ -6,7 +6,7 @@
 <html lang="en">
 
 <head>
-    <title>Edit Product</title>
+    <title>Добавление/изменение товара</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/dist/jquery.min.js}"></script>
@@ -31,17 +31,17 @@
                     <h4 class="card-title mt-2"><span th:text="${product.title == null} ? 'Добавление товара' : 'Изменение товара'"></span></h4>
                 </header>
                 <article class="card-body">
-                    <form th:action="@{/products/edit}" th:object="${product}" method="post">
+                    <form th:action="@{/products/edit}" th:object="${product}" method="post" enctype="multipart/form-data">
                         <input th:field="*{id}" type="hidden" class="form-control">
 
                         <div class="form-row">
                             <div class="col form-group">
-                                <label>Наименование </label>
+                                <label>Наименование</label>
                                 <input th:field="*{title}" type="text" class="form-control" placeholder="">
                                 <small class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"> </small>
                             </div>
                             <div class="col form-group">
-                                <label>Цена </label>
+                                <label>Цена</label>
                                 <input th:field="*{price}" type="number" class="form-control" placeholder="">
                                 <small class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"> </small>
                             </div>
@@ -50,7 +50,7 @@
                         <div class="form-row">
                             <div class="input-group">
                                 <div class="form-group col-md-12" >
-                                    <label>Выберите категорию </label>
+                                    <label>Выберите категорию</label>
                                     <select th:field="*{category.id}" class="form-control">
                                         <option th:each="category: ${categories}"
                                                 th:value="${category.id}"
@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                             <div class="col form-group">
-                                <label>Артикул </label>
+                                <label>Артикул</label>
                                 <input th:field="*{vendorCode}" type="text" class="form-control" placeholder="">
                                 <small class="error" th:if="${#fields.hasErrors('vendorCode')}" th:errors="*{vendorCode}"></small>
                             </div>
@@ -68,7 +68,7 @@
 
                         <div class="form-row">
                             <div class="col form-group">
-                                <label>Краткое описание </label>
+                                <label>Краткое описание</label>
                                 <input th:field="*{shortDescription}" type="text" class="form-control" th:rows="3" placeholder="">
                                 <small class="error" th:if="${#fields.hasErrors('shortDescription')}" th:errors="*{shortDescription}"></small>
                             </div>
@@ -76,17 +76,23 @@
 
                         <div class="form-row">
                             <div class="col form-group">
-                                <label>Подробное описание </label>
+                                <label>Подробное описание</label>
                                 <input th:field="*{fullDescription}" type="text" class="form-control" th:rows="5" placeholder="">
                                 <small class="error" th:if="${#fields.hasErrors('fullDescription')}" th:errors="*{fullDescription}"></small>
                                 <input th:field="*{id}" type="number" class="invisible" placeholder="">
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <button type="submit" name="addProduct" class="btn btn-primary btn-block"> Сохранить </button>
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label>Картинка</label>
+                                <input type="file" name="file" class="form-control-file" accept="image/*"/>
+                            </div>
                         </div>
-                        <!--<small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>-->
+
+                        <div class="form-group">
+                            <button type="submit" name="addProduct" class="btn btn-primary btn-block">Сохранить</button>
+                        </div>
                     </form>
                 </article>
             </div>

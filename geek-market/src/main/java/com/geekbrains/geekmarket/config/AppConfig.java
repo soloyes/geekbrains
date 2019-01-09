@@ -8,6 +8,7 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Properties;
 
@@ -15,7 +16,7 @@ import java.util.Properties;
 @PropertySource("classpath:private.properties")
 @ComponentScan("org.geekbrains.geekmarket")
 @Import({JmsConfig.class, MailConfig.class})
-public class AppConfig extends WebMvcAutoConfiguration {
+public class AppConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         if (!registry.hasMappingForPattern("/images/**")) {
             registry.addResourceHandler("/images/**").addResourceLocations("file:images/");

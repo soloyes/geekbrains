@@ -17,24 +17,25 @@
 <div class="container">
     <br>
     <h1>Заказ оформлен</h1>
-    <table class="table table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th>Название товара</th>
-            <th>Количество</th>
-            <th>Стоимость</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr th:each="orderItem : ${order.orderItems}">
-                <td th:text="${orderItem.product.title}"/>
-                <td th:text="${orderItem.quantity}"/>
-                <td th:text="${orderItem.totalPrice}"/>
-            </tr>
-        </tbody>
-    </table>
-    <span th:text="'Итоговая сумма: ' + ${order.price}" />
-    <br>
+    <span th:text="${details}" />
+    <!--<table class="table table-hover">-->
+        <!--<thead class="thead-dark">-->
+        <!--<tr>-->
+            <!--<th>Название товара</th>-->
+            <!--<th>Количество</th>-->
+            <!--<th>Стоимость</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+            <!--<tr th:each="orderItem : ${order.orderItems}">-->
+                <!--<td th:text="${orderItem.product.title}"/>-->
+                <!--<td th:text="${orderItem.quantity}"/>-->
+                <!--<td th:text="${orderItem.totalPrice}"/>-->
+            <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
+    <!--<span th:text="'Итоговая сумма: ' + ${order.price}" />-->
+    <!--<br>-->
     <a th:href="@{/}">Вернуться на главную страницу</a>
 </div>
 </body>

@@ -12,8 +12,6 @@ import java.util.Optional;
 public class ShoppingCart {
     private List<OrderItem> items;
     private Double totalCost;
-    private String deliveryAddress;
-    private String phone;
 
     public ShoppingCart() {
         items = new ArrayList<>();

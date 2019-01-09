@@ -57,7 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessUrl("/")
                 .and()
-                .csrf().ignoringAntMatchers("/api/**");
+                .csrf().disable();
+                // .csrf().ignoringAntMatchers("/api/**");
     }
 
     @Bean

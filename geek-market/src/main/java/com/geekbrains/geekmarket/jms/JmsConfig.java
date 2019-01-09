@@ -19,7 +19,7 @@ import javax.jms.ConnectionFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
+//@Configuration
 @EnableJms
 public class JmsConfig {
     @Bean

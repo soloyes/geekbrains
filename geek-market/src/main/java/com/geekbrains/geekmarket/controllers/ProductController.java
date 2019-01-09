@@ -3,6 +3,7 @@ package com.geekbrains.geekmarket.controllers;
 import com.geekbrains.geekmarket.entities.Product;
 import com.geekbrains.geekmarket.services.CategoryService;
 import com.geekbrains.geekmarket.services.ProductService;
+import com.geekbrains.geekmarket.utils.ImageSaver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,33 +48,18 @@ public class ProductController {
     }
 
     @PostMapping("/edit")
-    public String processProductAddForm(@Valid @ModelAttribute("product") Product product, BindingResult theBindingResult, Model model) {
+    public String processProductAddForm(@Valid @ModelAttribute("product") Product product, BindingResult theBindingResult, Model model, @RequestParam("file") MultipartFile file) {
         if (product.getId() == 0 && productService.isProductWithTitleExists(product.getTitle())) {
             theBindingResult.addError(new ObjectError("product.title", "Товар с таким названием уже существует")); // todo не отображает сообщение
-//            return "edit-product";
         }
         if (theBindingResult.hasErrors()) {
             model.addAttribute("categories", categoryService.getAllCategories());
             return "edit-product";
         }
+        if (!file.isEmpty()) {
+            product.setImagePath(ImageSaver.saveFile(file));
+        }
         productService.saveProduct(product);
         return "redirect:/shop";
     }
-
-//    @PostMapping("/edit") // todo Выпилить загрузку картинки из контроллера
-//    public String edit(Model model, Product product, @RequestParam("file") MultipartFile file) {
-//        if (!file.isEmpty()) {
-//            // Path path = Paths.get(".//products_images//" + file.getOriginalFilename());
-//            Path path = Paths.get(file.getOriginalFilename());
-//            try {
-//                byte[] bytes = file.getBytes();
-//                Files.write(path, bytes);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            product.setImagePath(path.toString());
-//        }
-//        productService.saveProduct(product);
-//        return "redirect:/shop";
-//    }
 }

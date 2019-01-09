@@ -1,14 +1,15 @@
 package com.geekbrains.geekmarket.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "orders_item")
 @Data
-public class OrderItem implements Serializable {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -26,15 +27,6 @@ public class OrderItem implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonBackReference
     private Order order;
-
-    @Override
-    public String toString() {
-        return "OrderItem{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                ", totalPrice=" + totalPrice +
-                ", product=" + product +
-                '}';
-    }
 }

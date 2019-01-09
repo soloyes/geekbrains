@@ -9,7 +9,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
-@Component
+//@Component
 public class SimpleMessageJmsListener {
     private static final Logger logger = LoggerFactory.getLogger(SimpleMessageJmsListener.class);
 

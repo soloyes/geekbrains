@@ -1,18 +1,19 @@
 package com.geekbrains.geekmarket.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
 @Data
-public class Order implements Serializable {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -20,6 +21,7 @@ public class Order implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "order", fetch = FetchType.EAGER)
@@ -35,6 +37,9 @@ public class Order implements Serializable {
     @Column(name = "delivery_address")
     private String deliveryAddress;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "create_at")
     @CreationTimestamp
     private LocalDateTime createAt;
@@ -43,16 +48,7 @@ public class Order implements Serializable {
     @CreationTimestamp
     private LocalDateTime updateAt;
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", user=" + user +
-                ", status=" + status +
-                ", price=" + price +
-                ", deliveryAddress='" + deliveryAddress + '\'' +
-                ", createAt=" + createAt +
-                ", updateAt=" + updateAt +
-                '}';
-    }
+    @JsonIgnore
+    @Transient
+    private boolean confirmed;
 }

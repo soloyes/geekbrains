@@ -28,7 +28,6 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    @Transactional
     public Order makeOrder(ShoppingCart cart, User user) {
         Order order = new Order();
         order.setId(0L);
@@ -38,13 +37,17 @@ public class OrderService {
         os.setTitle("Сформирован");
         order.setStatus(os);
         order.setPrice(cart.getTotalCost());
-        order.setDeliveryAddress(cart.getDeliveryAddress());
-        order = orderRepository.save(order);
         order.setOrderItems(new ArrayList<>(cart.getItems()));
         for (OrderItem o : cart.getItems()) {
             o.setOrder(order);
         }
-        order = orderRepository.save(order);
         return order;
+    }
+
+    @Transactional
+    public Order saveOrder(Order order) {
+        Order orderOut = orderRepository.save(order);
+        orderOut.setConfirmed(true);
+        return orderOut;
     }
 }

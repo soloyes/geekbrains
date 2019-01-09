@@ -1,6 +1,7 @@
 // https://datatables.net/
 
 $(document).ready( function () {
+     var _ctx = $("meta[name='ctx']").attr("content");
 	 var table = $('.table').DataTable({
 	    "ajax": {
 	      "url": "/geekmarket/api/products",
@@ -11,6 +12,12 @@ $(document).ready( function () {
 //        "serverSide": true,
         "columns": [
             { "data": "id" },
+            {
+              "data": "imagePath",
+              "render": function (data, type, full, meta) {
+                return '<img src="' + _ctx + '/images/' + data + '">';
+              }
+            },
             { "data": "title" },
             { "data": "price" },
             {
