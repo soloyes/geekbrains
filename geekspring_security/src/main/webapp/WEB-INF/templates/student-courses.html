@@ -1,0 +1,61 @@
+<!--/*@thymesVar id="student" type="com.geekbrains.entities.Student"*/-->
+<!--/*@thymesVar id="courses" type="java.util.List<com.geekbrains.entities.Course>"*/-->
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Students List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" th:src="@{/webjars/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/css/bootstrap.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
+</head>
+
+<body>
+<div th:replace="~{cool-navigation :: navi(StudentCourses)}"/>
+<div class="container">
+    <h1 th:text="'Student ' + ${student.name} +' Courses'"></h1>
+    <table class="table table-hover" id="student_courses">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Course Id</th>
+            <th scope="col">Course Title</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${student.courses}">
+            <th th:scope="row" th:text="${#ids.seq('1')}"></th>
+            <td th:text="${course.id}" th:attr="entryIndex=${course.id}"/>
+            <td th:text="${course.title}"/>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <h1>All Courses</h1>
+    <table class="table table-hover" id="all_courses">
+        <thead>
+        <tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Course Id</th>
+            <th scope="col">Course Title</th>
+        </tr>
+        </tr>
+        </thead>
+        <tr th:each="course : ${courses}">
+            <th th:scope="row" th:text="${#ids.seq('2')}"></th>
+            <td th:text="${course.id}" th:attr="entryIndex=${course.id}"/>
+            <td th:text="${course.title}"/>
+        </tr>
+    </table>
+</div>
+</body>
+<footer>
+    <div th:insert="~{my-footer :: foot}"></div>
+</footer>
+</html>

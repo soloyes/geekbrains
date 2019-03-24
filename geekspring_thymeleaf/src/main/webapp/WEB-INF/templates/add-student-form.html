@@ -1,0 +1,26 @@
+<!--/*@thymesVar id="studentsList" type="java.util.List<com.geekbrains.entities.Student>"*/-->
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add New Student</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" th:src="@{/webjars/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/css/bootstrap.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
+</head>
+<html>
+    <body>
+        <form th:action="@{/students/add}" th:object="${student}" method="post">
+            First Name: <input type="text" th:field="*{name}"/>
+            <br>
+            <div class="submit">
+                <button name="addStudent" type="submit">Add student</button>
+            </div>
+
+        </form>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+2019-01-10 00:00:57,954 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-5] Processing registration form for: null
+2019-01-10 00:01:08,560 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-8] Processing registration form for: abc
+2019-01-10 00:01:20,044 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-2] Processing registration form for: abc
+2019-01-10 00:01:29,160 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-7] Processing registration form for: abc
+2019-01-10 00:01:38,194 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-10] Processing registration form for: abc
+2019-01-10 00:01:47,166 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-5] Processing registration form for: abc
+2019-01-10 00:01:57,402 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-8] Processing registration form for: abc
+2019-01-10 00:05:40,942 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-2] Processing registration form for: abc
+2019-01-10 00:05:51,042 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-7] Processing registration form for: abc
+2019-01-10 00:07:02,006 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-8] Processing registration form for: null
+2019-01-10 00:09:14,612 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-2] Processing registration form for: abc
+2019-01-10 00:09:24,495 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-7] Processing registration form for: abc
+2019-01-10 00:09:33,744 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-10] Processing registration form for: abc
+2019-01-10 00:09:41,867 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-5] Processing registration form for: abc
+2019-01-10 00:09:50,851 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-8] Processing registration form for: abc
+2019-01-10 00:09:59,962 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-2] Processing registration form for: abc
+2019-01-10 00:10:08,038 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-5] Processing registration form for: null
+2019-01-10 00:10:52,305 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-6] Processing registration form for: abc
+2019-01-10 00:10:52,440 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-6] User name already exists
+2019-01-10 00:11:04,701 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-7] Processing registration form for: null
+2019-01-10 00:11:23,104 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-3] Processing registration form for: abc1
+2019-01-10 00:11:23,256 DEBUG com.geekbrains.geekmarket.controllers.RegistrationController [http-nio-8189-exec-3] Successfully created user: abc1

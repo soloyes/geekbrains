@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" th:src="@{/webjars/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/css/bootstrap.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
+</head>
+
+<body>
+
+<div th:replace="~{cool-navigation :: navi(Home)}"/>
+
+<div class="container">
+    <h1>Welcome page</h1>
+</div>
+</body>
+<footer>
+    <div th:insert="~{my-footer :: foot}"></div>
+</footer>
+</html>
