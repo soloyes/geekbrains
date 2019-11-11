@@ -97,7 +97,7 @@ synchronization protocol.
 ## Quote
 Snapshot of the best bid and ask prices, and other fields that may change with each quote. It represents the most recent 
 information that is available about the best quote on the market at any given moment of time.
-```
+``` bash
 #=Quote,EventSymbol,EventTime,BidTime,BidExchangeCode,BidPrice,BidSize,AskTime,AskExchangeCode,AskPrice,AskSize
 Quote,FBGX,20180926-100000.000-0400,20180926-095959-0400,Q,297.01,25,20180926-095959-0400,Q,298.23,25
 ```
